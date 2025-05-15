@@ -24,8 +24,8 @@ namespace JobBee.Application.Features.LeaveType.Commands.UpdateLeaveType
 				.MaximumLength(70).WithMessage("{PropertyName} must be fewer than 70 characters");
 
 			RuleFor(p => p.DefaultDays)
-				.GreaterThan(100).WithMessage("{PropertyName} cannot exceed 100")
-				.LessThan(1).WithMessage("{PropertyName} cannot be less than 1");
+				.LessThan(100).WithMessage("{PropertyName} cannot exceed 100")
+				.GreaterThan(1).WithMessage("{PropertyName} cannot be less than 1");
 
 			RuleFor(q => q)
 				.MustAsync(LeaveTypeNameUnique)
@@ -42,7 +42,17 @@ namespace JobBee.Application.Features.LeaveType.Commands.UpdateLeaveType
 
 		private async Task<bool> LeaveTypeNameUnique(UpdateLeaveTypeCommand command, CancellationToken token)
 		{
-			return await _leaveTypeRepository.IsLeaveTypeUnique(command.Name);
+			var leaveType = await _leaveTypeRepository.GetByIdAsync(command.Id);
+			if (leaveType.Name.Equals(command.Name))
+			{
+				return true;
+			}
+			else
+			{
+				return await _leaveTypeRepository.IsLeaveTypeUnique(command.Name);
+			}
+
+			
 		}
 	}
 }

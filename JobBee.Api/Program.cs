@@ -1,3 +1,7 @@
+using JobBee.Api.Middleware;
+using JobBee.Application;
+using JobBee.Infrastructure;
+using JobBee.Persistence;
 
 namespace JobBee.Api
 {
@@ -9,12 +13,26 @@ namespace JobBee.Api
 
 			// Add services to the container.
 
+			builder.Services.AddApplicationServices();
+			builder.Services.AddInfrastructureServices(builder.Configuration);
+			builder.Services.AddPersistenceServices(builder.Configuration);
+
 			builder.Services.AddControllers();
+
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("all", builder => builder.AllowAnyOrigin()
+				.AllowAnyHeader()
+				.AllowAnyMethod());
+			});
+
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
 			var app = builder.Build();
+
+			app.UseMiddleware<ExceptionMiddleware>();
 
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
