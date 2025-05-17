@@ -12,17 +12,23 @@ namespace JobBee.Application.Features.LeaveType.Commands.DeleteLeaveType
 {
 	public class DeleteLeaveTypeCommandHandler : IRequestHandler<DeleteLeaveTypeCommand, Unit>
 	{
+		private readonly IMapper mapper;
 		private readonly ILeaveTypeRepository _leaveTypeRepository;
+		private readonly IUnitOfWork<Domain.LeaveType, Guid> _unitOfWork;
 
-		public DeleteLeaveTypeCommandHandler(IMapper mapper, ILeaveTypeRepository leaveTypeRepository)
+		public DeleteLeaveTypeCommandHandler(IMapper mapper, 
+			ILeaveTypeRepository leaveTypeRepository,
+			IUnitOfWork<Domain.LeaveType, Guid> unitOfWork)
 		{
+			this.mapper = mapper;
 			this._leaveTypeRepository = leaveTypeRepository;
+			this._unitOfWork = unitOfWork;
 		}
 
 		public async Task<Unit> Handle(DeleteLeaveTypeCommand request, CancellationToken cancellationToken)
 		{
 			//Retrieve domain entity object
-			var leaveTypeToDelete = await _leaveTypeRepository.GetByIdAsync(request.Id);
+			var leaveTypeToDelete = _leaveTypeRepository.GetById(request.Id);
 
 			//Verify that record exists
 			if(leaveTypeToDelete == null)
@@ -31,7 +37,10 @@ namespace JobBee.Application.Features.LeaveType.Commands.DeleteLeaveType
 			}
 
 			//Remove to database
-			await _leaveTypeRepository.DeleteAsync(leaveTypeToDelete);
+			_leaveTypeRepository.Delete(leaveTypeToDelete);
+
+			//Save Change
+			await _unitOfWork.SaveChangesAsync();
 
 			//Return record id
 			return Unit.Value;

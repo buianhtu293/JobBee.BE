@@ -28,7 +28,7 @@ namespace JobBee.Application.Features.LeaveType.Queries.GetAllLeaveTypes
         public async Task<List<LeaveTypeDto>> Handle(GetLeaveTypeQuery request, CancellationToken cancellationToken)
 		{
 			//Query the database
-			var leaveTypes = await _leaveTypeRepository.GetAsync();
+			var leaveTypes = await _leaveTypeRepository.GetAllListAsync();
 
 			//Convert data objects to DTO objects
 			var data = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);

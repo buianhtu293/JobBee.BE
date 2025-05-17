@@ -7,11 +7,11 @@ using JobBee.Domain.Common;
 
 namespace JobBee.Domain
 {
-	public class LeaveAllocation : BaseEntity
+	public class LeaveAllocation : BaseEntity<Guid>
 	{
 		public int NumberOfDays { get; set; }
 		public LeaveType LeaveType { get; set; }
-		public int LeaveTypeId { get; set; }
+		public Guid LeaveTypeId { get; set; }
 		public int Period { get; set; }
 		public string EmployeeId { get; set; } = string.Empty;
 	}

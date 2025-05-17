@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JobBee.Shared\JobBee.Shared.csproj" />
+    <Folder Include="Enums\" />
   </ItemGroup>
 
 </Project>

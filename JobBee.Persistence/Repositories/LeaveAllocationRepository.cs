@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Persistence.Repositories
 {
-	public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILeaveAllocationRepository
+	public class LeaveAllocationRepository : GenericRepository<LeaveAllocation, Guid>, ILeaveAllocationRepository
 	{
 		public LeaveAllocationRepository(JobBeeDatabaseContext context) : base(context)
 		{
@@ -25,7 +25,7 @@ namespace JobBee.Persistence.Repositories
 		public async Task<bool> AllocationExists(string userId, int leaveTypeId, int period)
 		{
 			return await _context.LeaveAllocations.AnyAsync(q => q.EmployeeId == userId
-										&& q.LeaveTypeId == leaveTypeId
+										&& q.LeaveTypeId.Equals(leaveTypeId)
 										&& q.Period == period);
 		}
 
@@ -49,7 +49,7 @@ namespace JobBee.Persistence.Repositories
 		{
 			var leaveAllocation = await _context.LeaveAllocations
 				.Include(q => q.LeaveType)
-				.FirstOrDefaultAsync(q => q.Id == id);
+				.FirstOrDefaultAsync(q => q.Id.Equals(id));
 
 			return leaveAllocation;
 		}
@@ -57,7 +57,7 @@ namespace JobBee.Persistence.Repositories
 		public async Task<LeaveAllocation> GetUserAllocations(string userId, int leaveTypeId)
 		{
 			return await _context.LeaveAllocations.FirstOrDefaultAsync(q => q.EmployeeId == userId
-										&& q.LeaveTypeId == leaveTypeId);
+										&& q.LeaveTypeId.Equals(leaveTypeId));
 		}
 	}
 }

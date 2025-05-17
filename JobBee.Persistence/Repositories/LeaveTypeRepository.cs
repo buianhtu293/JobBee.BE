@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Persistence.Repositories
 {
-	public class LeaveTypeRepository : GenericRepository<LeaveType>, ILeaveTypeRepository
+	public class LeaveTypeRepository : GenericRepository<LeaveType, Guid>, ILeaveTypeRepository
 	{
 		public LeaveTypeRepository(JobBeeDatabaseContext context) : base(context)
 		{

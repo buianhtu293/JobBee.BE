@@ -7,12 +7,12 @@ using JobBee.Domain.Common;
 
 namespace JobBee.Domain
 {
-	public class LeaveRequest : BaseEntity
+	public class LeaveRequest : BaseEntity<Guid>
 	{
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public LeaveType LeaveType { get; set; }
-        public int LeaveTypeId { get; set; }
+        public Guid LeaveTypeId { get; set; }
         public DateTime DateRequest { get; set; }
         public string? RequestComments { get; set; }
         public bool? Approved { get; set; }

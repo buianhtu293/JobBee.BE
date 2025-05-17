@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Persistence.Repositories
 {
-	public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveRequestRepository
+	public class LeaveRequestRepository : GenericRepository<LeaveRequest, Guid>, ILeaveRequestRepository
 	{
 		public LeaveRequestRepository(JobBeeDatabaseContext context) : base(context)
 		{
@@ -37,7 +37,7 @@ namespace JobBee.Persistence.Repositories
 		{
 			var leaveRequest = await _context.LeaveRequests
 				.Include(q => q.LeaveType)
-				.FirstOrDefaultAsync(q => q.Id == id);
+				.FirstOrDefaultAsync(q => q.Id.Equals(id));
 			return leaveRequest;
 		}
 	}

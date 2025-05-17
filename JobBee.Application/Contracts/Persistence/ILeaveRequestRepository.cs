@@ -7,7 +7,7 @@ using JobBee.Domain;
 
 namespace JobBee.Application.Contracts.Persistence
 {
-	public interface ILeaveRequestRepository : IGenericRepository<LeaveRequest>
+	public interface ILeaveRequestRepository : IGenericRepository<LeaveRequest, Guid>
 	{
 		Task<LeaveRequest> GetLeaveRequestWithDetails(int id);
 		Task<List<LeaveRequest>> GetLeaveRequestsWithDetails();

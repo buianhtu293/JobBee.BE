@@ -7,7 +7,7 @@ using JobBee.Domain;
 
 namespace JobBee.Application.Contracts.Persistence
 {
-	public interface ILeaveTypeRepository : IGenericRepository<LeaveType>
+	public interface ILeaveTypeRepository : IGenericRepository<LeaveType, Guid>
 	{
 		Task<bool> IsLeaveTypeUnique(string name);
 	}

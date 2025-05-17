@@ -31,7 +31,7 @@ namespace JobBee.Api.Controllers
 
 		// GET api/<LeaveTypesController>/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<LeaveTypeDetailDto>> Get(int id)
+		public async Task<ActionResult<LeaveTypeDetailDto>> Get(Guid id)
 		{
 			var leaveType = await _mediator.Send(new GetLeaveTypeDetailsQuery(id));
 			return leaveType;
@@ -48,7 +48,7 @@ namespace JobBee.Api.Controllers
 		}
 
 		// PUT api/<LeaveTypesController>/5
-		[HttpPut("{id}")]
+		[HttpPut]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
@@ -63,7 +63,7 @@ namespace JobBee.Api.Controllers
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<ActionResult> Delete(int id)
+		public async Task<ActionResult> Delete(Guid id)
 		{
 			var command = new DeleteLeaveTypeCommand { Id = id };
 			await _mediator.Send(command);

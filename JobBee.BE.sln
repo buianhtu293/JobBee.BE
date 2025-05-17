@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBee.Application", "JobBe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBee.Persistence", "JobBee.Persistence\JobBee.Persistence.csproj", "{F36EB273-59FA-42C8-A019-7A954025F7D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBee.Infrastructure", "JobBee.Infrastructure\JobBee.Infrastructure.csproj", "{9C57B197-2D3F-46F8-B468-E11DDB889384}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBee.Infrastructure", "JobBee.Infrastructure\JobBee.Infrastructure.csproj", "{9C57B197-2D3F-46F8-B468-E11DDB889384}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBee.Api", "JobBee.Api\JobBee.Api.csproj", "{86B1C8BE-9D08-4837-B9A9-B30B293C1076}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBee.Api", "JobBee.Api\JobBee.Api.csproj", "{86B1C8BE-9D08-4837-B9A9-B30B293C1076}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBee.Shared", "JobBee.Shared\JobBee.Shared.csproj", "{553EC25E-D3A3-4715-9813-4EF0D2A70CCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{86B1C8BE-9D08-4837-B9A9-B30B293C1076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B1C8BE-9D08-4837-B9A9-B30B293C1076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B1C8BE-9D08-4837-B9A9-B30B293C1076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{553EC25E-D3A3-4715-9813-4EF0D2A70CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{553EC25E-D3A3-4715-9813-4EF0D2A70CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{553EC25E-D3A3-4715-9813-4EF0D2A70CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{553EC25E-D3A3-4715-9813-4EF0D2A70CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{F36EB273-59FA-42C8-A019-7A954025F7D1} = {40DD3FF3-C0C8-4BA9-AE95-BB90FAACC503}
 		{9C57B197-2D3F-46F8-B468-E11DDB889384} = {40DD3FF3-C0C8-4BA9-AE95-BB90FAACC503}
 		{86B1C8BE-9D08-4837-B9A9-B30B293C1076} = {0B9FD859-3F41-427F-A8ED-80849C3F7614}
+		{553EC25E-D3A3-4715-9813-4EF0D2A70CCB} = {3766DC07-FDA2-44F2-9F9B-7274B5E53100}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0EB491B-6DDD-483A-9629-D0D2BF58AF5C}

@@ -32,7 +32,7 @@ namespace JobBee.Persistence.DatabaseContext
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
-			foreach(var entry in base.ChangeTracker.Entries<BaseEntity>()
+			foreach(var entry in base.ChangeTracker.Entries<BaseEntity<Guid>>()
 				.Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
 			{
 				entry.Entity.DateModified = DateTime.Now;

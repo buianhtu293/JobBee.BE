@@ -13,21 +13,25 @@ using MediatR;
 
 namespace JobBee.Application.Features.LeaveType.Commands.CreateLeaveType
 {
-	public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, int>
+	public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeCommand, Guid>
 	{
 		private readonly IMapper _mapper;
 		private readonly ILeaveTypeRepository _leaveTypeRepository;
+		private readonly IUnitOfWork<Domain.LeaveType, Guid> _unitOfWork;
 		private readonly IAppLogger<GetLeaveTypeQueryHandler> _logger;
 
 		public CreateLeaveTypeCommandHandler(IMapper mapper, 
 			ILeaveTypeRepository leaveTypeRepository,
+			IUnitOfWork<Domain.LeaveType, Guid> unitOfWork,
 			IAppLogger<GetLeaveTypeQueryHandler> logger)
         {
 			this._mapper = mapper;
 			this._leaveTypeRepository = leaveTypeRepository;
+			this._unitOfWork = unitOfWork;
+			this._logger = logger;
 		}
 
-        public async Task<int> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateLeaveTypeCommand request, CancellationToken cancellationToken)
 		{
 			//Validate incomming data
 			var validator = new CreateLeaveTypeCommandValidator(_leaveTypeRepository);
@@ -43,7 +47,10 @@ namespace JobBee.Application.Features.LeaveType.Commands.CreateLeaveType
 			var leaveTypeToCreate = _mapper.Map<Domain.LeaveType>(request);
 
 			//Add to database
-			await _leaveTypeRepository.CreateAsync(leaveTypeToCreate);
+			_leaveTypeRepository.Insert(leaveTypeToCreate);
+
+			//Save Change
+			await _unitOfWork.SaveChangesAsync();
 
 			//Return record id
 			return leaveTypeToCreate.Id;

@@ -24,11 +24,9 @@ namespace JobBee.Persistence.Migrations
 
             modelBuilder.Entity("JobBee.Domain.LeaveAllocation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
@@ -40,8 +38,8 @@ namespace JobBee.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LeaveTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LeaveTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("NumberOfDays")
                         .HasColumnType("int");
@@ -58,11 +56,9 @@ namespace JobBee.Persistence.Migrations
 
             modelBuilder.Entity("JobBee.Domain.LeaveRequest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("Approved")
                         .HasColumnType("bit");
@@ -82,8 +78,8 @@ namespace JobBee.Persistence.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LeaveTypeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("LeaveTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RequestComments")
                         .HasColumnType("nvarchar(max)");
@@ -104,11 +100,9 @@ namespace JobBee.Persistence.Migrations
 
             modelBuilder.Entity("JobBee.Domain.LeaveType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime2");
@@ -121,22 +115,11 @@ namespace JobBee.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("LeaveTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2025, 5, 15, 9, 6, 37, 700, DateTimeKind.Local).AddTicks(5248),
-                            DateModified = new DateTime(2025, 5, 15, 9, 6, 37, 700, DateTimeKind.Local).AddTicks(5260),
-                            DefaultDays = 10,
-                            Name = "Vacation"
-                        });
                 });
 
             modelBuilder.Entity("JobBee.Domain.LeaveAllocation", b =>

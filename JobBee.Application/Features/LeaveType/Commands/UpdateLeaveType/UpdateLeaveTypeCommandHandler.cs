@@ -16,14 +16,17 @@ namespace JobBee.Application.Features.LeaveType.Commands.UpdateLeaveType
 		private readonly IMapper _mapper;
 		private readonly ILeaveTypeRepository _leaveTypeRepository;
 		private readonly IAppLogger<UpdateLeaveTypeCommandHandler> _logger;
+		private readonly IUnitOfWork<Domain.LeaveType, Guid> _unitOfWork;
 
 		public UpdateLeaveTypeCommandHandler(IMapper mapper, 
 			ILeaveTypeRepository leaveTypeRepository,
-			IAppLogger<UpdateLeaveTypeCommandHandler> logger)
+			IAppLogger<UpdateLeaveTypeCommandHandler> logger,
+			IUnitOfWork<Domain.LeaveType, Guid> unitOfWork)
         {
 			this._mapper = mapper;
 			this._leaveTypeRepository = leaveTypeRepository;
 			this._logger = logger;
+			this._unitOfWork = unitOfWork;
 		}
 
         public async Task<Unit> Handle(UpdateLeaveTypeCommand request, CancellationToken cancellationToken)
@@ -42,7 +45,10 @@ namespace JobBee.Application.Features.LeaveType.Commands.UpdateLeaveType
 			var leaveTypeToUpdate = _mapper.Map<Domain.LeaveType>(request);
 
 			//Update to database
-			await _leaveTypeRepository.UpdateAsync(leaveTypeToUpdate);
+			_leaveTypeRepository.Update(leaveTypeToUpdate);
+
+			//Save Change
+			_unitOfWork.SaveChangesAsync();
 
 			//Return record id
 			return Unit.Value;

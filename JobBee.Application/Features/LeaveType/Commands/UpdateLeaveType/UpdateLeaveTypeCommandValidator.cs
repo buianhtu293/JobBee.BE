@@ -34,15 +34,15 @@ namespace JobBee.Application.Features.LeaveType.Commands.UpdateLeaveType
 
 			this._leaveTypeRepository = leaveTypeRepository;
 		}
-		private async Task<bool> LeaveTypeMustExist(int id, CancellationToken arg2)
+		private async Task<bool> LeaveTypeMustExist(Guid id, CancellationToken arg2)
 		{
-			var leaveType = await _leaveTypeRepository.GetByIdAsync(id);
+			var leaveType = _leaveTypeRepository.GetById(id);
 			return leaveType != null;
 		}
 
 		private async Task<bool> LeaveTypeNameUnique(UpdateLeaveTypeCommand command, CancellationToken token)
 		{
-			var leaveType = await _leaveTypeRepository.GetByIdAsync(command.Id);
+			var leaveType = _leaveTypeRepository.GetById(command.Id);
 			if (leaveType.Name.Equals(command.Name))
 			{
 				return true;

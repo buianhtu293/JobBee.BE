@@ -24,7 +24,7 @@ namespace JobBee.Application.Features.LeaveType.Queries.GetLeaveTypeDetails
 		public async Task<LeaveTypeDetailDto> Handle(GetLeaveTypeDetailsQuery request, CancellationToken cancellationToken)
 		{
 			//Query the database
-			var leaveTypes = await _leaveTypeRepository.GetByIdAsync(request.Id);
+			var leaveTypes = _leaveTypeRepository.GetById(request.Id);
 
 			//Verify that record exists
 			if (leaveTypes == null)
