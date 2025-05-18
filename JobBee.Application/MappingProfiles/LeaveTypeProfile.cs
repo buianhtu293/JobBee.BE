@@ -14,12 +14,19 @@ namespace JobBee.Application.MappingProfiles
 {
 	public class LeaveTypeProfile : Profile
 	{
-        public LeaveTypeProfile()
-        {
-            CreateMap<LeaveTypeDto, LeaveType>().ReverseMap();
-            CreateMap<LeaveType, LeaveTypeDetailDto>();
-            CreateMap<CreateLeaveTypeCommand, LeaveType>();
-            CreateMap<UpdateLeaveTypeCommand, LeaveType>();
-        }
-    }
+		public LeaveTypeProfile()
+		{
+			CreateMap<LeaveType, LeaveTypeDto>()
+			.ForMember(dest => dest.DateCreated,
+				opt => opt.MapFrom(src =>
+					src.DateCreated.HasValue ? new DateTimeOffset(src.DateCreated.Value).ToUnixTimeSeconds() : (long?)null))
+			.ForMember(dest => dest.DateModified,
+				opt => opt.MapFrom(src =>
+					src.DateModified.HasValue ? new DateTimeOffset(src.DateModified.Value).ToUnixTimeSeconds() : (long?)null));
+
+			CreateMap<LeaveType, LeaveTypeDetailDto>();
+			CreateMap<CreateLeaveTypeCommand, LeaveType>();
+			CreateMap<UpdateLeaveTypeCommand, LeaveType>();
+		}
+	}
 }

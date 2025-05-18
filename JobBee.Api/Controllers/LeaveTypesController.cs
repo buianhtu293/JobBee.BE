@@ -3,6 +3,7 @@ using JobBee.Application.Features.LeaveType.Commands.DeleteLeaveType;
 using JobBee.Application.Features.LeaveType.Commands.UpdateLeaveType;
 using JobBee.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 using JobBee.Application.Features.LeaveType.Queries.GetLeaveTypeDetails;
+using JobBee.Application.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace JobBee.Api.Controllers
 
         // GET: api/<LeaveTypesController>
         [HttpGet]
-		public async Task<List<LeaveTypeDto>> Get()
+		public async Task<ApiResponse<List<LeaveTypeDto>>> Get()
 		{
 			var leaveTypes = await _mediator.Send(new GetLeaveTypeQuery());
 			return leaveTypes;

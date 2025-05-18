@@ -17,10 +17,19 @@ namespace JobBee.Persistence
 		public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
 			IConfiguration configuration)
 		{
+			#region Config SQL Server
+			//services.AddDbContext<JobBeeDatabaseContext>(options =>
+			//{
+			//	options.UseSqlServer(configuration.GetConnectionString("JobBeeDatabaseConnectionString"));
+			//});
+			#endregion
+
+			#region Config PostgreSQL
 			services.AddDbContext<JobBeeDatabaseContext>(options =>
 			{
-				options.UseSqlServer(configuration.GetConnectionString("JobBeeDatabaseConnectionString"));
+				options.UseNpgsql(configuration.GetConnectionString("JobBeeDatabaseConnectionString"));
 			});
+			#endregion
 
 			services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 			services.AddScoped(typeof(IUnitOfWork<,>), typeof(UnitOfWork<,>));

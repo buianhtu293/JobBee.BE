@@ -186,8 +186,8 @@ namespace JobBee.Persistence.Repositories
 		public TEntity Update(TEntity entity)
 		{
 			var trackedEntity = _context.Set<TEntity>().Local
-					.FirstOrDefault(e => _context.Entry(e).Property("Id").CurrentValue.Equals(
-						_context.Entry(entity).Property("Id").CurrentValue));
+	.FirstOrDefault(e => _context.Entry(e).Property("Id").CurrentValue.Equals(
+		_context.Entry(entity).Property("Id").CurrentValue));
 
 			if (trackedEntity != null)
 			{

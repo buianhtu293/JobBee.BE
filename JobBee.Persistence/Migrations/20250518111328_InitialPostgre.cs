@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace JobBee.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialPostgre : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,11 +15,11 @@ namespace JobBee.Persistence.Migrations
                 name: "LeaveTypes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DefaultDays = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    DefaultDays = table.Column<int>(type: "integer", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,13 +30,13 @@ namespace JobBee.Persistence.Migrations
                 name: "LeaveAllocations",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NumberOfDays = table.Column<int>(type: "int", nullable: false),
-                    LeaveTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Period = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    NumberOfDays = table.Column<int>(type: "integer", nullable: false),
+                    LeaveTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Period = table.Column<int>(type: "integer", nullable: false),
+                    EmployeeId = table.Column<string>(type: "text", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,17 +53,17 @@ namespace JobBee.Persistence.Migrations
                 name: "LeaveRequests",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LeaveTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateRequest = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RequestComments = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Approved = table.Column<bool>(type: "bit", nullable: true),
-                    Cancelled = table.Column<bool>(type: "bit", nullable: false),
-                    RequestingEmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    LeaveTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DateRequest = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestComments = table.Column<string>(type: "text", nullable: true),
+                    Approved = table.Column<bool>(type: "boolean", nullable: true),
+                    Cancelled = table.Column<bool>(type: "boolean", nullable: false),
+                    RequestingEmployeeId = table.Column<string>(type: "text", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {

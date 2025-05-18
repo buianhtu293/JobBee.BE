@@ -35,11 +35,11 @@ namespace JobBee.Persistence.DatabaseContext
 			foreach(var entry in base.ChangeTracker.Entries<BaseEntity<Guid>>()
 				.Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
 			{
-				entry.Entity.DateModified = DateTime.Now;
+				entry.Entity.DateModified = DateTime.UtcNow;
 
 				if (entry.State == EntityState.Added)
 				{
-					entry.Entity.DateCreated = DateTime.Now;
+					entry.Entity.DateCreated = DateTime.UtcNow;
 				}
 			}
 
