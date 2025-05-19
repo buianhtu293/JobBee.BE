@@ -20,6 +20,7 @@ namespace JobBee.Persistence.DatabaseContext
         public DbSet<LeaveType> LeaveTypes { get; set; }
         public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
 		public DbSet<LeaveRequest> LeaveRequests { get; set; }
+		public DbSet<Test> Tests { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

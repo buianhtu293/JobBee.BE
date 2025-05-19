@@ -1,3 +1,4 @@
+using JobBee.Api.Extentions;
 using JobBee.Api.Middleware;
 using JobBee.Application;
 using JobBee.Infrastructure;
@@ -39,6 +40,7 @@ namespace JobBee.Api
 			{
 				app.UseSwagger();
 				app.UseSwaggerUI();
+				app.ApplyExtensions();
 			}
 
 			app.UseHttpsRedirection();
