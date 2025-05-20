@@ -13,6 +13,8 @@ services:
       - ./.containers/products-db:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - jobbee
   
   jobbee.api:
     depends_on:
@@ -25,3 +27,37 @@ services:
     ports:
       - "5000:5000"
       - "5001:5001"
+    networks:
+      - jobbee
+
+  elasticsearch:
+    container_name: els
+    image: elasticsearch:9.0.1
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - jobbee
+
+  kibana:
+    container_name: kibana
+    image: kibana:9.0.1
+    ports:
+      - "5600:5600"
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    networks:
+      - jobbee
+
+networks:
+  jobbee:
+    driver: bridge
+    
+volumes:
+  elasticsearch-data:
