@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>4dd9b014-aa6b-46a0-a4a4-64eaea0084b5</ProjectGuid>
+    <ProjectGuid>19b9cb79-954d-48f8-86ce-0b0bc340c834</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>jobbee.api</DockerServiceName>

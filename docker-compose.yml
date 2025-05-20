@@ -8,17 +8,17 @@ services:
       context: .
       dockerfile: JobBee.Api/Dockerfile
     ports:
-        - "5030:5030"
-        - "7006:7006"
+        - "5000:5000"
+        - "5001:5001"
 
   jobbee.database:
     image: postgres:latest
     container_name: jobbee.database
     environment:
-        - POSTGRES_DB=JobBee
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=JobBee
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
     volumes:
-        - ./.Containers/JobBeeDB:/var/lib/postgresql/data
+      - ./.containers/products-db:/var/lib/postgresql/data
     ports:
-        - 5432:5432
+      - 5432:5432
