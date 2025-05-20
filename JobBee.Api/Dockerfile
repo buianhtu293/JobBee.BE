@@ -1,4 +1,4 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
@@ -24,7 +24,15 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./JobBee.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
 WORKDIR /app
+# Install EF Core tools
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/home/app/.dotnet/tools"
+# Copy published files
 COPY --from=publish /app/publish .
+# Copy the entire solution for EF Core migrations
+COPY --from=build /src /app/src
+# Run migrations before starting the app
+RUN dotnet ef database update --project /app/src/JobBee.Persistence/JobBee.Persistence.csproj --startup-project /app/src/JobBee.Api/JobBee.Api.csproj
 ENTRYPOINT ["dotnet", "JobBee.Api.dll"]

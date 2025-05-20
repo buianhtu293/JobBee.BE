@@ -1,18 +1,9 @@
 version: '3.4'
 
 services:
-  jobbee.api:
-    image: ${DOCKER_REGISTRY-}jobbeeapi
-    container_name: jobbee.api
-    build:
-      context: .
-      dockerfile: JobBee.Api/Dockerfile
-    ports:
-        - "5000:5000"
-        - "5001:5001"
-
   jobbee.database:
-    image: postgres:latest
+    hostname: jobbee.database
+    image: postgres:17.5-alpine3.21
     container_name: jobbee.database
     environment:
       - POSTGRES_DB=JobBee
@@ -21,4 +12,16 @@ services:
     volumes:
       - ./.containers/products-db:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5433:5432"
+  
+  jobbee.api:
+    depends_on:
+      - jobbee.database
+    image: ${DOCKER_REGISTRY-}jobbeeapi
+    container_name: jobbee.api
+    build:
+      context: .
+      dockerfile: JobBee.Api/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
