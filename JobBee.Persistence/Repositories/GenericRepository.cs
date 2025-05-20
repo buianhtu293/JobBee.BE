@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using JobBee.Application.Contracts.Persistence;
-using JobBee.Domain.Common;
 using JobBee.Persistence.DatabaseContext;
 using JobBee.Shared.Paginators;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +11,11 @@ namespace JobBee.Persistence.Repositories
 	/// </summary>
 	/// <typeparam name="TEntity">The type of entity this repository works with. Must be a class inheriting DomainEntity</typeparam>
 	/// <typeparam name="TPrimaryKey">The type of primary key</typeparam>
-	public class GenericRepository<TEntity, TPrimaryKey> : IGenericRepository<TEntity, TPrimaryKey>, IDisposable where TEntity : BaseEntity<TPrimaryKey>
+	public class GenericRepository<TEntity, TPrimaryKey> : IGenericRepository<TEntity, TPrimaryKey>, IDisposable where TEntity : class
 	{
-		protected readonly JobBeeDatabaseContext _context;
+		protected readonly JobBeeContext _context;
 
-		public GenericRepository(JobBeeDatabaseContext context)
+		public GenericRepository(JobBeeContext context)
 		{
 			_context = context;
 		}
@@ -66,20 +60,20 @@ namespace JobBee.Persistence.Repositories
 			return GetAll().FirstOrDefault(predicate);
 		}
 
-		public TEntity? FirstOrDefault(TPrimaryKey id)
-		{
-			return _context.Set<TEntity>().FirstOrDefault(x => x.Id.Equals(id));
-		}
+		//public TEntity? FirstOrDefault(TPrimaryKey id)
+		//{
+		//	return _context.Set<TEntity>().FirstOrDefault(x => x.Id.Equals(id));
+		//}
 
 		public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
 		{
 			return await GetAll().FirstOrDefaultAsync(predicate);
 		}
 
-		public async Task<TEntity?> FirstOrDefaultAsync(TPrimaryKey id)
-		{
-			return await GetAll().FirstOrDefaultAsync(x => x.Id.Equals(id));
-		}
+		//public async Task<TEntity?> FirstOrDefaultAsync(TPrimaryKey id)
+		//{
+		//	return await GetAll().FirstOrDefaultAsync(x => x.Id.Equals(id));
+		//}
 
 		public TEntity? GetById(TPrimaryKey id)
 		{
@@ -135,17 +129,17 @@ namespace JobBee.Persistence.Repositories
 			return _context.Set<TEntity>().Add(entity).Entity;
 		}
 
-		public TPrimaryKey InsertAndGetId(TEntity entity)
-		{
-			var result = _context.Set<TEntity>().Add(entity);
-			return result.Entity.Id;
-		}
+		//public TPrimaryKey InsertAndGetId(TEntity entity)
+		//{
+		//	var result = _context.Set<TEntity>().Add(entity);
+		//	return result.Entity.Id;
+		//}
 
-		public async Task<TPrimaryKey> InsertAndGetIdAsync(TEntity entity)
-		{
-			var result = await _context.Set<TEntity>().AddAsync(entity);
-			return result.Entity.Id;
-		}
+		//public async Task<TPrimaryKey> InsertAndGetIdAsync(TEntity entity)
+		//{
+		//	var result = await _context.Set<TEntity>().AddAsync(entity);
+		//	return result.Entity.Id;
+		//}
 
 		public async Task<TEntity> InsertAsync(TEntity entity)
 		{
@@ -213,7 +207,12 @@ namespace JobBee.Persistence.Repositories
 			else
 			{
 				// If no ordering specified, try to order by primary key
-				query = query.OrderBy(e => e.Id);
+				var param = Expression.Parameter(typeof(TEntity), "e");
+				var idProp = Expression.PropertyOrField(param, "Id");
+				var lambda = Expression.Lambda<Func<TEntity, object>>(
+					Expression.Convert(idProp, typeof(object)), param);
+				query = query.OrderBy(lambda);
+				//query = query.OrderBy(e => e.Id);
 			}
 			var items = await query
 				.Skip((pageIndex - 1) * pageSize)

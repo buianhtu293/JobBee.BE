@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JobBee.Application.Contracts.Persistence;
-using JobBee.Domain.Common;
+﻿using JobBee.Application.Contracts.Persistence;
 using JobBee.Persistence.DatabaseContext;
 
 namespace JobBee.Persistence.Repositories
 {
-	public class UnitOfWork<TEntity, TPrimaryKey>(JobBeeDatabaseContext context) : IUnitOfWork<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
+	public class UnitOfWork<TEntity, TPrimaryKey>(JobBeeContext context) : IUnitOfWork<TEntity, TPrimaryKey> where TEntity : class
 	{
 		private IGenericRepository<TEntity, TPrimaryKey>? _genericRepository;
 

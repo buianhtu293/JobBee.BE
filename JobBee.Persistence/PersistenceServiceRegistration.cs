@@ -25,7 +25,7 @@ namespace JobBee.Persistence
 			#endregion
 
 			#region Config PostgreSQL
-			services.AddDbContext<JobBeeDatabaseContext>(options =>
+			services.AddDbContext<JobBeeContext>(options =>
 			{
 				options.UseNpgsql(configuration.GetConnectionString("JobBeeDatabaseConnectionString"));
 			});
@@ -33,9 +33,8 @@ namespace JobBee.Persistence
 
 			services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 			services.AddScoped(typeof(IUnitOfWork<,>), typeof(UnitOfWork<,>));
-			services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
-			services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
-			services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
+
+			services.AddScoped<ISkillCategoryRepository, SkillCategoryRepository>();
 
 			return services;
 		}

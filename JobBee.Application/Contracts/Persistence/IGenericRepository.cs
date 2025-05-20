@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using JobBee.Domain.Common;
+﻿using System.Linq.Expressions;
 using JobBee.Shared.Paginators;
 
 namespace JobBee.Application.Contracts.Persistence
@@ -15,7 +9,7 @@ namespace JobBee.Application.Contracts.Persistence
 	/// </summary>
 	/// <typeparam name="TEntity">Main Entity type this repository works on</typeparam>
 	/// <typeparam name="TPrimaryKey">Primary key type of the entity</typeparam>
-	public interface IGenericRepository<TEntity, TPrimaryKey> where TEntity : BaseEntity<TPrimaryKey>
+	public interface IGenericRepository<TEntity, TPrimaryKey> where TEntity : class
 	{
 		/// <summary>
 		/// Gets count of all entities in this repository.
@@ -77,7 +71,7 @@ namespace JobBee.Application.Contracts.Persistence
 		/// </summary>
 		/// <param name="id">Primary key of the entity to get</param>
 		/// <returns>Entity or null</returns>
-		TEntity? FirstOrDefault(TPrimaryKey id);
+		//TEntity? FirstOrDefault(TPrimaryKey id);
 
 		/// <summary>
 		/// Gets an entity with given given predicate or null if not found.
@@ -91,7 +85,7 @@ namespace JobBee.Application.Contracts.Persistence
 		/// </summary>
 		/// <param name="id">Primary key of the entity to get</param>
 		/// <returns>Entity or null</returns>
-		Task<TEntity?> FirstOrDefaultAsync(TPrimaryKey id);
+		//Task<TEntity?> FirstOrDefaultAsync(TPrimaryKey id);
 
 		/// <summary>
 		/// Gets an entity with given primary key.
