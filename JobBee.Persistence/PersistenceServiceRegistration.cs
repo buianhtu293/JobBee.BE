@@ -27,7 +27,7 @@ namespace JobBee.Persistence
 			#region Config PostgreSQL
 			services.AddDbContext<JobBeeContext>(options =>
 			{
-				options.UseNpgsql(configuration.GetConnectionString("JobBeeDatabaseConnectionString"));
+				options.UseNpgsql(configuration.GetConnectionString("JobBeeDatabaseConnectionString"));	
 			});
 			#endregion
 
