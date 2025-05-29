@@ -39,7 +39,8 @@ services:
       - elasticsearch-data:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=l3lack0ver9669
     networks:
       - jobbee
 
@@ -51,9 +52,11 @@ services:
     depends_on:
       - elasticsearch
     environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://els:9200
+      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbjpwNklwZzJLWFFRVzFBbVBsVUVWVFVB
     networks:
       - jobbee
+
 
 networks:
   jobbee:

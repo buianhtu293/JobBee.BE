@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
 using JobBee.Domain.Config;
 using JobBee.Shared.Paginators;
 using Microsoft.Extensions.Options;
@@ -16,7 +17,7 @@ namespace JobBee.Application.Services
 			_elasticsearchSettings = optionsMonitor.Value;
 
 			var settings = new ElasticsearchClientSettings(new Uri(_elasticsearchSettings.Url))
-				//.Authentication()
+				.Authentication(new BasicAuthentication(_elasticsearchSettings.Username, _elasticsearchSettings.Password))
 				.DefaultIndex(_elasticsearchSettings.DefaultIndex);
 
 			_elasticsearchClient = new ElasticsearchClient(settings);
