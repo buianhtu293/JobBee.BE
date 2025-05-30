@@ -23,8 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Features\Company\Queries\" />
-    <Folder Include="Features\Job\Commands\" />
     <Folder Include="Features\SkillCategory\Commands\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

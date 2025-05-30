@@ -1,6 +1,6 @@
 ﻿using JobBee.Shared.Paginators;
 
-namespace JobBee.Application.Services
+namespace JobBee.Application.Services.ElasticSearchService
 {
 	public interface IElasticSearchService<TModel> where TModel : class
 	{
