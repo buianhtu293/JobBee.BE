@@ -1,6 +1,4 @@
-﻿using JobBee.Api.Models;
-
-namespace JobBee.Api.Models;
+﻿namespace JobBee.Domain.Entities;
 
 public partial class SkillCategory
 {

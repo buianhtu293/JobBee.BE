@@ -1,4 +1,5 @@
 ﻿using JobBee.Api.Models;
+using JobBee.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Persistence.DatabaseContext;
