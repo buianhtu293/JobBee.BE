@@ -1,4 +1,5 @@
 ﻿using JobBee.Api.Models;
+using JobBee.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Persistence.DatabaseContext;
@@ -104,8 +105,8 @@ public partial class JobBeeContext : DbContext
 
 	public virtual DbSet<WebsiteReview> WebsiteReviews { get; set; }
 
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		=> optionsBuilder.UseNpgsql("Name=ConnectionStrings:JobBeeDatabaseConnectionString");
+	//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	//	=> optionsBuilder.UseNpgsql("Name=ConnectionStrings:JobBeeDatabaseConnectionString");
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

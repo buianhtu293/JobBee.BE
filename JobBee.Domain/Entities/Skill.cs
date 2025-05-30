@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using JobBee.Api.Models;
+﻿using JobBee.Api.Models;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
 public partial class Skill
 {

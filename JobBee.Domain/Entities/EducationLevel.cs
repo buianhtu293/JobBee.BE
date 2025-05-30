@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JobBee.Domain.Entities;
 
 namespace JobBee.Api.Models;
 

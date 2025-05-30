@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace JobBee.Api.Models;
+﻿namespace JobBee.Domain.Entities;
 
 public partial class ExperienceLevel
 {
