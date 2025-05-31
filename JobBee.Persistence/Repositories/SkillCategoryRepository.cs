@@ -1,5 +1,4 @@
-﻿using JobBee.Api.Models;
-using JobBee.Application.Contracts.Persistence;
+﻿using JobBee.Application.Contracts.Persistence;
 using JobBee.Domain.Entities;
 using JobBee.Persistence.DatabaseContext;
 

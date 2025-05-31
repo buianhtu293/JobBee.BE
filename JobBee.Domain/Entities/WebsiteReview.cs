@@ -1,22 +1,33 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("website_review")]
 public partial class WebsiteReview
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid UserId { get; set; }
+	[Column("user_id")]
+	public Guid UserId { get; set; }
 
-    public int Rating { get; set; }
+	[Column("rating")]
+	public int Rating { get; set; }
 
-    public string? ReviewText { get; set; }
+	[Column("review_text")]
+	public string? ReviewText { get; set; }
 
-    public bool? IsFeatured { get; set; }
+	[Column("is_featured")]
+	public bool? IsFeatured { get; set; }
 
-    public string? Status { get; set; }
+	[Column("status")]
+	public string? Status { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual User User { get; set; } = null!;
+	public virtual User User { get; set; } = null!;
 }

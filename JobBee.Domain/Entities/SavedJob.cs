@@ -1,16 +1,23 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("saved_job")]
 public partial class SavedJob
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid CandidateId { get; set; }
+	[Column("candidate_id")]
+	public Guid CandidateId { get; set; }
 
-    public Guid JobId { get; set; }
+	[Column("job_id")]
+	public Guid JobId { get; set; }
 
-    public DateTime? SavedAt { get; set; }
+	[Column("saved_at")]
+	public DateTime? SavedAt { get; set; }
 
-    public virtual Candidate Candidate { get; set; } = null!;
+	public virtual Candidate Candidate { get; set; } = null!;
 
-    public virtual Job Job { get; set; } = null!;
+	public virtual Job Job { get; set; } = null!;
 }

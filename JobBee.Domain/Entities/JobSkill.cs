@@ -1,20 +1,26 @@
-﻿using JobBee.Api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobBee.Domain.Entities;
 
+[Table("job_skill")]
 public partial class JobSkill
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid JobId { get; set; }
+	[Column("job_id")]
+	public Guid JobId { get; set; }
 
-    public Guid SkillId { get; set; }
+	[Column("skill_id")]
+	public Guid SkillId { get; set; }
 
-    public bool? IsRequired { get; set; }
+	[Column("is_required")]
+	public bool? IsRequired { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public virtual Job Job { get; set; } = null!;
+	public virtual Job Job { get; set; } = null!;
 
-    public virtual Skill Skill { get; set; } = null!;
+	public virtual Skill Skill { get; set; } = null!;
 }

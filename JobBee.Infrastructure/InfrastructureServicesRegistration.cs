@@ -1,7 +1,7 @@
 ﻿using JobBee.Application.Contracts.Email;
 using JobBee.Application.Contracts.Logging;
+using JobBee.Application.ElasticSearchService;
 using JobBee.Application.Models.Email;
-using JobBee.Application.Services.ElasticSearchService;
 using JobBee.Domain.Config;
 using JobBee.Infrastructure.EmailService;
 using JobBee.Infrastructure.Logging;
@@ -17,8 +17,6 @@ namespace JobBee.Infrastructure
 			services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-			services.Configure<ElasticSearchSettings>(configuration.GetSection("ElasticSearchSettings"));
-			services.AddSingleton(typeof(IElasticSearchService<>), typeof(ElasticSearchService<>));
 			return services;
 		}
 	}

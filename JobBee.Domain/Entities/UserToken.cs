@@ -1,14 +1,21 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("user_token")]
 public partial class UserToken
 {
-    public Guid UserId { get; set; }
+	[Column("user_id")]
+	public Guid UserId { get; set; }
 
-    public string LoginProvider { get; set; } = null!;
+	[Column("login_provider")]
+	public string LoginProvider { get; set; } = null!;
 
-    public string Name { get; set; } = null!;
+	[Column("name")]
+	public string Name { get; set; } = null!;
 
-    public string? Value { get; set; }
+	[Column("value")]
+	public string? Value { get; set; }
 
-    public virtual User User { get; set; } = null!;
+	public virtual User User { get; set; } = null!;
 }

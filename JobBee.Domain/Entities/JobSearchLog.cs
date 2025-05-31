@@ -1,32 +1,43 @@
-﻿using JobBee.Api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobBee.Domain.Entities;
 
+[Table("job_search_log")]
 public partial class JobSearchLog
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid? UserId { get; set; }
+	[Column("user_id")]
+	public Guid? UserId { get; set; }
 
-    public string? SearchKeyword { get; set; }
+	[Column("search_keyword")]
+	public string? SearchKeyword { get; set; }
 
-    public string? Location { get; set; }
+	[Column("location")]
+	public string? Location { get; set; }
 
-    public Guid? JobCategoryId { get; set; }
+	[Column("job_category_id")]
+	public Guid? JobCategoryId { get; set; }
 
-    public Guid? JobTypeId { get; set; }
+	[Column("job_type_id")]
+	public Guid? JobTypeId { get; set; }
 
-    public decimal? MinSalary { get; set; }
+	[Column("min_salary")]
+	public decimal? MinSalary { get; set; }
 
-    public decimal? MaxSalary { get; set; }
+	[Column("max_salary")]
+	public decimal? MaxSalary { get; set; }
 
-    public int? ResultsCount { get; set; }
+	[Column("results_count")]
+	public int? ResultsCount { get; set; }
 
-    public DateTime? SearchDate { get; set; }
+	[Column("search_date")]
+	public DateTime? SearchDate { get; set; }
 
-    public virtual JobCategory? JobCategory { get; set; }
+	public virtual JobCategory? JobCategory { get; set; }
 
-    public virtual JobType? JobType { get; set; }
+	public virtual JobType? JobType { get; set; }
 
-    public virtual User? User { get; set; }
+	public virtual User? User { get; set; }
 }

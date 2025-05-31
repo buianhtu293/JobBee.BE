@@ -1,12 +1,15 @@
-﻿using JobBee.Api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobBee.Domain.Entities;
 
+[Table("company_size")]
 public partial class CompanySize
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string SizeRange { get; set; } = null!;
+	[Column("size_range")]
+	public string SizeRange { get; set; } = null!;
 
-    public virtual ICollection<Employer> Employers { get; set; } = new List<Employer>();
+	public virtual ICollection<Employer> Employers { get; set; } = new List<Employer>();
 }

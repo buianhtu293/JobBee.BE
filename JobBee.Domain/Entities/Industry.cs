@@ -1,10 +1,15 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("industry")]
 public partial class Industry
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string IndustryName { get; set; } = null!;
+	[Column("industry_name")]
+	public string IndustryName { get; set; } = null!;
 
-    public virtual ICollection<Employer> Employers { get; set; } = new List<Employer>();
+	public virtual ICollection<Employer> Employers { get; set; } = new List<Employer>();
 }

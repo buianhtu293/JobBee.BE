@@ -1,18 +1,22 @@
-﻿using JobBee.Api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobBee.Domain.Entities;
 
+[Table("skill")]
 public partial class Skill
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string SkillName { get; set; } = null!;
+	[Column("skill_name")]
+	public string SkillName { get; set; } = null!;
 
-    public Guid? CategoryId { get; set; }
+	[Column("category_id")]
+	public Guid? CategoryId { get; set; }
 
-    public virtual ICollection<CandidateSkill> CandidateSkills { get; set; } = new List<CandidateSkill>();
+	public virtual ICollection<CandidateSkill> CandidateSkills { get; set; } = new List<CandidateSkill>();
 
-    public virtual SkillCategory? Category { get; set; }
+	public virtual SkillCategory? Category { get; set; }
 
-    public virtual ICollection<JobSkill> JobSkills { get; set; } = new List<JobSkill>();
+	public virtual ICollection<JobSkill> JobSkills { get; set; } = new List<JobSkill>();
 }
