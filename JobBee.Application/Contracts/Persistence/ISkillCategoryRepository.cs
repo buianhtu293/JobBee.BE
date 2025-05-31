@@ -1,5 +1,4 @@
-﻿using JobBee.Api.Models;
-using JobBee.Domain.Entities;
+﻿using JobBee.Domain.Entities;
 
 namespace JobBee.Application.Contracts.Persistence
 {

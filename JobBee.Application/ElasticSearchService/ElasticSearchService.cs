@@ -4,7 +4,7 @@ using JobBee.Domain.Config;
 using JobBee.Shared.Paginators;
 using Microsoft.Extensions.Options;
 
-namespace JobBee.Application.Services.ElasticSearchService
+namespace JobBee.Application.ElasticSearchService
 {
 	public class ElasticSearchService<TModel> : IElasticSearchService<TModel> where TModel : class
 	{

@@ -1,18 +1,27 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("employer_benefit")]
 public partial class EmployerBenefit
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid EmployerId { get; set; }
+	[Column("employer_id")]
+	public Guid EmployerId { get; set; }
 
-    public string BenefitName { get; set; } = null!;
+	[Column("benefit_name")]
+	public string BenefitName { get; set; } = null!;
 
-    public string? BenefitDescription { get; set; }
+	[Column("benefit_description")]
+	public string? BenefitDescription { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual Employer Employer { get; set; } = null!;
+	public virtual Employer Employer { get; set; } = null!;
 }

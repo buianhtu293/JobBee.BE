@@ -1,32 +1,44 @@
-﻿using JobBee.Api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobBee.Domain.Entities;
 
+[Table("candidate_education")]
 public partial class CandidateEducation
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid CandidateId { get; set; }
+	[Column("candidate_id")]
+	public Guid CandidateId { get; set; }
 
-    public string InstitutionName { get; set; } = null!;
+	[Column("institution_name")]
+	public string InstitutionName { get; set; } = null!;
 
-    public Guid? EducationLevelId { get; set; }
+	[Column("education_level_id")]
+	public Guid? EducationLevelId { get; set; }
 
-    public string? FieldOfStudy { get; set; }
+	[Column("field_of_study")]
+	public string? FieldOfStudy { get; set; }
 
-    public DateOnly? StartDate { get; set; }
+	[Column("start_date")]
+	public DateOnly? StartDate { get; set; }
 
-    public DateOnly? EndDate { get; set; }
+	[Column("end_date")]
+	public DateOnly? EndDate { get; set; }
 
-    public bool? IsCurrent { get; set; }
+	[Column("is_current")]
+	public bool? IsCurrent { get; set; }
 
-    public string? Description { get; set; }
+	[Column("description")]
+	public string? Description { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual Candidate Candidate { get; set; } = null!;
+	public virtual Candidate Candidate { get; set; } = null!;
 
-    public virtual EducationLevel? EducationLevel { get; set; }
+	public virtual EducationLevel? EducationLevel { get; set; }
 }

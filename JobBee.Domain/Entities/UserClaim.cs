@@ -1,14 +1,21 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("user_claim")]
 public partial class UserClaim
 {
-    public int Id { get; set; }
+	[Column("id")]
+	public int Id { get; set; }
 
-    public Guid UserId { get; set; }
+	[Column("user_id")]
+	public Guid UserId { get; set; }
 
-    public string? ClaimType { get; set; }
+	[Column("claim_type")]
+	public string? ClaimType { get; set; }
 
-    public string? ClaimValue { get; set; }
+	[Column("claim_value")]
+	public string? ClaimValue { get; set; }
 
-    public virtual User User { get; set; } = null!;
+	public virtual User User { get; set; } = null!;
 }

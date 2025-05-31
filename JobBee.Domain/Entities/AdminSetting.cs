@@ -1,14 +1,22 @@
-﻿namespace JobBee.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace JobBee.Domain.Entities;
+
+[Table("admin_setting")]
 public partial class AdminSetting
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string SettingName { get; set; } = null!;
+	[Column("setting_name")]
+	public string SettingName { get; set; } = null!;
 
-    public string SettingValue { get; set; } = null!;
+	[Column("setting_value")]
+	public string SettingValue { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 }

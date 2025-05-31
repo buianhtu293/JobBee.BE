@@ -29,6 +29,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobBee.Shared", "JobBee.Sha
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{19B9CB79-954D-48F8-86CE-0B0BC340C834}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logstash", "logstash", "{0ECCA1F8-8475-4337-AE3A-D89381950B8E}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		JobBee.Api\Dockerfile = JobBee.Api\Dockerfile
+		logstash.conf = logstash.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

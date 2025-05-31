@@ -1,36 +1,49 @@
-﻿using JobBee.Api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobBee.Domain.Entities;
 
+[Table("job_alert")]
 public partial class JobAlert
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid CandidateId { get; set; }
+	[Column("candidate_id")]
+	public Guid CandidateId { get; set; }
 
-    public string AlertName { get; set; } = null!;
+	[Column("alert_name")]
+	public string AlertName { get; set; } = null!;
 
-    public Guid? JobCategoryId { get; set; }
+	[Column("job_category_id")]
+	public Guid? JobCategoryId { get; set; }
 
-    public Guid? JobTypeId { get; set; }
+	[Column("job_type_id")]
+	public Guid? JobTypeId { get; set; }
 
-    public string? Location { get; set; }
+	[Column("location")]
+	public string? Location { get; set; }
 
-    public decimal? MinSalary { get; set; }
+	[Column("min_salary")]
+	public decimal? MinSalary { get; set; }
 
-    public string? Keywords { get; set; }
+	[Column("keywords")]
+	public string? Keywords { get; set; }
 
-    public string Frequency { get; set; } = null!;
+	[Column("frequency")]
+	public string Frequency { get; set; } = null!;  // e.g., "daily", "weekly"
 
-    public bool? IsActive { get; set; }
+	[Column("is_active")]
+	public bool? IsActive { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual Candidate Candidate { get; set; } = null!;
+	public virtual Candidate Candidate { get; set; } = null!;
 
-    public virtual JobCategory? JobCategory { get; set; }
+	public virtual JobCategory? JobCategory { get; set; }
 
-    public virtual JobType? JobType { get; set; }
+	public virtual JobType? JobType { get; set; }
 }

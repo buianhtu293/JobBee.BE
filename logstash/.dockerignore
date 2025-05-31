@@ -15,7 +15,10 @@
 **/bin
 **/charts
 **/docker-compose*
-**/Dockerfile*
+# bỏ ignore Dockerfile
+!Dockerfile
+# bỏ ignore file logstash.conf
+!logstash.conf
 **/node_modules
 **/npm-debug.log
 **/obj
