@@ -4,7 +4,7 @@ using MediatR;
 
 namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 {
-	public class GetAllJobsQuery : IRequest<ApiResponse<PageResult<GetAllJobsQuery>>>
+	public class GetAllJobsQuery : IRequest<ApiResponse<PageResult<JobDto>>>
 	{
 		public String? Keyword { get; set; } = string.Empty;
 		public String? Location { get; set; }

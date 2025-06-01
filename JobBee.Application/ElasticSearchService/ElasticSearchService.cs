@@ -64,8 +64,8 @@ namespace JobBee.Application.ElasticSearchService
 			Func<SearchRequestDescriptor<TModel>, SearchRequestDescriptor<TModel>>? searchConfig = null,
 			Expression<Func<TModel, TProperty>>? orderBy = null,
 			bool? ascending = true,
-			int? page = 1,
-			int? pageSize = 50)
+			int? page = 0,
+			int? pageSize = 20)
 		{
 			var searchResponse = await _elasticsearchClient.SearchAsync<TModel>(s =>
 			{
@@ -96,10 +96,15 @@ namespace JobBee.Application.ElasticSearchService
 				// Apply pagination
 				if (page.HasValue && pageSize.HasValue)
 				{
-					int from = (page.Value - 1) * pageSize.Value;
+					int from = page.Value;
 					s.From(from).Size(pageSize.Value);
 				}
 			});
+
+			if(!searchResponse.IsValidResponse)
+			{
+				throw new Exception("Invalid");
+			}
 
 			return new PageResult<TModel>(searchResponse.Documents.ToList(), searchResponse.Total, page!.Value, pageSize!.Value);
 		}
