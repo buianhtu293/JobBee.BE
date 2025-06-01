@@ -1,8 +1,12 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Nodes;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 using Elastic.Transport;
 using JobBee.Domain.Config;
 using JobBee.Shared.Paginators;
 using Microsoft.Extensions.Options;
+using System.Linq.Expressions;
+using SearchRequest = Elastic.Clients.Elasticsearch.SearchRequest;
 
 namespace JobBee.Application.ElasticSearchService
 {
@@ -56,36 +60,57 @@ namespace JobBee.Application.ElasticSearchService
 			return response.Source;
 		}
 
-		public async Task<PageResult<TModel>> GetPagination(int page, int pageSize)
+		public async Task<PageResult<TModel>> GetList<TProperty>(
+			Func<SearchRequestDescriptor<TModel>, SearchRequestDescriptor<TModel>>? searchConfig = null,
+			Expression<Func<TModel, TProperty>>? orderBy = null,
+			bool? ascending = true,
+			int? page = 1,
+			int? pageSize = 50)
 		{
-			// Ensure valid page and pageSize values
-			page = Math.Max(1, page); // Ensure page is at least 1
-			pageSize = Math.Max(1, Math.Min(pageSize, 50)); // Enforce pageSize limits (1-50)
-
-			// Calculate the 'from' parameter for Elasticsearch (zero-based)
-			int from = (page - 1) * pageSize;
-
-			// Perform the search query with pagination
-			var response = await _elasticsearchClient.SearchAsync<TModel>(s => s
-				.Indices(_elasticsearchSettings.DefaultIndex)
-				.From(from)
-				.Size(pageSize)
-			);
-
-			// Check if the response is valid
-			if (!response.IsValidResponse)
+			var searchResponse = await _elasticsearchClient.SearchAsync<TModel>(s =>
 			{
-				// Return empty result if the query fails
-				return new PageResult<TModel>(new List<TModel>(), 0, page, pageSize);
-			}
+				s.Indices(_elasticsearchSettings.DefaultIndex);
 
-			// Map the results to PageResult
-			return new PageResult<TModel>(
-				items: response.Documents?.ToList() ?? new List<TModel>(),
-				totalItems: (int)response.Total, // Total hits from Elasticsearch
-				pageIndex: page,
-				pageSize: pageSize
-			);
+				// Apply custom search configuration
+				if (searchConfig != null)
+				{
+					s = searchConfig(s);
+				}
+
+				// Apply sorting
+				if (orderBy != null)
+				{
+					s.Sort(sort =>
+					{
+						if (orderBy != null)
+						{
+							var fieldName = GetPropertyName<TProperty>(orderBy);
+							// FIXED: Sử dụng Action<FieldSortDescriptor>
+							sort.Field(fieldName, descriptor => descriptor
+								.Order(ascending!.Value ? SortOrder.Asc : SortOrder.Desc)
+							);
+						}
+					});
+				}
+
+				// Apply pagination
+				if (page.HasValue && pageSize.HasValue)
+				{
+					int from = (page.Value - 1) * pageSize.Value;
+					s.From(from).Size(pageSize.Value);
+				}
+			});
+
+			return new PageResult<TModel>(searchResponse.Documents.ToList(), searchResponse.Total, page!.Value, pageSize!.Value);
+		}
+
+		private string GetPropertyName<TProperty>(Expression<Func<TModel, TProperty>> expression)
+		{
+			if (expression.Body is MemberExpression memberExpression)
+			{
+				return memberExpression.Member.Name.ToLowerInvariant();
+			}
+			throw new ArgumentException("Expression must be a member expression");
 		}
 
 		public async Task<bool> Remove(string key)

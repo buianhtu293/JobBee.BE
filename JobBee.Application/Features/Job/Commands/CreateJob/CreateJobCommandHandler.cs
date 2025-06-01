@@ -27,14 +27,7 @@ namespace JobBee.Application.Features.Job.Commands.CreateJob
 				logger.LogWarning("Can not create new job to database");
 				throw new BadRequestException("Invalid request");
 			}
-			// not prefer
-			var isValid = await elasticSearchService.AddOrUpdate(job);
-			if (!isValid)
-			{
-				logger.LogWarning("Can not create new job to elastic search");
-				throw new BadRequestException("Invalid request");
-			}
-			return isValid;
+			return true;
 		}
 	}
 }
