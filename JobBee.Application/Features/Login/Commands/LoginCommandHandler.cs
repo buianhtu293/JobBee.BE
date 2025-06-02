@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JobBee.Api.Models;
+using JobBee.Domain.Entities;
 using JobBee.Application.Abstractions;
 using JobBee.Application.Abstractions.Messaging;
 using JobBee.Application.Contracts.Persistence;

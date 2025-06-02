@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using JobBee.Api.Models;
+﻿using JobBee.Domain.Entities;
 using JobBee.Application.Contracts.Persistence;
 using JobBee.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
