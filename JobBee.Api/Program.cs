@@ -15,7 +15,7 @@ namespace JobBee.Api
 
 			// Add services to the container.
 
-			builder.Services.AddApplicationServices();
+			builder.Services.AddApplicationServices(builder.Configuration);
 			builder.Services.AddInfrastructureServices(builder.Configuration);
 			builder.Services.AddPersistenceServices(builder.Configuration);
 

@@ -1,31 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("candidate_experience")]
 public partial class CandidateExperience
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid CandidateId { get; set; }
+	[Column("candidate_id")]
+	public Guid CandidateId { get; set; }
 
-    public string CompanyName { get; set; } = null!;
+	[Column("company_name")]
+	public string CompanyName { get; set; } = null!;
 
-    public string Position { get; set; } = null!;
+	[Column("position")]
+	public string Position { get; set; } = null!;
 
-    public DateOnly StartDate { get; set; }
+	[Column("start_date")]
+	public DateOnly StartDate { get; set; }
 
-    public DateOnly? EndDate { get; set; }
+	[Column("end_date")]
+	public DateOnly? EndDate { get; set; }
 
-    public bool? IsCurrent { get; set; }
+	[Column("is_current")]
+	public bool? IsCurrent { get; set; }
 
-    public string? Responsibilities { get; set; }
+	[Column("responsibilities")]
+	public string? Responsibilities { get; set; }
 
-    public string? Achievements { get; set; }
+	[Column("achievements")]
+	public string? Achievements { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual Candidate Candidate { get; set; } = null!;
+	public virtual Candidate Candidate { get; set; } = null!;
 }

@@ -1,35 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("employer_review")]
 public partial class EmployerReview
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid EmployerId { get; set; }
+	[Column("employer_id")]
+	public Guid EmployerId { get; set; }
 
-    public Guid CandidateId { get; set; }
+	[Column("candidate_id")]
+	public Guid CandidateId { get; set; }
 
-    public int Rating { get; set; }
+	[Column("rating")]
+	public int Rating { get; set; }
 
-    public string? Title { get; set; }
+	[Column("title")]
+	public string? Title { get; set; }
 
-    public string? ReviewText { get; set; }
+	[Column("review_text")]
+	public string? ReviewText { get; set; }
 
-    public string? Pros { get; set; }
+	[Column("pros")]
+	public string? Pros { get; set; }
 
-    public string? Cons { get; set; }
+	[Column("cons")]
+	public string? Cons { get; set; }
 
-    public bool? IsAnonymous { get; set; }
+	[Column("is_anonymous")]
+	public bool? IsAnonymous { get; set; }
 
-    public string? Status { get; set; }
+	[Column("status")]
+	public string? Status { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual Candidate Candidate { get; set; } = null!;
+	public virtual Candidate Candidate { get; set; } = null!;
 
-    public virtual Employer Employer { get; set; } = null!;
+	public virtual Employer Employer { get; set; } = null!;
 }

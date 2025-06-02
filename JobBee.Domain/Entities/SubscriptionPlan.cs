@@ -1,39 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("subscription_plan")]
 public partial class SubscriptionPlan
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string PlanName { get; set; } = null!;
+	[Column("plan_name")]
+	public string PlanName { get; set; } = null!;
 
-    public string PlanType { get; set; } = null!;
+	[Column("plan_type")]
+	public string PlanType { get; set; } = null!;
 
-    public decimal Price { get; set; }
+	[Column("price")]
+	public decimal Price { get; set; }
 
-    public string Currency { get; set; } = null!;
+	[Column("currency")]
+	public string Currency { get; set; } = null!;
 
-    public string BillingCycle { get; set; } = null!;
+	[Column("billing_cycle")]
+	public string BillingCycle { get; set; } = null!;
 
-    public string? Description { get; set; }
+	[Column("description")]
+	public string? Description { get; set; }
 
-    public int? JobPostingLimit { get; set; }
+	[Column("job_posting_limit")]
+	public int? JobPostingLimit { get; set; }
 
-    public int? FeaturedJobLimit { get; set; }
+	[Column("featured_job_limit")]
+	public int? FeaturedJobLimit { get; set; }
 
-    public int? CandidateSearchLimit { get; set; }
+	[Column("candidate_search_limit")]
+	public int? CandidateSearchLimit { get; set; }
 
-    public int? ResumeAccessLimit { get; set; }
+	[Column("resume_access_limit")]
+	public int? ResumeAccessLimit { get; set; }
 
-    public bool? ProfileVisibility { get; set; }
+	[Column("profile_visibility")]
+	public bool? ProfileVisibility { get; set; }
 
-    public bool? PriorityListing { get; set; }
+	[Column("priority_listing")]
+	public bool? PriorityListing { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
+	public virtual ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
 }

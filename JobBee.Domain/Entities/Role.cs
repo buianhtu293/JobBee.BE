@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("role")]
 public partial class Role
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string? Name { get; set; }
+	[Column("name")]
+	public string? Name { get; set; }
 
-    public string? NormalizedName { get; set; }
+	[Column("normalized_name")]
+	public string? NormalizedName { get; set; }
 
-    public string? ConcurrencyStamp { get; set; }
+	[Column("concurrency_stamp")]
+	public string? ConcurrencyStamp { get; set; }
 
-    public virtual ICollection<RoleClaim> RoleClaims { get; set; } = new List<RoleClaim>();
+	public virtual ICollection<RoleClaim> RoleClaims { get; set; } = new List<RoleClaim>();
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+	public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

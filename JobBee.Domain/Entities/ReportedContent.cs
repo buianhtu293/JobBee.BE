@@ -1,29 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("reported_content")]
 public partial class ReportedContent
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid ReporterUserId { get; set; }
+	[Column("reporter_user_id")]
+	public Guid ReporterUserId { get; set; }
 
-    public string ContentType { get; set; } = null!;
+	[Column("content_type")]
+	public string ContentType { get; set; } = null!;
 
-    public int ContentId { get; set; }
+	[Column("content_id")]
+	public int ContentId { get; set; }
 
-    public string Reason { get; set; } = null!;
+	[Column("reason")]
+	public string Reason { get; set; } = null!;
 
-    public string? Details { get; set; }
+	[Column("details")]
+	public string? Details { get; set; }
 
-    public string? Status { get; set; }
+	[Column("status")]
+	public string? Status { get; set; }
 
-    public string? AdminNotes { get; set; }
+	[Column("admin_notes")]
+	public string? AdminNotes { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual User ReporterUser { get; set; } = null!;
+	public virtual User ReporterUser { get; set; } = null!;
 }

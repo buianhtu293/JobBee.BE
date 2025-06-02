@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("company_photo")]
 public partial class CompanyPhoto
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid EmployerId { get; set; }
+	[Column("employer_id")]
+	public Guid EmployerId { get; set; }
 
-    public string PhotoUrl { get; set; } = null!;
+	[Column("photo_url")]
+	public string PhotoUrl { get; set; } = null!;
 
-    public string? Caption { get; set; }
+	[Column("caption")]
+	public string? Caption { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public virtual Employer Employer { get; set; } = null!;
+	public virtual Employer Employer { get; set; } = null!;
 }

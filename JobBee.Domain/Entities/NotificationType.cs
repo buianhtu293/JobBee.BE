@@ -1,17 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("notification_type")]
 public partial class NotificationType
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string TypeName { get; set; } = null!;
+	[Column("type_name")]
+	public string TypeName { get; set; } = null!;
 
-    public string? Template { get; set; }
+	[Column("template")]
+	public string? Template { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+	public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

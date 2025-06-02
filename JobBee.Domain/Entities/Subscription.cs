@@ -1,35 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("subscription")]
 public partial class Subscription
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid UserId { get; set; }
+	[Column("user_id")]
+	public Guid UserId { get; set; }
 
-    public Guid PlanId { get; set; }
+	[Column("plan_id")]
+	public Guid PlanId { get; set; }
 
-    public string Status { get; set; } = null!;
+	[Column("status")]
+	public string Status { get; set; } = null!;
 
-    public DateTime StartDate { get; set; }
+	[Column("start_date")]
+	public DateTime StartDate { get; set; }
 
-    public DateTime? EndDate { get; set; }
+	[Column("end_date")]
+	public DateTime? EndDate { get; set; }
 
-    public DateTime? RenewalDate { get; set; }
+	[Column("renewal_date")]
+	public DateTime? RenewalDate { get; set; }
 
-    public string? PaymentMethod { get; set; }
+	[Column("payment_method")]
+	public string? PaymentMethod { get; set; }
 
-    public bool? AutoRenew { get; set; }
+	[Column("auto_renew")]
+	public bool? AutoRenew { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
+	public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
-    public virtual SubscriptionPlan Plan { get; set; } = null!;
+	public virtual SubscriptionPlan Plan { get; set; } = null!;
 
-    public virtual User User { get; set; } = null!;
+	public virtual User User { get; set; } = null!;
 }

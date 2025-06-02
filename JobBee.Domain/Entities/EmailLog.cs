@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("email_log")]
 public partial class EmailLog
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string RecipientEmail { get; set; } = null!;
+	[Column("recipient_email")]
+	public string RecipientEmail { get; set; } = null!;
 
-    public string Subject { get; set; } = null!;
+	[Column("subject")]
+	public string Subject { get; set; } = null!;
 
-    public Guid? TemplateId { get; set; }
+	[Column("template_id")]
+	public Guid? TemplateId { get; set; }
 
-    public DateTime? SentAt { get; set; }
+	[Column("sent_at")]
+	public DateTime? SentAt { get; set; }
 
-    public string Status { get; set; } = null!;
+	[Column("status")]
+	public string Status { get; set; } = null!;
 
-    public string? ErrorMessage { get; set; }
+	[Column("error_message")]
+	public string? ErrorMessage { get; set; }
 
-    public virtual EmailTemplate? Template { get; set; }
+	public virtual EmailTemplate? Template { get; set; }
 }

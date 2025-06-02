@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("experience_level")]
 public partial class ExperienceLevel
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string LevelName { get; set; } = null!;
+	[Column("level_name")]
+	public string LevelName { get; set; } = null!;
 
-    public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
+	public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
 }

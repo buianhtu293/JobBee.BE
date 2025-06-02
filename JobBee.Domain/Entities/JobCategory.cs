@@ -1,25 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("job_category")]
 public partial class JobCategory
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public string CategoryName { get; set; } = null!;
+	[Column("category_name")]
+	public string CategoryName { get; set; } = null!;
 
-    public Guid? ParentCategoryId { get; set; }
+	[Column("parent_category_id")]
+	public Guid? ParentCategoryId { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public virtual ICollection<JobCategory> InverseParentCategory { get; set; } = new List<JobCategory>();
+	// Collection of child categories
+	public virtual ICollection<JobCategory> InverseParentCategory { get; set; } = new List<JobCategory>();
 
-    public virtual ICollection<JobAlert> JobAlerts { get; set; } = new List<JobAlert>();
+	// Navigation for related JobAlerts with this category
+	public virtual ICollection<JobAlert> JobAlerts { get; set; } = new List<JobAlert>();
 
-    public virtual ICollection<JobSearchLog> JobSearchLogs { get; set; } = new List<JobSearchLog>();
+	// Navigation for related JobSearchLogs with this category
+	public virtual ICollection<JobSearchLog> JobSearchLogs { get; set; } = new List<JobSearchLog>();
 
-    public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
+	// Navigation for Jobs under this category
+	public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
 
-    public virtual JobCategory? ParentCategory { get; set; }
+	// Navigation for parent category
+	public virtual JobCategory? ParentCategory { get; set; }
 }

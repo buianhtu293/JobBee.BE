@@ -1,65 +1,85 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("employer")]
 public partial class Employer
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid UserId { get; set; }
+	[Column("user_id")]
+	public Guid UserId { get; set; }
 
-    public string CompanyName { get; set; } = null!;
+	[Column("company_name")]
+	public string CompanyName { get; set; } = null!;
 
-    public string? CompanyLogo { get; set; }
+	[Column("company_logo")]
+	public string? CompanyLogo { get; set; }
 
-    public Guid? IndustryId { get; set; }
+	[Column("industry_id")]
+	public Guid? IndustryId { get; set; }
 
-    public Guid? CompanySizeId { get; set; }
+	[Column("company_size_id")]
+	public Guid? CompanySizeId { get; set; }
 
-    public int? FoundedYear { get; set; }
+	[Column("founded_year")]
+	public int? FoundedYear { get; set; }
 
-    public string? CompanyDescription { get; set; }
+	[Column("company_description")]
+	public string? CompanyDescription { get; set; }
 
-    public string? WebsiteUrl { get; set; }
+	[Column("website_url")]
+	public string? WebsiteUrl { get; set; }
 
-    public string? HeadquartersAddress { get; set; }
+	[Column("headquarters_address")]
+	public string? HeadquartersAddress { get; set; }
 
-    public string? HeadquartersCity { get; set; }
+	[Column("headquarters_city")]
+	public string? HeadquartersCity { get; set; }
 
-    public string? HeadquartersState { get; set; }
+	[Column("headquarters_state")]
+	public string? HeadquartersState { get; set; }
 
-    public string? HeadquartersCountry { get; set; }
+	[Column("headquarters_country")]
+	public string? HeadquartersCountry { get; set; }
 
-    public string? ContactPersonName { get; set; }
+	[Column("contact_person_name")]
+	public string? ContactPersonName { get; set; }
 
-    public string? ContactEmail { get; set; }
+	[Column("contact_email")]
+	public string? ContactEmail { get; set; }
 
-    public string? ContactPhone { get; set; }
+	[Column("contact_phone")]
+	public string? ContactPhone { get; set; }
 
-    public bool? IsVerified { get; set; }
+	[Column("is_verified")]
+	public bool? IsVerified { get; set; }
 
-    public string? VerificationDocuments { get; set; }
+	[Column("verification_documents")]
+	public string? VerificationDocuments { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual ICollection<CompanyPhoto> CompanyPhotos { get; set; } = new List<CompanyPhoto>();
+	public virtual ICollection<CompanyPhoto> CompanyPhotos { get; set; } = new List<CompanyPhoto>();
 
-    public virtual CompanySize? CompanySize { get; set; }
+	public virtual CompanySize? CompanySize { get; set; }
 
-    public virtual ICollection<EmployerBenefit> EmployerBenefits { get; set; } = new List<EmployerBenefit>();
+	public virtual ICollection<EmployerBenefit> EmployerBenefits { get; set; } = new List<EmployerBenefit>();
 
-    public virtual ICollection<EmployerReview> EmployerReviews { get; set; } = new List<EmployerReview>();
+	public virtual ICollection<EmployerReview> EmployerReviews { get; set; } = new List<EmployerReview>();
 
-    public virtual ICollection<EmployerSocialMedium> EmployerSocialMedia { get; set; } = new List<EmployerSocialMedium>();
+	public virtual ICollection<EmployerSocialMedia> EmployerSocialMedia { get; set; } = new List<EmployerSocialMedia>();
 
-    public virtual Industry? Industry { get; set; }
+	public virtual Industry? Industry { get; set; }
 
-    public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
+	public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
 
-    public virtual ICollection<SavedCandidate> SavedCandidates { get; set; } = new List<SavedCandidate>();
+	public virtual ICollection<SavedCandidate> SavedCandidates { get; set; } = new List<SavedCandidate>();
 
-    public virtual User User { get; set; } = null!;
+	public virtual User User { get; set; } = null!;
 }

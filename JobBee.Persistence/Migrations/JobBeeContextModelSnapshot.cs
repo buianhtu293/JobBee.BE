@@ -22,891 +22,1080 @@ namespace JobBee.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("JobBee.Api.Models.AdminSetting", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.AdminSetting", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("SettingName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("setting_name");
 
                     b.Property<string>("SettingValue")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("setting_value");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("AdminSettings_pkey");
+                        .HasName("admin_settings_pkey");
 
-                    b.HasIndex(new[] { "SettingName" }, "AdminSettings_SettingName_key")
+                    b.HasIndex(new[] { "SettingName" }, "admin_settings_setting_name_key")
                         .IsUnique();
 
-                    b.ToTable("AdminSettings");
+                    b.ToTable("admin_settings", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Candidate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Candidate", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Address")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("address");
 
                     b.Property<DateOnly?>("BirthDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("birth_date");
 
                     b.Property<string>("City")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("city");
 
                     b.Property<string>("Country")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("country");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<decimal?>("CurrentSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("current_salary");
 
                     b.Property<int?>("ExperienceYears")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("experience_years");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("first_name");
 
                     b.Property<string>("Gender")
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("gender");
 
                     b.Property<string>("Headline")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("headline");
 
                     b.Property<bool?>("IsAvailableForHire")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_available_for_hire");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("last_name");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("phone");
 
                     b.Property<string>("PostalCode")
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("postal_code");
 
                     b.Property<string>("ProfilePicture")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("profile_picture");
 
                     b.Property<decimal?>("SalaryExpectation")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("salary_expectation");
 
                     b.Property<string>("State")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("state");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("summary");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("Candidates_pkey");
+                        .HasName("candidates_pkey");
 
-                    b.HasIndex(new[] { "UserId" }, "Candidates_UserId_key")
+                    b.HasIndex(new[] { "UserId" }, "candidates_user_id_key")
                         .IsUnique();
 
-                    b.ToTable("Candidates");
+                    b.ToTable("candidates", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateEducation", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateEducation", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<Guid?>("EducationLevelId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("education_level_id");
 
                     b.Property<DateOnly?>("EndDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("end_date");
 
                     b.Property<string>("FieldOfStudy")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("field_of_study");
 
                     b.Property<string>("InstitutionName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("institution_name");
 
                     b.Property<bool?>("IsCurrent")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_current");
 
                     b.Property<DateOnly?>("StartDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("start_date");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("CandidateEducation_pkey");
+                        .HasName("candidate_educations_pkey");
 
                     b.HasIndex("CandidateId");
 
                     b.HasIndex("EducationLevelId");
 
-                    b.ToTable("CandidateEducation", (string)null);
+                    b.ToTable("candidate_educations", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateExperience", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateExperience", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Achievements")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("achievements");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("company_name");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<DateOnly?>("EndDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("end_date");
 
                     b.Property<bool?>("IsCurrent")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_current");
 
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("position");
 
                     b.Property<string>("Responsibilities")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("responsibilities");
 
                     b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("start_date");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("CandidateExperience_pkey");
+                        .HasName("candidate_experiences_pkey");
 
                     b.HasIndex("CandidateId");
 
-                    b.ToTable("CandidateExperience", (string)null);
+                    b.ToTable("candidate_experiences", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidatePortfolio", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidatePortfolio", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<string>("ImageUrl")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("image_url");
 
                     b.Property<string>("ProjectUrl")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("project_url");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("title");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("CandidatePortfolio_pkey");
+                        .HasName("candidate_portfolios_pkey");
 
                     b.HasIndex("CandidateId");
 
-                    b.ToTable("CandidatePortfolio", (string)null);
+                    b.ToTable("candidate_portfolios", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidatePreference", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidatePreference", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("JobType")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("job_type");
 
                     b.Property<decimal?>("MinSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("min_salary");
 
                     b.Property<string>("PreferredLocation")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("preferred_location");
 
                     b.Property<bool?>("RelocationWillingness")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("relocation_willingness");
 
                     b.Property<string>("RemotePreference")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("remote_preference");
 
                     b.Property<int?>("TravelWillingness")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("travel_willingness");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("CandidatePreferences_pkey");
+                        .HasName("candidate_preferences_pkey");
 
-                    b.HasIndex(new[] { "CandidateId" }, "CandidatePreferences_CandidateId_key")
+                    b.HasIndex(new[] { "CandidateId" }, "candidate_preferences_candidate_id_key")
                         .IsUnique();
 
-                    b.ToTable("CandidatePreferences");
+                    b.ToTable("candidate_preferences", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateResume", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateResume", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("FileName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("file_name");
 
                     b.Property<string>("FilePath")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("file_path");
 
                     b.Property<int>("FileSize")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("file_size");
 
                     b.Property<string>("FileType")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("file_type");
 
                     b.Property<bool?>("IsDefault")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_default");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("CandidateResumes_pkey");
+                        .HasName("candidate_resumes_pkey");
 
                     b.HasIndex("CandidateId");
 
-                    b.ToTable("CandidateResumes");
+                    b.ToTable("candidate_resumes", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateSkill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateSkill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int?>("ProficiencyLevel")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("proficiency_level");
 
                     b.Property<Guid>("SkillId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("skill_id");
 
                     b.Property<int?>("YearsExperience")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("years_experience");
 
                     b.HasKey("Id")
-                        .HasName("CandidateSkills_pkey");
+                        .HasName("candidate_skills_pkey");
 
                     b.HasIndex("SkillId");
 
-                    b.HasIndex(new[] { "CandidateId", "SkillId" }, "CandidateSkills_CandidateId_SkillId_key")
+                    b.HasIndex(new[] { "CandidateId", "SkillId" }, "candidate_skills_candidate_id_skill_id_key")
                         .IsUnique();
 
-                    b.ToTable("CandidateSkills");
+                    b.ToTable("candidate_skills", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CompanyPhoto", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CompanyPhoto", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Caption")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("caption");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("employer_id");
 
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("photo_url");
 
                     b.HasKey("Id")
-                        .HasName("CompanyPhotos_pkey");
+                        .HasName("company_photos_pkey");
 
                     b.HasIndex("EmployerId");
 
-                    b.ToTable("CompanyPhotos");
+                    b.ToTable("company_photos", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CompanySize", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CompanySize", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("SizeRange")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("size_range");
 
                     b.HasKey("Id")
-                        .HasName("CompanySizes_pkey");
+                        .HasName("company_sizes_pkey");
 
-                    b.HasIndex(new[] { "SizeRange" }, "CompanySizes_SizeRange_key")
+                    b.HasIndex(new[] { "SizeRange" }, "company_sizes_size_range_key")
                         .IsUnique();
 
-                    b.ToTable("CompanySizes");
+                    b.ToTable("company_sizes", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EducationLevel", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EducationLevel", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("LevelName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("level_name");
 
                     b.HasKey("Id")
-                        .HasName("EducationLevels_pkey");
+                        .HasName("education_levels_pkey");
 
-                    b.HasIndex(new[] { "LevelName" }, "EducationLevels_LevelName_key")
+                    b.HasIndex(new[] { "LevelName" }, "education_levels_level_name_key")
                         .IsUnique();
 
-                    b.ToTable("EducationLevels");
+                    b.ToTable("education_levels", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmailLog", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmailLog", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("ErrorMessage")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("error_message");
 
                     b.Property<string>("RecipientEmail")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("recipient_email");
 
                     b.Property<DateTime?>("SentAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("sent_at");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("status");
 
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("subject");
 
                     b.Property<Guid?>("TemplateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("template_id");
 
                     b.HasKey("Id")
-                        .HasName("EmailLogs_pkey");
+                        .HasName("email_logs_pkey");
 
                     b.HasIndex("TemplateId");
 
-                    b.ToTable("EmailLogs");
+                    b.ToTable("email_logs", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmailSetting", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmailSetting", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<bool?>("ApplicationUpdates")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("application_updates");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<bool?>("JobAlerts")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("job_alerts");
 
                     b.Property<bool?>("JobRecommendations")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("job_recommendations");
 
                     b.Property<bool?>("MarketingEmails")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("marketing_emails");
 
                     b.Property<bool?>("ProfileViews")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("profile_views");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("EmailSettings_pkey");
+                        .HasName("email_settings_pkey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EmailSettings");
+                    b.ToTable("email_settings", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmailTemplate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmailTemplate", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("body");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Subject")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("subject");
 
                     b.Property<string>("TemplateName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("template_name");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("Variables")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("variables");
 
                     b.HasKey("Id")
-                        .HasName("EmailTemplates_pkey");
+                        .HasName("email_templates_pkey");
 
-                    b.HasIndex(new[] { "TemplateName" }, "EmailTemplates_TemplateName_key")
+                    b.HasIndex(new[] { "TemplateName" }, "email_templates_template_name_key")
                         .IsUnique();
 
-                    b.ToTable("EmailTemplates");
+                    b.ToTable("email_templates", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Employer", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Employer", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("CompanyDescription")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("company_description");
 
                     b.Property<string>("CompanyLogo")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("company_logo");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("company_name");
 
                     b.Property<Guid?>("CompanySizeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("company_size_id");
 
                     b.Property<string>("ContactEmail")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("contact_email");
 
                     b.Property<string>("ContactPersonName")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("contact_person_name");
 
                     b.Property<string>("ContactPhone")
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("contact_phone");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<int?>("FoundedYear")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("founded_year");
 
                     b.Property<string>("HeadquartersAddress")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("headquarters_address");
 
                     b.Property<string>("HeadquartersCity")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("headquarters_city");
 
                     b.Property<string>("HeadquartersCountry")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("headquarters_country");
 
                     b.Property<string>("HeadquartersState")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("headquarters_state");
 
                     b.Property<Guid?>("IndustryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("industry_id");
 
                     b.Property<bool?>("IsVerified")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_verified");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("VerificationDocuments")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("verification_documents");
 
                     b.Property<string>("WebsiteUrl")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("website_url");
 
                     b.HasKey("Id")
-                        .HasName("Employers_pkey");
+                        .HasName("employers_pkey");
 
                     b.HasIndex("CompanySizeId");
 
                     b.HasIndex("IndustryId");
 
-                    b.HasIndex(new[] { "UserId" }, "Employers_UserId_key")
+                    b.HasIndex(new[] { "UserId" }, "employers_user_id_key")
                         .IsUnique();
 
-                    b.ToTable("Employers");
+                    b.ToTable("employers", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmployerBenefit", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmployerBenefit", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("BenefitDescription")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("benefit_description");
 
                     b.Property<string>("BenefitName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("benefit_name");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("employer_id");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("EmployerBenefits_pkey");
+                        .HasName("employer_benefits_pkey");
 
                     b.HasIndex("EmployerId");
 
-                    b.ToTable("EmployerBenefits");
+                    b.ToTable("employer_benefits", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmployerReview", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmployerReview", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<string>("Cons")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("cons");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("employer_id");
 
                     b.Property<bool?>("IsAnonymous")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_anonymous");
 
                     b.Property<string>("Pros")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("pros");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("rating");
 
                     b.Property<string>("ReviewText")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("review_text");
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
+                        .HasColumnName("status")
                         .HasDefaultValueSql("'Pending'::character varying");
 
                     b.Property<string>("Title")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("title");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("EmployerReviews_pkey");
+                        .HasName("employer_reviews_pkey");
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex(new[] { "EmployerId", "CandidateId" }, "EmployerReviews_EmployerId_CandidateId_key")
+                    b.HasIndex(new[] { "EmployerId", "CandidateId" }, "employer_reviews_employer_id_candidate_id_key")
                         .IsUnique();
 
-                    b.ToTable("EmployerReviews");
+                    b.ToTable("employer_reviews", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmployerSocialMedium", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmployerSocialMedia", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("employer_id");
 
                     b.Property<string>("PlatformName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("platform_name");
 
                     b.Property<string>("ProfileUrl")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("profile_url");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("EmployerSocialMedia_pkey");
+                        .HasName("employer_social_media_pkey");
 
-                    b.HasIndex(new[] { "EmployerId", "PlatformName" }, "EmployerSocialMedia_EmployerId_PlatformName_key")
+                    b.HasIndex(new[] { "EmployerId", "PlatformName" }, "employer_social_media_employer_id_platform_name_key")
                         .IsUnique();
 
-                    b.ToTable("EmployerSocialMedia");
+                    b.ToTable("employer_social_media", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.ExperienceLevel", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.ExperienceLevel", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("LevelName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("level_name");
 
                     b.HasKey("Id")
-                        .HasName("ExperienceLevels_pkey");
+                        .HasName("experience_levels_pkey");
 
-                    b.HasIndex(new[] { "LevelName" }, "ExperienceLevels_LevelName_key")
+                    b.HasIndex(new[] { "LevelName" }, "experience_levels_level_name_key")
                         .IsUnique();
 
-                    b.ToTable("ExperienceLevels");
+                    b.ToTable("experience_levels", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Industry", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Industry", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("IndustryName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("industry_name");
 
                     b.HasKey("Id")
-                        .HasName("Industries_pkey");
+                        .HasName("industries_pkey");
 
-                    b.HasIndex(new[] { "IndustryName" }, "Industries_IndustryName_key")
+                    b.HasIndex(new[] { "IndustryName" }, "industries_industry_name_key")
                         .IsUnique();
 
-                    b.ToTable("Industries");
+                    b.ToTable("industries", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Job", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Job", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<bool?>("AllowsWorkFromHome")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("allows_work_from_home");
 
                     b.Property<DateOnly?>("ApplicationDeadline")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("application_deadline");
 
                     b.Property<int?>("ApplicationsCount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(0)
+                        .HasColumnName("applications_count");
 
                     b.Property<string>("Currency")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("currency");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("employer_id");
 
                     b.Property<Guid?>("ExperienceLevelId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("experience_level_id");
 
                     b.Property<DateTime?>("ExpiresAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("expires_at");
 
                     b.Property<bool?>("IsActive")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
 
                     b.Property<bool?>("IsFeatured")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_featured");
 
                     b.Property<bool?>("IsRemote")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_remote");
 
                     b.Property<bool?>("IsSalaryNegotiable")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_salary_negotiable");
 
                     b.Property<Guid?>("JobCategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_category_id");
 
                     b.Property<Guid?>("JobTypeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_type_id");
 
                     b.Property<string>("LocationCity")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("location_city");
 
                     b.Property<string>("LocationCountry")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("location_country");
 
                     b.Property<string>("LocationState")
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("location_state");
 
                     b.Property<decimal?>("MaxSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("max_salary");
 
                     b.Property<Guid?>("MinEducationId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("min_education_id");
 
                     b.Property<decimal?>("MinSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("min_salary");
 
                     b.Property<DateTime?>("PostedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("posted_at");
 
                     b.Property<string>("Requirements")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("requirements");
 
                     b.Property<string>("Responsibilities")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("responsibilities");
 
                     b.Property<string>("SalaryPeriod")
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("salary_period");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("title");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<int?>("ViewsCount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(0)
+                        .HasColumnName("views_count");
 
                     b.HasKey("Id")
-                        .HasName("Jobs_pkey");
+                        .HasName("jobs_pkey");
 
                     b.HasIndex("EmployerId");
 
@@ -918,55 +1107,67 @@ namespace JobBee.Persistence.Migrations
 
                     b.HasIndex("MinEducationId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("jobs", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobAlert", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobAlert", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("AlertName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("alert_name");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Frequency")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("frequency");
 
                     b.Property<bool?>("IsActive")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
 
                     b.Property<Guid?>("JobCategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_category_id");
 
                     b.Property<Guid?>("JobTypeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_type_id");
 
                     b.Property<string>("Keywords")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("keywords");
 
                     b.Property<string>("Location")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("location");
 
                     b.Property<decimal?>("MinSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("min_salary");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("JobAlerts_pkey");
+                        .HasName("job_alerts_pkey");
 
                     b.HasIndex("CandidateId");
 
@@ -974,119 +1175,142 @@ namespace JobBee.Persistence.Migrations
 
                     b.HasIndex("JobTypeId");
 
-                    b.ToTable("JobAlerts");
+                    b.ToTable("job_alerts", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobApplication", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobApplication", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("AppliedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("applied_at");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<string>("CoverLetter")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("cover_letter");
 
                     b.Property<string>("EmployerNotes")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("employer_notes");
 
                     b.Property<Guid>("JobId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_id");
 
                     b.Property<Guid?>("ResumeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("resume_id");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
+                        .HasColumnName("status")
                         .HasDefaultValueSql("'Pending'::character varying");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("JobApplications_pkey");
+                        .HasName("job_applications_pkey");
 
                     b.HasIndex("CandidateId");
 
                     b.HasIndex("ResumeId");
 
-                    b.HasIndex(new[] { "JobId", "CandidateId" }, "JobApplications_JobId_CandidateId_key")
+                    b.HasIndex(new[] { "JobId", "CandidateId" }, "job_applications_job_id_candidate_id_key")
                         .IsUnique();
 
-                    b.ToTable("JobApplications");
+                    b.ToTable("job_applications", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobCategory", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobCategory", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("category_name");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<Guid?>("ParentCategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("parent_category_id");
 
                     b.HasKey("Id")
-                        .HasName("JobCategories_pkey");
+                        .HasName("job_categories_pkey");
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.HasIndex(new[] { "CategoryName" }, "JobCategories_CategoryName_key")
+                    b.HasIndex(new[] { "CategoryName" }, "job_categories_category_name_key")
                         .IsUnique();
 
-                    b.ToTable("JobCategories");
+                    b.ToTable("job_categories", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobSearchLog", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobSearchLog", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid?>("JobCategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_category_id");
 
                     b.Property<Guid?>("JobTypeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_type_id");
 
                     b.Property<string>("Location")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("location");
 
                     b.Property<decimal?>("MaxSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("max_salary");
 
                     b.Property<decimal?>("MinSalary")
                         .HasPrecision(12, 2)
-                        .HasColumnType("numeric(12,2)");
+                        .HasColumnType("numeric(12,2)")
+                        .HasColumnName("min_salary");
 
                     b.Property<int?>("ResultsCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("results_count");
 
                     b.Property<DateTime?>("SearchDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("search_date");
 
                     b.Property<string>("SearchKeyword")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("search_keyword");
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("JobSearchLogs_pkey");
+                        .HasName("job_search_logs_pkey");
 
                     b.HasIndex("JobCategoryId");
 
@@ -1094,675 +1318,805 @@ namespace JobBee.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobSearchLogs");
+                    b.ToTable("job_search_logs", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobSkill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobSkill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<bool?>("IsRequired")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_required");
 
                     b.Property<Guid>("JobId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_id");
 
                     b.Property<Guid>("SkillId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("skill_id");
 
                     b.HasKey("Id")
-                        .HasName("JobSkills_pkey");
+                        .HasName("job_skills_pkey");
 
                     b.HasIndex("SkillId");
 
-                    b.HasIndex(new[] { "JobId", "SkillId" }, "JobSkills_JobId_SkillId_key")
+                    b.HasIndex(new[] { "JobId", "SkillId" }, "job_skills_job_id_skill_id_key")
                         .IsUnique();
 
-                    b.ToTable("JobSkills");
+                    b.ToTable("job_skills", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobType", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("TypeName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("type_name");
 
                     b.HasKey("Id")
-                        .HasName("JobTypes_pkey");
+                        .HasName("job_types_pkey");
 
-                    b.HasIndex(new[] { "TypeName" }, "JobTypes_TypeName_key")
+                    b.HasIndex(new[] { "TypeName" }, "job_types_type_name_key")
                         .IsUnique();
 
-                    b.ToTable("JobTypes");
+                    b.ToTable("job_types", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Notification", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Notification", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<bool?>("IsRead")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_read");
 
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("message");
 
                     b.Property<Guid>("NotificationTypeId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("notification_type_id");
 
                     b.Property<int?>("RelatedEntityId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("related_entity_id");
 
                     b.Property<string>("RelatedEntityType")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("related_entity_type");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("title");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("Notifications_pkey");
+                        .HasName("notifications_pkey");
 
                     b.HasIndex("NotificationTypeId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("notifications", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.NotificationType", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.NotificationType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Template")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("template");
 
                     b.Property<string>("TypeName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("type_name");
 
                     b.HasKey("Id")
-                        .HasName("NotificationTypes_pkey");
+                        .HasName("notification_types_pkey");
 
-                    b.HasIndex(new[] { "TypeName" }, "NotificationTypes_TypeName_key")
+                    b.HasIndex(new[] { "TypeName" }, "notification_types_type_name_key")
                         .IsUnique();
 
-                    b.ToTable("NotificationTypes");
+                    b.ToTable("notification_types", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Payment", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Payment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<decimal>("Amount")
                         .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)");
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("amount");
 
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("currency");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<DateTime?>("PaymentDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("payment_date");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("payment_method");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("status");
 
                     b.Property<Guid?>("SubscriptionId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("subscription_id");
 
                     b.Property<string>("TransactionId")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("transaction_id");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("Payments_pkey");
+                        .HasName("payments_pkey");
 
                     b.HasIndex("SubscriptionId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("payments", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.ReportedContent", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.ReportedContent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("AdminNotes")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("admin_notes");
 
                     b.Property<int>("ContentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("content_id");
 
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("content_type");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Details")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("details");
 
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("reason");
 
                     b.Property<Guid>("ReporterUserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("reporter_user_id");
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
+                        .HasColumnName("status")
                         .HasDefaultValueSql("'Pending'::character varying");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("ReportedContent_pkey");
+                        .HasName("reported_content_pkey");
 
                     b.HasIndex("ReporterUserId");
 
-                    b.ToTable("ReportedContent", (string)null);
+                    b.ToTable("reported_content", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Role", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_name");
 
                     b.HasKey("Id")
-                        .HasName("Roles_pkey");
+                        .HasName("roles_pkey");
 
-                    b.ToTable("Roles");
+                    b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.RoleClaim", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("role_id");
 
                     b.HasKey("Id")
-                        .HasName("RoleClaims_pkey");
+                        .HasName("role_claims_pkey");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims");
+                    b.ToTable("role_claims", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SavedCandidate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SavedCandidate", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<Guid>("EmployerId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("employer_id");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("notes");
 
                     b.Property<DateTime?>("SavedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("saved_at");
 
                     b.HasKey("Id")
-                        .HasName("SavedCandidates_pkey");
+                        .HasName("saved_candidates_pkey");
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex(new[] { "EmployerId", "CandidateId" }, "SavedCandidates_EmployerId_CandidateId_key")
+                    b.HasIndex(new[] { "EmployerId", "CandidateId" }, "saved_candidates_employer_id_candidate_id_key")
                         .IsUnique();
 
-                    b.ToTable("SavedCandidates");
+                    b.ToTable("saved_candidates", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SavedJob", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SavedJob", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("candidate_id");
 
                     b.Property<Guid>("JobId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_id");
 
                     b.Property<DateTime?>("SavedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("saved_at");
 
                     b.HasKey("Id")
-                        .HasName("SavedJobs_pkey");
+                        .HasName("saved_jobs_pkey");
 
                     b.HasIndex("JobId");
 
-                    b.HasIndex(new[] { "CandidateId", "JobId" }, "SavedJobs_CandidateId_JobId_key")
+                    b.HasIndex(new[] { "CandidateId", "JobId" }, "saved_jobs_candidate_id_job_id_key")
                         .IsUnique();
 
-                    b.ToTable("SavedJobs");
+                    b.ToTable("saved_jobs", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Skill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Skill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("category_id");
 
                     b.Property<string>("SkillName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("skill_name");
 
                     b.HasKey("Id")
-                        .HasName("Skills_pkey");
+                        .HasName("skills_pkey");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex(new[] { "SkillName" }, "Skills_SkillName_key")
+                    b.HasIndex(new[] { "SkillName" }, "skills_skill_name_key")
                         .IsUnique();
 
-                    b.ToTable("Skills");
+                    b.ToTable("skills", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SkillCategory", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SkillCategory", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("category_name");
 
                     b.HasKey("Id")
-                        .HasName("SkillCategories_pkey");
+                        .HasName("skill_categories_pkey");
 
-                    b.HasIndex(new[] { "CategoryName" }, "SkillCategories_CategoryName_key")
+                    b.HasIndex(new[] { "CategoryName" }, "skill_categories_category_name_key")
                         .IsUnique();
 
-                    b.ToTable("SkillCategories");
+                    b.ToTable("skill_categories", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Subscription", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Subscription", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<bool?>("AutoRenew")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("auto_renew");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("end_date");
 
                     b.Property<string>("PaymentMethod")
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("payment_method");
 
                     b.Property<Guid>("PlanId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("plan_id");
 
                     b.Property<DateTime?>("RenewalDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("renewal_date");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("start_date");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("status");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("Subscriptions_pkey");
+                        .HasName("subscriptions_pkey");
 
                     b.HasIndex("PlanId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("subscriptions", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SubscriptionPlan", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SubscriptionPlan", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("BillingCycle")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("billing_cycle");
 
                     b.Property<int?>("CandidateSearchLimit")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("candidate_search_limit");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("currency");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<int?>("FeaturedJobLimit")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("featured_job_limit");
 
                     b.Property<int?>("JobPostingLimit")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("job_posting_limit");
 
                     b.Property<string>("PlanName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("plan_name");
 
                     b.Property<string>("PlanType")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("plan_type");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(10, 2)
-                        .HasColumnType("numeric(10,2)");
+                        .HasColumnType("numeric(10,2)")
+                        .HasColumnName("price");
 
                     b.Property<bool?>("PriorityListing")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("priority_listing");
 
                     b.Property<bool?>("ProfileVisibility")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("profile_visibility");
 
                     b.Property<int?>("ResumeAccessLimit")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("resume_access_limit");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("SubscriptionPlans_pkey");
+                        .HasName("subscription_plans_pkey");
 
-                    b.ToTable("SubscriptionPlans");
+                    b.ToTable("subscription_plans", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.User", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("access_failed_count");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("email_confirmed");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("lockout_enabled");
 
                     b.Property<DateTime?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("lockout_end");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_email");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_user_name");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("phone_number_confirmed");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("security_stamp");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("two_factor_enabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id")
-                        .HasName("Users_pkey");
+                        .HasName("users_pkey");
 
-                    b.ToTable("Users");
+                    b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserActivityLog", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserActivityLog", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("ActivityType")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("activity_type");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Details")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("details");
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(45)
-                        .HasColumnType("character varying(45)");
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("ip_address");
 
                     b.Property<string>("UserAgent")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_agent");
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("UserActivityLogs_pkey");
+                        .HasName("user_activity_logs_pkey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserActivityLogs");
+                    b.ToTable("user_activity_logs", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserClaim", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("UserClaims_pkey");
+                        .HasName("user_claims_pkey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims");
+                    b.ToTable("user_claims", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserLogin", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("login_provider");
 
                     b.Property<string>("ProviderKey")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("provider_key");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("provider_display_name");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("LoginProvider", "ProviderKey")
-                        .HasName("UserLogins_pkey");
+                        .HasName("user_logins_pkey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins");
+                    b.ToTable("user_logins", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserToken", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserToken", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("login_provider");
 
                     b.Property<string>("Name")
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("name");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("value");
 
                     b.HasKey("UserId", "LoginProvider", "Name")
-                        .HasName("UserTokens_pkey");
+                        .HasName("user_tokens_pkey");
 
-                    b.ToTable("UserTokens");
+                    b.ToTable("user_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.WebsiteReview", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.WebsiteReview", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<bool?>("IsFeatured")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_featured");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("rating");
 
                     b.Property<string>("ReviewText")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("review_text");
 
                     b.Property<string>("Status")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
+                        .HasColumnName("status")
                         .HasDefaultValueSql("'Pending'::character varying");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("WebsiteReviews_pkey");
+                        .HasName("website_reviews_pkey");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("WebsiteReviews");
+                    b.ToTable("website_reviews", (string)null);
                 });
 
-            modelBuilder.Entity("UserRole", b =>
+            modelBuilder.Entity("user_roles", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -1771,154 +2125,154 @@ namespace JobBee.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("UserId", "RoleId")
-                        .HasName("UserRoles_pkey");
+                        .HasName("user_roles_pkey");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("user_roles", (string)null);
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Candidate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Candidate", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithOne("Candidate")
-                        .HasForeignKey("JobBee.Api.Models.Candidate", "UserId")
+                        .HasForeignKey("JobBee.Domain.Entities.Candidate", "UserId")
                         .IsRequired()
-                        .HasConstraintName("Candidates_UserId_fkey");
+                        .HasConstraintName("candidates_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateEducation", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateEducation", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("CandidateEducations")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("CandidateEducation_CandidateId_fkey");
+                        .HasConstraintName("candidate_educations_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.EducationLevel", "EducationLevel")
+                    b.HasOne("JobBee.Domain.Entities.EducationLevel", "EducationLevel")
                         .WithMany("CandidateEducations")
                         .HasForeignKey("EducationLevelId")
-                        .HasConstraintName("CandidateEducation_EducationLevelId_fkey");
+                        .HasConstraintName("candidate_educations_education_level_id_fkey");
 
                     b.Navigation("Candidate");
 
                     b.Navigation("EducationLevel");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateExperience", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateExperience", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("CandidateExperiences")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("CandidateExperience_CandidateId_fkey");
+                        .HasConstraintName("candidate_experiences_candidate_id_fkey");
 
                     b.Navigation("Candidate");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidatePortfolio", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidatePortfolio", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("CandidatePortfolios")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("CandidatePortfolio_CandidateId_fkey");
+                        .HasConstraintName("candidate_portfolios_candidate_id_fkey");
 
                     b.Navigation("Candidate");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidatePreference", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidatePreference", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithOne("CandidatePreference")
-                        .HasForeignKey("JobBee.Api.Models.CandidatePreference", "CandidateId")
+                        .HasForeignKey("JobBee.Domain.Entities.CandidatePreference", "CandidateId")
                         .IsRequired()
-                        .HasConstraintName("CandidatePreferences_CandidateId_fkey");
+                        .HasConstraintName("candidate_preferences_candidate_id_fkey");
 
                     b.Navigation("Candidate");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateResume", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateResume", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("CandidateResumes")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("CandidateResumes_CandidateId_fkey");
+                        .HasConstraintName("candidate_resumes_candidate_id_fkey");
 
                     b.Navigation("Candidate");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateSkill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateSkill", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("CandidateSkills")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("CandidateSkills_CandidateId_fkey");
+                        .HasConstraintName("candidate_skills_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Skill", "Skill")
+                    b.HasOne("JobBee.Domain.Entities.Skill", "Skill")
                         .WithMany("CandidateSkills")
                         .HasForeignKey("SkillId")
                         .IsRequired()
-                        .HasConstraintName("CandidateSkills_SkillId_fkey");
+                        .HasConstraintName("candidate_skills_skill_id_fkey");
 
                     b.Navigation("Candidate");
 
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CompanyPhoto", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CompanyPhoto", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Employer", "Employer")
+                    b.HasOne("JobBee.Domain.Entities.Employer", "Employer")
                         .WithMany("CompanyPhotos")
                         .HasForeignKey("EmployerId")
                         .IsRequired()
-                        .HasConstraintName("CompanyPhotos_EmployerId_fkey");
+                        .HasConstraintName("company_photos_employer_id_fkey");
 
                     b.Navigation("Employer");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmailLog", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmailLog", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.EmailTemplate", "Template")
+                    b.HasOne("JobBee.Domain.Entities.EmailTemplate", "Template")
                         .WithMany("EmailLogs")
                         .HasForeignKey("TemplateId")
-                        .HasConstraintName("EmailLogs_TemplateId_fkey");
+                        .HasConstraintName("email_logs_template_id_fkey");
 
                     b.Navigation("Template");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmailSetting", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmailSetting", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("EmailSettings")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("EmailSettings_UserId_fkey");
+                        .HasConstraintName("email_settings_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Employer", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Employer", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.CompanySize", "CompanySize")
+                    b.HasOne("JobBee.Domain.Entities.CompanySize", "CompanySize")
                         .WithMany("Employers")
                         .HasForeignKey("CompanySizeId")
-                        .HasConstraintName("Employers_CompanySizeId_fkey");
+                        .HasConstraintName("employers_company_size_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Industry", "Industry")
+                    b.HasOne("JobBee.Domain.Entities.Industry", "Industry")
                         .WithMany("Employers")
                         .HasForeignKey("IndustryId")
-                        .HasConstraintName("Employers_IndustryId_fkey");
+                        .HasConstraintName("employers_industry_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithOne("Employer")
-                        .HasForeignKey("JobBee.Api.Models.Employer", "UserId")
+                        .HasForeignKey("JobBee.Domain.Entities.Employer", "UserId")
                         .IsRequired()
-                        .HasConstraintName("Employers_UserId_fkey");
+                        .HasConstraintName("employers_user_id_fkey");
 
                     b.Navigation("CompanySize");
 
@@ -1927,74 +2281,74 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmployerBenefit", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmployerBenefit", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Employer", "Employer")
+                    b.HasOne("JobBee.Domain.Entities.Employer", "Employer")
                         .WithMany("EmployerBenefits")
                         .HasForeignKey("EmployerId")
                         .IsRequired()
-                        .HasConstraintName("EmployerBenefits_EmployerId_fkey");
+                        .HasConstraintName("employer_benefits_employer_id_fkey");
 
                     b.Navigation("Employer");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmployerReview", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmployerReview", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("EmployerReviews")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("EmployerReviews_CandidateId_fkey");
+                        .HasConstraintName("employer_reviews_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Employer", "Employer")
+                    b.HasOne("JobBee.Domain.Entities.Employer", "Employer")
                         .WithMany("EmployerReviews")
                         .HasForeignKey("EmployerId")
                         .IsRequired()
-                        .HasConstraintName("EmployerReviews_EmployerId_fkey");
+                        .HasConstraintName("employer_reviews_employer_id_fkey");
 
                     b.Navigation("Candidate");
 
                     b.Navigation("Employer");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmployerSocialMedium", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmployerSocialMedia", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Employer", "Employer")
+                    b.HasOne("JobBee.Domain.Entities.Employer", "Employer")
                         .WithMany("EmployerSocialMedia")
                         .HasForeignKey("EmployerId")
                         .IsRequired()
-                        .HasConstraintName("EmployerSocialMedia_EmployerId_fkey");
+                        .HasConstraintName("employer_social_media_employer_id_fkey");
 
                     b.Navigation("Employer");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Job", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Job", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Employer", "Employer")
+                    b.HasOne("JobBee.Domain.Entities.Employer", "Employer")
                         .WithMany("Jobs")
                         .HasForeignKey("EmployerId")
                         .IsRequired()
-                        .HasConstraintName("Jobs_EmployerId_fkey");
+                        .HasConstraintName("jobs_employer_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.ExperienceLevel", "ExperienceLevel")
+                    b.HasOne("JobBee.Domain.Entities.ExperienceLevel", "ExperienceLevel")
                         .WithMany("Jobs")
                         .HasForeignKey("ExperienceLevelId")
-                        .HasConstraintName("Jobs_ExperienceLevelId_fkey");
+                        .HasConstraintName("jobs_experience_level_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.JobCategory", "JobCategory")
+                    b.HasOne("JobBee.Domain.Entities.JobCategory", "JobCategory")
                         .WithMany("Jobs")
                         .HasForeignKey("JobCategoryId")
-                        .HasConstraintName("Jobs_JobCategoryId_fkey");
+                        .HasConstraintName("jobs_job_category_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.JobType", "JobType")
+                    b.HasOne("JobBee.Domain.Entities.JobType", "JobType")
                         .WithMany("Jobs")
                         .HasForeignKey("JobTypeId")
-                        .HasConstraintName("Jobs_JobTypeId_fkey");
+                        .HasConstraintName("jobs_job_type_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.EducationLevel", "MinEducation")
+                    b.HasOne("JobBee.Domain.Entities.EducationLevel", "MinEducation")
                         .WithMany("Jobs")
                         .HasForeignKey("MinEducationId")
-                        .HasConstraintName("Jobs_MinEducationId_fkey");
+                        .HasConstraintName("jobs_min_education_id_fkey");
 
                     b.Navigation("Employer");
 
@@ -2007,23 +2361,23 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("MinEducation");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobAlert", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobAlert", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("JobAlerts")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("JobAlerts_CandidateId_fkey");
+                        .HasConstraintName("job_alerts_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.JobCategory", "JobCategory")
+                    b.HasOne("JobBee.Domain.Entities.JobCategory", "JobCategory")
                         .WithMany("JobAlerts")
                         .HasForeignKey("JobCategoryId")
-                        .HasConstraintName("JobAlerts_JobCategoryId_fkey");
+                        .HasConstraintName("job_alerts_job_category_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.JobType", "JobType")
+                    b.HasOne("JobBee.Domain.Entities.JobType", "JobType")
                         .WithMany("JobAlerts")
                         .HasForeignKey("JobTypeId")
-                        .HasConstraintName("JobAlerts_JobTypeId_fkey");
+                        .HasConstraintName("job_alerts_job_type_id_fkey");
 
                     b.Navigation("Candidate");
 
@@ -2032,24 +2386,24 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("JobType");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobApplication", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobApplication", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("JobApplications")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("JobApplications_CandidateId_fkey");
+                        .HasConstraintName("job_applications_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Job", "Job")
+                    b.HasOne("JobBee.Domain.Entities.Job", "Job")
                         .WithMany("JobApplications")
                         .HasForeignKey("JobId")
                         .IsRequired()
-                        .HasConstraintName("JobApplications_JobId_fkey");
+                        .HasConstraintName("job_applications_job_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.CandidateResume", "Resume")
+                    b.HasOne("JobBee.Domain.Entities.CandidateResume", "Resume")
                         .WithMany("JobApplications")
                         .HasForeignKey("ResumeId")
-                        .HasConstraintName("JobApplications_ResumeId_fkey");
+                        .HasConstraintName("job_applications_resume_id_fkey");
 
                     b.Navigation("Candidate");
 
@@ -2058,32 +2412,32 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("Resume");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobCategory", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobCategory", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.JobCategory", "ParentCategory")
+                    b.HasOne("JobBee.Domain.Entities.JobCategory", "ParentCategory")
                         .WithMany("InverseParentCategory")
                         .HasForeignKey("ParentCategoryId")
-                        .HasConstraintName("JobCategories_ParentCategoryId_fkey");
+                        .HasConstraintName("job_categories_parent_category_id_fkey");
 
                     b.Navigation("ParentCategory");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobSearchLog", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobSearchLog", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.JobCategory", "JobCategory")
+                    b.HasOne("JobBee.Domain.Entities.JobCategory", "JobCategory")
                         .WithMany("JobSearchLogs")
                         .HasForeignKey("JobCategoryId")
-                        .HasConstraintName("JobSearchLogs_JobCategoryId_fkey");
+                        .HasConstraintName("job_search_logs_job_category_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.JobType", "JobType")
+                    b.HasOne("JobBee.Domain.Entities.JobType", "JobType")
                         .WithMany("JobSearchLogs")
                         .HasForeignKey("JobTypeId")
-                        .HasConstraintName("JobSearchLogs_JobTypeId_fkey");
+                        .HasConstraintName("job_search_logs_job_type_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("JobSearchLogs")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("JobSearchLogs_UserId_fkey");
+                        .HasConstraintName("job_search_logs_user_id_fkey");
 
                     b.Navigation("JobCategory");
 
@@ -2092,227 +2446,227 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobSkill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobSkill", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Job", "Job")
+                    b.HasOne("JobBee.Domain.Entities.Job", "Job")
                         .WithMany("JobSkills")
                         .HasForeignKey("JobId")
                         .IsRequired()
-                        .HasConstraintName("JobSkills_JobId_fkey");
+                        .HasConstraintName("job_skills_job_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Skill", "Skill")
+                    b.HasOne("JobBee.Domain.Entities.Skill", "Skill")
                         .WithMany("JobSkills")
                         .HasForeignKey("SkillId")
                         .IsRequired()
-                        .HasConstraintName("JobSkills_SkillId_fkey");
+                        .HasConstraintName("job_skills_skill_id_fkey");
 
                     b.Navigation("Job");
 
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Notification", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Notification", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.NotificationType", "NotificationType")
+                    b.HasOne("JobBee.Domain.Entities.NotificationType", "NotificationType")
                         .WithMany("Notifications")
                         .HasForeignKey("NotificationTypeId")
                         .IsRequired()
-                        .HasConstraintName("Notifications_NotificationTypeId_fkey");
+                        .HasConstraintName("notifications_notification_type_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("Notifications_UserId_fkey");
+                        .HasConstraintName("notifications_user_id_fkey");
 
                     b.Navigation("NotificationType");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Payment", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Subscription", "Subscription")
+                    b.HasOne("JobBee.Domain.Entities.Subscription", "Subscription")
                         .WithMany("Payments")
                         .HasForeignKey("SubscriptionId")
-                        .HasConstraintName("Payments_SubscriptionId_fkey");
+                        .HasConstraintName("payments_subscription_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("Payments")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("Payments_UserId_fkey");
+                        .HasConstraintName("payments_user_id_fkey");
 
                     b.Navigation("Subscription");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.ReportedContent", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.ReportedContent", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "ReporterUser")
+                    b.HasOne("JobBee.Domain.Entities.User", "ReporterUser")
                         .WithMany("ReportedContents")
                         .HasForeignKey("ReporterUserId")
                         .IsRequired()
-                        .HasConstraintName("ReportedContent_ReporterUserId_fkey");
+                        .HasConstraintName("reported_content_reporter_user_id_fkey");
 
                     b.Navigation("ReporterUser");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.RoleClaim", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.RoleClaim", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Role", "Role")
+                    b.HasOne("JobBee.Domain.Entities.Role", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("RoleClaims_RoleId_fkey");
+                        .HasConstraintName("role_claims_role_id_fkey");
 
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SavedCandidate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SavedCandidate", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("SavedCandidates")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("SavedCandidates_CandidateId_fkey");
+                        .HasConstraintName("saved_candidates_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Employer", "Employer")
+                    b.HasOne("JobBee.Domain.Entities.Employer", "Employer")
                         .WithMany("SavedCandidates")
                         .HasForeignKey("EmployerId")
                         .IsRequired()
-                        .HasConstraintName("SavedCandidates_EmployerId_fkey");
+                        .HasConstraintName("saved_candidates_employer_id_fkey");
 
                     b.Navigation("Candidate");
 
                     b.Navigation("Employer");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SavedJob", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SavedJob", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Candidate", "Candidate")
+                    b.HasOne("JobBee.Domain.Entities.Candidate", "Candidate")
                         .WithMany("SavedJobs")
                         .HasForeignKey("CandidateId")
                         .IsRequired()
-                        .HasConstraintName("SavedJobs_CandidateId_fkey");
+                        .HasConstraintName("saved_jobs_candidate_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.Job", "Job")
+                    b.HasOne("JobBee.Domain.Entities.Job", "Job")
                         .WithMany("SavedJobs")
                         .HasForeignKey("JobId")
                         .IsRequired()
-                        .HasConstraintName("SavedJobs_JobId_fkey");
+                        .HasConstraintName("saved_jobs_job_id_fkey");
 
                     b.Navigation("Candidate");
 
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Skill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Skill", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.SkillCategory", "Category")
+                    b.HasOne("JobBee.Domain.Entities.SkillCategory", "Category")
                         .WithMany("Skills")
                         .HasForeignKey("CategoryId")
-                        .HasConstraintName("Skills_CategoryId_fkey");
+                        .HasConstraintName("skills_category_id_fkey");
 
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Subscription", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Subscription", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.SubscriptionPlan", "Plan")
+                    b.HasOne("JobBee.Domain.Entities.SubscriptionPlan", "Plan")
                         .WithMany("Subscriptions")
                         .HasForeignKey("PlanId")
                         .IsRequired()
-                        .HasConstraintName("Subscriptions_PlanId_fkey");
+                        .HasConstraintName("subscriptions_plan_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("Subscriptions")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("Subscriptions_UserId_fkey");
+                        .HasConstraintName("subscriptions_user_id_fkey");
 
                     b.Navigation("Plan");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserActivityLog", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserActivityLog", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("UserActivityLogs")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("UserActivityLogs_UserId_fkey");
+                        .HasConstraintName("user_activity_logs_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserClaim", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserClaim", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("UserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("UserClaims_UserId_fkey");
+                        .HasConstraintName("user_claims_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserLogin", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserLogin", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("UserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("UserLogins_UserId_fkey");
+                        .HasConstraintName("user_logins_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.UserToken", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.UserToken", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("UserTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("UserTokens_UserId_fkey");
+                        .HasConstraintName("user_tokens_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.WebsiteReview", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.WebsiteReview", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.User", "User")
+                    b.HasOne("JobBee.Domain.Entities.User", "User")
                         .WithMany("WebsiteReviews")
                         .HasForeignKey("UserId")
                         .IsRequired()
-                        .HasConstraintName("WebsiteReviews_UserId_fkey");
+                        .HasConstraintName("website_reviews_user_id_fkey");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UserRole", b =>
+            modelBuilder.Entity("user_roles", b =>
                 {
-                    b.HasOne("JobBee.Api.Models.Role", null)
+                    b.HasOne("JobBee.Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("UserRoles_RoleId_fkey");
+                        .HasConstraintName("user_roles_role_id_fkey");
 
-                    b.HasOne("JobBee.Api.Models.User", null)
+                    b.HasOne("JobBee.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("UserRoles_UserId_fkey");
+                        .HasConstraintName("user_roles_user_id_fkey");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Candidate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Candidate", b =>
                 {
                     b.Navigation("CandidateEducations");
 
@@ -2337,29 +2691,29 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("SavedJobs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CandidateResume", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CandidateResume", b =>
                 {
                     b.Navigation("JobApplications");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.CompanySize", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.CompanySize", b =>
                 {
                     b.Navigation("Employers");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EducationLevel", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EducationLevel", b =>
                 {
                     b.Navigation("CandidateEducations");
 
                     b.Navigation("Jobs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.EmailTemplate", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.EmailTemplate", b =>
                 {
                     b.Navigation("EmailLogs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Employer", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Employer", b =>
                 {
                     b.Navigation("CompanyPhotos");
 
@@ -2374,17 +2728,17 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("SavedCandidates");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.ExperienceLevel", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.ExperienceLevel", b =>
                 {
                     b.Navigation("Jobs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Industry", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Industry", b =>
                 {
                     b.Navigation("Employers");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Job", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Job", b =>
                 {
                     b.Navigation("JobApplications");
 
@@ -2393,7 +2747,7 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("SavedJobs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobCategory", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobCategory", b =>
                 {
                     b.Navigation("InverseParentCategory");
 
@@ -2404,7 +2758,7 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("Jobs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.JobType", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.JobType", b =>
                 {
                     b.Navigation("JobAlerts");
 
@@ -2413,39 +2767,39 @@ namespace JobBee.Persistence.Migrations
                     b.Navigation("Jobs");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.NotificationType", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.NotificationType", b =>
                 {
                     b.Navigation("Notifications");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Role", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Role", b =>
                 {
                     b.Navigation("RoleClaims");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Skill", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Skill", b =>
                 {
                     b.Navigation("CandidateSkills");
 
                     b.Navigation("JobSkills");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SkillCategory", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SkillCategory", b =>
                 {
                     b.Navigation("Skills");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.Subscription", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.Subscription", b =>
                 {
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.SubscriptionPlan", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.SubscriptionPlan", b =>
                 {
                     b.Navigation("Subscriptions");
                 });
 
-            modelBuilder.Entity("JobBee.Api.Models.User", b =>
+            modelBuilder.Entity("JobBee.Domain.Entities.User", b =>
                 {
                     b.Navigation("Candidate");
 

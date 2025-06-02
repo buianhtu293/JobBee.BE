@@ -1,25 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JobBee.Api.Models;
+namespace JobBee.Domain.Entities;
 
+[Table("candidate_portfolio")]
 public partial class CandidatePortfolio
 {
-    public Guid Id { get; set; }
+	[Column("id")]
+	public Guid Id { get; set; }
 
-    public Guid CandidateId { get; set; }
+	[Column("candidate_id")]
+	public Guid CandidateId { get; set; }
 
-    public string Title { get; set; } = null!;
+	[Column("title")]
+	public string Title { get; set; } = null!;
 
-    public string? Description { get; set; }
+	[Column("description")]
+	public string? Description { get; set; }
 
-    public string? ProjectUrl { get; set; }
+	[Column("project_url")]
+	public string? ProjectUrl { get; set; }
 
-    public string? ImageUrl { get; set; }
+	[Column("image_url")]
+	public string? ImageUrl { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+	[Column("created_at")]
+	public DateTime? CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+	[Column("updated_at")]
+	public DateTime? UpdatedAt { get; set; }
 
-    public virtual Candidate Candidate { get; set; } = null!;
+	public virtual Candidate Candidate { get; set; } = null!;
 }
