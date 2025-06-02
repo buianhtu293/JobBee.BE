@@ -1,7 +1,9 @@
 using JobBee.Api.Middleware;
+using JobBee.Api.OptionsSetup;
 using JobBee.Application;
 using JobBee.Infrastructure;
 using JobBee.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace JobBee.Api
 {
@@ -30,6 +32,13 @@ namespace JobBee.Api
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
+			//Jwt
+			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer();
+
+			builder.Services.ConfigureOptions<JwtOptionsSetup>();
+			builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 			var app = builder.Build();
 
 			app.UseMiddleware<ExceptionMiddleware>();
@@ -43,8 +52,8 @@ namespace JobBee.Api
 
 			app.UseHttpsRedirection();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
-
 
 			app.MapControllers();
 
