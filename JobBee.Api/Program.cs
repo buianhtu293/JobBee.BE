@@ -43,11 +43,12 @@ namespace JobBee.Api
 
 			var app = builder.Build();
 
-			//using (var scope = app.Services.CreateScope())
-			//{
-			//	var dbContext = scope.ServiceProvider.GetRequiredService<JobBeeContext>();
-			//	dbContext.Database.Migrate(); // Applies any pending EF Core migrations
-			//}
+
+			using (var scope = app.Services.CreateScope())
+			{
+				var dbContext = scope.ServiceProvider.GetRequiredService<JobBeeContext>();
+				dbContext.Database.Migrate(); // Applies any pending EF Core migrations
+			}
 
 			app.UseMiddleware<ExceptionMiddleware>();
 
