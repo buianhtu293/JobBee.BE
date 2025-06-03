@@ -15,7 +15,7 @@
 		/// <summary>
 		/// Total number of pages, calculated from TotalItems and PageSize
 		/// </summary>
-		public int TotalPages => (int)Math.Ceiling((double)TotalItems / PageSize);
+		public long TotalPages => (long)Math.Ceiling((double)TotalItems / PageSize);
 
 		/// <summary>
 		/// Current page number
