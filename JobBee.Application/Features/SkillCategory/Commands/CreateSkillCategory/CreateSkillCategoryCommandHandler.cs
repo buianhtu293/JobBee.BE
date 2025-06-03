@@ -45,7 +45,7 @@ namespace JobBee.Application.Features.SkillCategory.Commands.CreateSkillCategory
 			var skillCategoryCreated = _mapper.Map<SkillCategoryDto>(skillCategoryToCreate);
 			var data = new ApiResponse<SkillCategoryDto>("Success", 201, skillCategoryCreated);
 
-			_unitOfWork.SaveChangesAsync();
+			await _unitOfWork.SaveChangesAsync();
 
 			return data;
 		}
