@@ -1,4 +1,7 @@
-﻿using JobBee.Shared.Paginators;
+﻿using Elastic.Clients.Elasticsearch;
+using JobBee.Shared.Paginators;
+using Nest;
+using System.Linq.Expressions;
 
 namespace JobBee.Application.ElasticSearchService
 {
@@ -33,12 +36,21 @@ namespace JobBee.Application.ElasticSearchService
 		Task<TModel?> Get(string key);
 
 		/// <summary>
-		/// Get list with paging
+		/// 
 		/// </summary>
-		/// <param name="page">number of page</param>
-		/// <param name="pageSize">number of records in a page</param>
-		/// <returns>page result</returns>
-		Task<PageResult<TModel>> GetPagination(int page, int pageSize);
+		/// <typeparam name="TProperty"></typeparam>
+		/// <param name="searchConfig"></param>
+		/// <param name="orderBy"></param>
+		/// <param name="ascending"></param>
+		/// <param name="page"></param>
+		/// <param name="pageSize"></param>
+		/// <returns></returns>
+		Task<PageResult<TModel>> GetList<TProperty>(
+			Func<SearchRequestDescriptor<TModel>, SearchRequestDescriptor<TModel>>? searchConfig = null,
+			Expression<Func<TModel, TProperty>>? orderBy = null,
+			bool? ascending = true,
+			int? page = 1,
+			int? pageSize = 20);
 
 		/// <summary>
 		/// Remove a model with a specific key 

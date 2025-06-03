@@ -10,7 +10,7 @@
 		/// <summary>
 		/// Total number of items across all pages
 		/// </summary>
-		public int TotalItems { get; private set; }
+		public long TotalItems { get; private set; }
 
 		/// <summary>
 		/// Total number of pages, calculated from TotalItems and PageSize
@@ -49,7 +49,7 @@
 		/// <param name="totalItems">The total numberc of items across all pages</param>
 		/// <param name="pageIndex">The current page number</param>
 		/// <param name="pageSize">The number of items per page</param>
-		public PageResult(List<TModel> items, int totalItems, int pageIndex, int pageSize)
+		public PageResult(List<TModel> items, long totalItems, int pageIndex, int pageSize)
 		{
 			Items = items ?? new List<TModel>();
 			TotalItems = totalItems;
