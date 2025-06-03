@@ -3,7 +3,9 @@ using JobBee.Api.OptionsSetup;
 using JobBee.Application;
 using JobBee.Infrastructure;
 using JobBee.Persistence;
+using JobBee.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Api
 {
@@ -40,6 +42,12 @@ namespace JobBee.Api
 			builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
 			var app = builder.Build();
+
+			//using (var scope = app.Services.CreateScope())
+			//{
+			//	var dbContext = scope.ServiceProvider.GetRequiredService<JobBeeContext>();
+			//	dbContext.Database.Migrate(); // Applies any pending EF Core migrations
+			//}
 
 			app.UseMiddleware<ExceptionMiddleware>();
 

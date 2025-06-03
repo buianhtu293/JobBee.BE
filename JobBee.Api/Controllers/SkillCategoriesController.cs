@@ -1,4 +1,8 @@
-﻿using JobBee.Application.Features.SkillCategory.Queries.GetAllSkillCategories;
+﻿using JobBee.Application.Features.SkillCategory.Commands.CreateSkillCategory;
+using JobBee.Application.Features.SkillCategory.Commands.DeleteSkillCategory;
+using JobBee.Application.Features.SkillCategory.Commands.UpdateSkillCategory;
+using JobBee.Application.Features.SkillCategory.Queries.GetAllSkillCategories;
+using JobBee.Application.Features.SkillCategory.Queries.GetSkillCategoryDetails;
 using JobBee.Application.Models.Response;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,27 +32,45 @@ namespace JobBee.Api.Controllers
 
 		// GET api/<SkillCategoriesController>/5
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public async Task<ActionResult<ApiResponse<SkillCategoryDetailDto>>> Get(Guid id)
 		{
-			return "value";
+			var skillCategory = await _mediator.Send(new GetSkillCategoryDetailQuery(id));
+			return Ok(skillCategory);
 		}
 
 		// POST api/<SkillCategoriesController>
 		[HttpPost]
-		public void Post([FromBody] string value)
+		[ProducesResponseType(201)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<ApiResponse<SkillCategoryDto>> Post([FromBody] CreateSkillCategoryCommand skillCategory)
 		{
+			var response = await _mediator.Send(skillCategory);
+			return response;
 		}
 
 		// PUT api/<SkillCategoriesController>/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		[HttpPut]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> Put([FromBody] UpdateSkillCategoryCommand updateSkillCategoryCommand)
 		{
+			var command = _mediator.Send(updateSkillCategoryCommand);
+			return NoContent();
 		}
 
 		// DELETE api/<SkillCategoriesController>/5
 		[HttpDelete("{id}")]
-		public void Delete(int id)
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<ActionResult> Delete(Guid id)
 		{
+			var command = new DeleteSkillcategoryCommand { Id = id };
+			await _mediator.Send(command);
+			return NoContent();
 		}
 	}
 }

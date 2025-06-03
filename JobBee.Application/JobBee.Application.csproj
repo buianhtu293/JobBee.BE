@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Company\Queries\" />
-    <Folder Include="Features\SkillCategory\Commands\" />
   </ItemGroup>
 
 </Project>
