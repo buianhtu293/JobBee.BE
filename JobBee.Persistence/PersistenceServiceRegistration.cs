@@ -48,6 +48,7 @@ namespace JobBee.Persistence
 			services.AddScoped<IIndustryRepository, IndustryRepository>();
 
 			services.AddSingleton<IPasswordHasher, PasswordHasher>();
+			services.AddScoped<IRoleRepository, RoleRepository>();
 
 			return services;
 		}
