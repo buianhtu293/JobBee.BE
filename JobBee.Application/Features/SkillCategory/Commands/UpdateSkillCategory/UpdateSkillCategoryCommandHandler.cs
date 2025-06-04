@@ -12,12 +12,12 @@ namespace JobBee.Application.Features.SkillCategory.Commands.UpdateSkillCategory
 	{
 		private readonly IMapper _mapper;
 		private readonly ISkillCategoryRepository _skillCategoryRepository;
-		private readonly IAppLogger<GetSkillCategoryQueryHandler> _logger;
+		private readonly IAppLogger<UpdateSkillCategoryCommandHandler> _logger;
 		private readonly IUnitOfWork<Domain.Entities.SkillCategory, Guid> _unitOfWork;
 
 		public UpdateSkillCategoryCommandHandler(IMapper mapper,
 			ISkillCategoryRepository skillCategoryRepository,
-			IAppLogger<GetSkillCategoryQueryHandler> logger,
+			IAppLogger<UpdateSkillCategoryCommandHandler> logger,
 			IUnitOfWork<Domain.Entities.SkillCategory, Guid> unitOfWork)
 		{
 			this._mapper = mapper;

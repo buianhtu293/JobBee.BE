@@ -20,9 +20,9 @@ namespace JobBee.Application.Features.SkillCategory.Commands.CreateSkillCategory
 				.NotNull()
 				.MaximumLength(70).WithMessage("{PropertyName} must be fewer than 70 characters");
 
-			//RuleFor(p => p)
-			//	.MustAsync(SkillCategoryNameUnique)
-			//	.WithMessage("Skill Category already exists");
+			RuleFor(p => p)
+				.MustAsync(SkillCategoryNameUnique)
+				.WithMessage("Skill Category already exists");
 
 			_skillCategoryRepository = skillCategoryRepository;
 		}

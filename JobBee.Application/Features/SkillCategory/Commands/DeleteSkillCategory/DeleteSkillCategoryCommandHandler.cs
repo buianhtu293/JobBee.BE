@@ -11,12 +11,12 @@ namespace JobBee.Application.Features.SkillCategory.Commands.DeleteSkillCategory
 	{
 		private readonly IMapper _mapper;
 		private readonly ISkillCategoryRepository _skillCategoryRepository;
-		private readonly IAppLogger<GetSkillCategoryQueryHandler> _logger;
+		private readonly IAppLogger<DeleteSkillCategoryCommandHandler> _logger;
 		private readonly IUnitOfWork<Domain.Entities.SkillCategory, Guid> _unitOfWork;
 
 		public DeleteSkillCategoryCommandHandler(IMapper mapper,
 			ISkillCategoryRepository skillCategoryRepository,
-			IAppLogger<GetSkillCategoryQueryHandler> logger,
+			IAppLogger<DeleteSkillCategoryCommandHandler> logger,
 			IUnitOfWork<Domain.Entities.SkillCategory, Guid> unitOfWork)
 		{
 			this._mapper = mapper;
