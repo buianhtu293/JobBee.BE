@@ -51,14 +51,14 @@ namespace JobBee.Api.Controllers
 
 		// PUT api/<SkillCategoriesController>/5
 		[HttpPut]
-		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(400)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> Put([FromBody] UpdateSkillCategoryCommand updateSkillCategoryCommand)
+		public async Task<ApiResponse<SkillCategoryDto>> Put([FromBody] UpdateSkillCategoryCommand updateSkillCategoryCommand)
 		{
-			var command = _mediator.Send(updateSkillCategoryCommand);
-			return NoContent();
+			var command = await _mediator.Send(updateSkillCategoryCommand);
+			return command;
 		}
 
 		// DELETE api/<SkillCategoriesController>/5

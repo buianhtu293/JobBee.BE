@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using JobBee.Application.Contracts.Logging;
 using JobBee.Application.Contracts.Persistence;
 using JobBee.Application.Exceptions;
 using JobBee.Application.Features.SkillCategory.Queries.GetAllSkillCategories;
+using JobBee.Application.Models.Response;
 using MediatR;
 
 namespace JobBee.Application.Features.SkillCategory.Commands.UpdateSkillCategory
 {
-	public class UpdateSkillCategoryCommandHandler : IRequestHandler<UpdateSkillCategoryCommand, Unit>
+	public class UpdateSkillCategoryCommandHandler : IRequestHandler<UpdateSkillCategoryCommand, ApiResponse<SkillCategoryDto>>
 	{
 		private readonly IMapper _mapper;
 		private readonly ISkillCategoryRepository _skillCategoryRepository;
@@ -29,7 +25,7 @@ namespace JobBee.Application.Features.SkillCategory.Commands.UpdateSkillCategory
 			this._logger = logger;
 			_unitOfWork = unitOfWork;
 		}
-		public async Task<Unit> Handle(UpdateSkillCategoryCommand request, CancellationToken cancellationToken)
+		public async Task<ApiResponse<SkillCategoryDto>> Handle(UpdateSkillCategoryCommand request, CancellationToken cancellationToken)
 		{
 			var validator = new UpdateSkillCategoryCommandValidator(_skillCategoryRepository);
 			var validationResult = await validator.ValidateAsync(request);
@@ -43,9 +39,12 @@ namespace JobBee.Application.Features.SkillCategory.Commands.UpdateSkillCategory
 
 			_skillCategoryRepository.Update(skillCategoryToUpdate);
 
+			var skillCategoryUpdated = _mapper.Map<SkillCategoryDto>(skillCategoryToUpdate);
+			var data = new ApiResponse<SkillCategoryDto>("Success", 200, skillCategoryUpdated);
+
 			await _unitOfWork.SaveChangesAsync();
 
-			return Unit.Value;
+			return data;
 		}
 	}
 }

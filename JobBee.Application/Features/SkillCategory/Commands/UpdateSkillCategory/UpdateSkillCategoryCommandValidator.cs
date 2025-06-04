@@ -27,9 +27,7 @@ namespace JobBee.Application.Features.SkillCategory.Commands.UpdateSkillCategory
 			if (existing == null)
 				return true;
 
-			var result = existing.Id == command.Id;
-
-			return result;
+			return existing.Id == command.Id;
 		}
 	}
 }

@@ -36,6 +36,7 @@ namespace JobBee.Persistence
 
 			services.AddScoped<ISkillCategoryRepository, SkillCategoryRepository>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<IRoleRepository, RoleRepository>();
 
 			return services;
 		}

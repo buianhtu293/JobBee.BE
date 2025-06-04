@@ -4,7 +4,6 @@ using JobBee.Application.Contracts.Persistence;
 using JobBee.Application.Exceptions;
 using JobBee.Application.Features.SkillCategory.Queries.GetAllSkillCategories;
 using JobBee.Application.Models.Response;
-using JobBee.Domain.Entities;
 using MediatR;
 
 namespace JobBee.Application.Features.SkillCategory.Commands.CreateSkillCategory
