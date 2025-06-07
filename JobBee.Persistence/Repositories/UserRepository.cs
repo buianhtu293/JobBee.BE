@@ -8,10 +8,13 @@ namespace JobBee.Persistence.Repositories
 	public class UserRepository : GenericRepository<User, Guid>, IUserRepository
 	{
 		private readonly JobBeeContext _context;
+		private readonly IPasswordHasher _passwordHasher;
 
-		public UserRepository(JobBeeContext context) : base(context)
+		public UserRepository(JobBeeContext context,
+			IPasswordHasher passwordHasher) : base(context)
 		{
 			this._context = context;
+			this._passwordHasher = passwordHasher;
 		}
 
 		public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
@@ -27,5 +30,24 @@ namespace JobBee.Persistence.Repositories
 		!await _context
 			.Set<User>()
 			.AnyAsync(member => member.Email == email, cancellationToken);
+
+		public async Task<User> Login(string email, string password)
+		{
+			User? user = await GetByEmailAsync(email);
+
+			if(user is null)
+			{
+				throw new Exception("The user was not found");
+			}
+
+			bool verified = _passwordHasher.Verify(password, user.PasswordHash);
+
+			if(!verified)
+			{
+				user = null;
+			}
+
+			return user;
+		}
 	}
 }
