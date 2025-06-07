@@ -62,7 +62,7 @@ namespace JobBee.Api
 			app.UseHttpsRedirection();
 
 			app.UseAuthentication();
-			app.UseAuthorization();
+			//app.UseAuthorization();
 
 			app.MapControllers();
 
