@@ -19,7 +19,7 @@ namespace JobBee.Application.Features.User.Commands.Register
 		private readonly IEmailService _emailService;
 
 		public RegisterUserCommandHandler(IMapper mapper, 
-			IUserRepository userRepository,
+			IUserRepository userRepository, 
 			IUnitOfWork<Domain.Entities.User, Guid> unitOfWork,
 			IPasswordHasher passwordHasher,
 			IRoleRepository roleRepository,
@@ -83,6 +83,8 @@ namespace JobBee.Application.Features.User.Commands.Register
 
 			var userCreated = _mapper.Map<RegisterUserDto>(userToCreate);
 			var data = new ApiResponse<RegisterUserDto>("Success", 201, userCreated);
+
+			await _unitOfWork.SaveChangesAsync();
 
 			return data;
 
