@@ -48,6 +48,12 @@ namespace JobBee.Application.CloudService
 			return $"{cloudFrontUrl}/{key}";
 		}
 
+		/// <summary>
+		/// delete file
+		/// </summary>
+		/// <param name="url">Pass file url</param>
+		/// <returns>delete response</returns>
+
 		public async Task<DeleteObjectResponse> DeleteFile(string url)
 		{
 			var response = await Delete(url);
