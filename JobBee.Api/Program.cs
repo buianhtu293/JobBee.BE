@@ -6,6 +6,7 @@ using JobBee.Persistence;
 using JobBee.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace JobBee.Api
 {
@@ -32,7 +33,30 @@ namespace JobBee.Api
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen();
+			builder.Services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new OpenApiInfo
+				{
+					Title = "File Upload API",
+					Version = "v1"
+				});
+
+				c.MapType<IFormFile>(() => new OpenApiSchema
+				{
+					Type = "string",
+					Format = "binary"
+				});
+
+				c.MapType<IFormFileCollection>(() => new OpenApiSchema
+				{
+					Type = "array",
+					Items = new OpenApiSchema
+					{
+						Type = "string",
+						Format = "binary"
+					}
+				});
+			});
 
 			//Jwt
 			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

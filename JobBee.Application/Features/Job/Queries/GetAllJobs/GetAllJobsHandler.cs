@@ -34,7 +34,7 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 					if (request.Categories?.Any() == true)
 						mustClauses.Add(new TermsQuery
 						{
-							Field = "job_category",
+							Field = "job_category.keyword",
 							Terms = new TermsQueryField(request.Categories.Select(FieldValue.String).ToList())
 						});
 
@@ -55,14 +55,14 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 					if (request.JobTypes?.Any() == true)
 						mustClauses.Add(new TermsQuery
 						{
-							Field = "job_type",
+							Field = "job_type.keyword",
 							Terms = new TermsQueryField(request.JobTypes.Select(FieldValue.String).ToList())
 						});
 
 					if (request.EducationLevels?.Any() == true)
 						mustClauses.Add(new TermsQuery
 						{
-							Field = "min_education_level",
+							Field = "min_education_level.keyword",
 							Terms = new TermsQueryField(request.EducationLevels.Select(FieldValue.String).ToList())
 						});
 
