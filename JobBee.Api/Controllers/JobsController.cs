@@ -1,26 +1,33 @@
-using JobBee.Application.Features.Job.Commands.CreateJob;
 using JobBee.Application.Features.Job.Queries.GetAllJobs;
+using JobBee.Application.Features.Job.Queries.GetDetail;
+using JobBee.Shared.APIRoutes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.DependencyResolver;
 
 namespace JobBee.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(JobRoutes.Index)]
     [ApiController]
     public class JobsController(IMediator mediator) : ControllerBase
     {
-        [HttpGet]
+        [HttpGet(JobRoutes.ACTION.GetListJobs)]
         public async Task<IActionResult> GetJobs([FromQuery] GetAllJobsQuery query)
         {
             var result = await mediator.Send(query);
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateJob([FromBody] CreateJobCommand command, IFormFile file)
+        [HttpGet]
+        [Route(JobRoutes.ACTION.GetDetail)]
+        public async Task<IActionResult> GetDetail([FromRoute] Guid id)
         {
-            using var stream = file.OpenReadStream();
+            var job = await mediator.Send(new GetJobDetailQuery() { Id = id });
+            return Ok(job);
+        }
+
+        [HttpPost(JobRoutes.ACTION.Create)]
+        public async Task<IActionResult> CreateJob([FromBody] CreateJobCommand command)
+        {
             var result = await mediator.Send(command);
             return Ok(result);
         }
