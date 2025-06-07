@@ -27,7 +27,7 @@ public partial class Notification
 	public string? RelatedEntityType { get; set; }
 
 	[Column("related_entity_id")]
-	public int? RelatedEntityId { get; set; }
+	public Guid? RelatedEntityId { get; set; }
 
 	[Column("created_at")]
 	public DateTime? CreatedAt { get; set; }

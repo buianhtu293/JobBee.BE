@@ -33,7 +33,7 @@ namespace JobBee.Application.ElasticSearchService
 		/// </summary>
 		/// <param name="key">key of model</param>
 		/// <returns>model</returns>
-		Task<TModel?> Get(string key);
+		Task<TModel?> Get(string key, string? index = null);
 
 		/// <summary>
 		/// 
@@ -49,20 +49,21 @@ namespace JobBee.Application.ElasticSearchService
 			Func<SearchRequestDescriptor<TModel>, SearchRequestDescriptor<TModel>>? searchConfig = null,
 			Expression<Func<TModel, TProperty>>? orderBy = null,
 			bool? ascending = true,
-			int? page = 1,
-			int? pageSize = 20);
+			int? page = 0,
+			int? pageSize = 20,
+			string? index = null);
 
 		/// <summary>
 		/// Remove a model with a specific key 
 		/// </summary>
 		/// <param name="key">Key of model</param>
 		/// <returns>true if remove successfully</returns>
-		Task<bool> Remove(string key);
+		Task<bool> Remove(string key, string? index = null);
 
 		/// <summary>
 		/// Remove all model
 		/// </summary>
 		/// <returns>Number of records which were removed</returns>
-		Task<long?> RemoveAll();
+		Task<long?> RemoveAll(string? index = null);
 	}
 }

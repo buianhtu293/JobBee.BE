@@ -8,8 +8,8 @@
 		{
 			public const string GetListJobs = "";
 			public const string GetDetail = "{id}";
-			public const string Create = "add";
-			public const string Edit = "edit";
+			public const string Create = "";
+			public const string Edit = "";
 			public const string Delete = "{id}";
 		}
 	}

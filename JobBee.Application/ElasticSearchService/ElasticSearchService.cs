@@ -53,9 +53,9 @@ namespace JobBee.Application.ElasticSearchService
 			}
 		}
 
-		public async Task<TModel?> Get(string key)
+		public async Task<TModel?> Get(string key, string? index = null)
 		{
-			var response = await _elasticsearchClient.GetAsync<TModel>(key, g => g.Index(_elasticsearchSettings.DefaultIndex));
+			var response = await _elasticsearchClient.GetAsync<TModel>(key, g => g.Index(index ?? _elasticsearchSettings.DefaultIndex));
 
 			return response.Source;
 		}
@@ -65,11 +65,12 @@ namespace JobBee.Application.ElasticSearchService
 			Expression<Func<TModel, TProperty>>? orderBy = null,
 			bool? ascending = true,
 			int? page = 0,
-			int? pageSize = 20)
+			int? pageSize = 20,
+			string? index = null)
 		{
 			var searchResponse = await _elasticsearchClient.SearchAsync<TModel>(s =>
 			{
-				s.Indices(_elasticsearchSettings.DefaultIndex);
+				s.Indices(index ?? _elasticsearchSettings.DefaultIndex);
 
 				// Apply custom search configuration
 				if (searchConfig != null)
@@ -85,7 +86,6 @@ namespace JobBee.Application.ElasticSearchService
 						if (orderBy != null)
 						{
 							var fieldName = GetPropertyName<TProperty>(orderBy);
-							// FIXED: Sử dụng Action<FieldSortDescriptor>
 							sort.Field(fieldName, descriptor => descriptor
 								.Order(ascending!.Value ? SortOrder.Asc : SortOrder.Desc)
 							);
@@ -101,7 +101,7 @@ namespace JobBee.Application.ElasticSearchService
 				}
 			});
 
-			if(!searchResponse.IsValidResponse)
+			if (!searchResponse.IsValidResponse)
 			{
 				throw new Exception("Invalid");
 			}
@@ -118,16 +118,17 @@ namespace JobBee.Application.ElasticSearchService
 			throw new ArgumentException("Expression must be a member expression");
 		}
 
-		public async Task<bool> Remove(string key)
+		public async Task<bool> Remove(string key, string? index = null)
 		{
-			var response = await _elasticsearchClient.DeleteAsync<TModel>(key, d => d.Index(_elasticsearchSettings.DefaultIndex));
+			var response = await _elasticsearchClient.DeleteAsync<TModel>(key,
+				d => d.Index(index ?? _elasticsearchSettings.DefaultIndex));
 
 			return response.IsValidResponse;
 		}
 
-		public async Task<long?> RemoveAll()
+		public async Task<long?> RemoveAll(string? index = null)
 		{
-			var response = await _elasticsearchClient.DeleteByQueryAsync<TModel>(d => d.Indices(_elasticsearchSettings.DefaultIndex));
+			var response = await _elasticsearchClient.DeleteByQueryAsync<TModel>(d => d.Indices(index ??_elasticsearchSettings.DefaultIndex));
 
 			return response.IsValidResponse ? response.Deleted : default;
 		}
