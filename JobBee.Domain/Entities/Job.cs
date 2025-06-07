@@ -104,4 +104,6 @@ public partial class Job
 	public virtual EducationLevel? MinEducation { get; set; }
 
 	public virtual ICollection<SavedJob> SavedJobs { get; set; } = new List<SavedJob>();
+
+	public virtual ICollection<JobAlert> JobAlerts { get; set; } = new List<JobAlert>();
 }

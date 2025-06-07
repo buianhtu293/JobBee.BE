@@ -13,18 +13,21 @@ namespace JobBee.Application.Features.User.Commands.Register
 		private readonly IUnitOfWork<Domain.Entities.User, Guid> _unitOfWork;
 		private readonly IPasswordHasher _passwordHasher;
 		private readonly IMediator _mediator;
+		private readonly IRoleRepository _roleRepository;
 
 		public RegisterUserCommandHandler(IMapper mapper, 
-			IUserRepository userRepository, 
+			IUserRepository userRepository,
 			IUnitOfWork<Domain.Entities.User, Guid> unitOfWork,
 			IPasswordHasher passwordHasher,
-			IMediator mediator)
+			IMediator mediator,
+			IRoleRepository roleRepository)
 		{
 			_mapper = mapper;
 			_userRepository = userRepository;
 			_unitOfWork = unitOfWork;
 			_passwordHasher = passwordHasher;
 			_mediator = mediator;
+			_roleRepository = roleRepository;
 		}
 
 		public async Task<ApiResponse<RegisterUserDto>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -53,6 +56,25 @@ namespace JobBee.Application.Features.User.Commands.Register
 			userToCreate.LockoutEnd = null;
 			userToCreate.LockoutEnabled = false;
 			userToCreate.AccessFailedCount = 0;
+
+			if (request.IsCandidate!.Value)
+			{
+				var role = await _roleRepository.GetByName("candidate");
+
+				var roles = new List<Domain.Entities.Role>();
+				roles.Add(role!);
+
+				userToCreate.Roles = roles;
+			}
+			else
+			{
+				var role = await _roleRepository.GetByName("employer");
+
+				var roles = new List<Domain.Entities.Role>();
+				roles.Add(role!);
+
+				userToCreate.Roles = roles;
+			}
 
 			_userRepository.Insert(userToCreate);
 

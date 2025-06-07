@@ -473,23 +473,11 @@ public partial class JobBeeContext : DbContext
 			entity.Property(e => e.Id).ValueGeneratedNever();
 			entity.Property(e => e.AlertName).HasMaxLength(255);
 			entity.Property(e => e.CreatedAt).HasColumnType("timestamp without time zone");
-			entity.Property(e => e.Frequency).HasMaxLength(20);
-			entity.Property(e => e.Location).HasMaxLength(255);
-			entity.Property(e => e.MinSalary).HasPrecision(12, 2);
-			entity.Property(e => e.UpdatedAt).HasColumnType("timestamp without time zone");
 
 			entity.HasOne(d => d.Candidate).WithMany(p => p.JobAlerts)
 				.HasForeignKey(d => d.CandidateId)
 				.OnDelete(DeleteBehavior.ClientSetNull)
 				.HasConstraintName("job_alerts_candidate_id_fkey");
-
-			entity.HasOne(d => d.JobCategory).WithMany(p => p.JobAlerts)
-				.HasForeignKey(d => d.JobCategoryId)
-				.HasConstraintName("job_alerts_job_category_id_fkey");
-
-			entity.HasOne(d => d.JobType).WithMany(p => p.JobAlerts)
-				.HasForeignKey(d => d.JobTypeId)
-				.HasConstraintName("job_alerts_job_type_id_fkey");
 		});
 
 		modelBuilder.Entity<JobApplication>(entity =>

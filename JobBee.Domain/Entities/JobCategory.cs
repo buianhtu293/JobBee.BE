@@ -20,9 +20,6 @@ public partial class JobCategory
 	// Collection of child categories
 	public virtual ICollection<JobCategory> InverseParentCategory { get; set; } = new List<JobCategory>();
 
-	// Navigation for related JobAlerts with this category
-	public virtual ICollection<JobAlert> JobAlerts { get; set; } = new List<JobAlert>();
-
 	// Navigation for related JobSearchLogs with this category
 	public virtual ICollection<JobSearchLog> JobSearchLogs { get; set; } = new List<JobSearchLog>();
 

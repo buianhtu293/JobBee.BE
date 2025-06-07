@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JobBee.Application.Features.Role.Queries.GetAllRoles;
 
 namespace JobBee.Application.Features.User.Commands.Register
 {
@@ -24,5 +25,6 @@ namespace JobBee.Application.Features.User.Commands.Register
 		public DateTime? LockoutEnd { get; set; }
 		public bool LockoutEnabled { get; set; }
 		public int AccessFailedCount { get; set; }
+		public virtual ICollection<RoleDto> Roles { get; set; } = new List<RoleDto>();
 	}
 }

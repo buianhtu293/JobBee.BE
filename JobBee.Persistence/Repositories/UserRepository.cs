@@ -24,6 +24,7 @@ namespace JobBee.Persistence.Repositories
 			.FirstOrDefaultAsync(member => member.Email == email, cancellationToken);
 		}
 
+
 		public async Task<bool> IsEmailUniqueAsync(
 		string email,
 		CancellationToken cancellationToken = default) =>

@@ -9,5 +9,6 @@ namespace JobBee.Application.Contracts.Persistence
 		Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken = default);
 
 		Task<User> Login(string email, string password);
+
 	}
 }
