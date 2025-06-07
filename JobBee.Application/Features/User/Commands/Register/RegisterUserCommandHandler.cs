@@ -19,7 +19,7 @@ namespace JobBee.Application.Features.User.Commands.Register
 		private readonly IEmailService _emailService;
 
 		public RegisterUserCommandHandler(IMapper mapper, 
-			IUserRepository userRepository, 
+			IUserRepository userRepository,
 			IUnitOfWork<Domain.Entities.User, Guid> unitOfWork,
 			IPasswordHasher passwordHasher,
 			IRoleRepository roleRepository,
