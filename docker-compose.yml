@@ -10,7 +10,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123
     volumes:
-      - ./.containers/products-db:/var/lib/postgresql/data
+      - jobbee_pgdata:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     networks:
@@ -91,5 +91,6 @@ networks:
     driver: bridge
     
 volumes:
+  jobbee_pgdata:
   elasticsearch-data:
   logstash_data:  
