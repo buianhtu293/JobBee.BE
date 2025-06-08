@@ -1,5 +1,6 @@
 ﻿using JobBee.Application.Features.User.Commands.Login;
 using JobBee.Application.Features.User.Commands.Register;
+using JobBee.Application.Features.User.Queries.GetAllUser;
 using JobBee.Application.Models.Response;
 using JobBee.Shared.Shared;
 using MediatR;
@@ -19,7 +20,7 @@ namespace JobBee.Api.Controllers
 		}
 
 		[HttpGet]
-        public async Task<IActionResult> LoginMember([FromBody] LoginRequest loginRequest,
+		public async Task<IActionResult> LoginMember([FromBody] LoginRequest loginRequest,
 			CancellationToken cancellationToken)
 		{
 			var command = new LoginCommand(loginRequest.email, loginRequest.password);
@@ -34,6 +35,13 @@ namespace JobBee.Api.Controllers
 		{
 			var command = await _mediator.Send(registerUserCommand);
 			return Ok(command);
+		}
+
+		[HttpGet]
+		public async Task<ActionResult> GetUsers([FromQuery] GetAllUserQuery getAllUserQuery)
+		{
+			var result = await _mediator.Send(getAllUserQuery);
+			return Ok(result);
 		}
 	}
 }
