@@ -19,6 +19,8 @@ namespace JobBee.Shared.APIRoutes
 			public const string Delete = "{id}";
 			public const string Verify = "verify";
 			public const string Resend = "resend";
+			public const string Forget = "forget";
+			public const string Reset = "reset";
 		}
 	}
 }

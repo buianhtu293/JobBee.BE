@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using JobBee.Application.Features.User.Commands.ForgetPassword;
 using JobBee.Application.Features.User.Commands.Register;
 using JobBee.Application.Features.User.Commands.ResendVerifyAccount;
+using JobBee.Application.Features.User.Commands.ResetPassword;
 using JobBee.Application.Features.User.Commands.VerifyAccount;
 using JobBee.Application.Features.User.Queries.GetAllUser;
 using JobBee.Application.Features.User.Queries.GetUserDetail;
@@ -21,7 +23,11 @@ namespace JobBee.Application.MappingProfiles
 
 			CreateMap<User, VerifyUserDto>().ReverseMap();
 
-			CreateMap<User, ResendVerifyAccountDto>().ReverseMap(); 
+			CreateMap<User, ResendVerifyAccountDto>().ReverseMap();
+
+			CreateMap<User, ForgetPasswordDto>().ReverseMap();
+
+			CreateMap<User, ResetPasswordDto>().ReverseMap();
 		}
 	}
 }

@@ -39,10 +39,36 @@ namespace JobBee.Application.EmailService
 			var host = _configuration.GetValue<string>("EMAIL_CONFIGURATION:HOST");
 			var port = _configuration.GetValue<int>("EMAIL_CONFIGURATION:PORT");
 
-			var bodyHtml = $@"<a href=""{url}"" target=""_blank"" 
-       style=""display: inline-block; font-size: 16px; font-weight: 600; letter-spacing: 1px; color: #f4f4f5; text-decoration: none; background-color: #2563eb; padding: 12px 24px; border-radius: 4px; border: none; transition: background-color 0.3s ease;"">
-        Reset Password
-    </a>";
+			var bodyHtml = $@"<div style='font-family: Segoe UI, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background-color: #ffffff; color: #333333; border: 1px solid #e5e7eb; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);'>
+    <h2 style='color: #111827; margin-bottom: 16px;'>Reset Your <span style='color: #2563eb;'>JobBee</span> Password</h2>
+    <p style='font-size: 16px; line-height: 1.6; margin-bottom: 24px;'>
+        We received a request to reset the password for your JobBee account. Click the button below to set a new password. If you didn’t request this, you can safely ignore this email.
+    </p>
+    <div style='text-align: center; margin: 30px 0;'>
+        <a href='{url}' target='_blank'
+           style='display: inline-block;
+                  font-size: 16px;
+                  font-weight: 600;
+                  letter-spacing: 0.5px;
+                  color: #ffffff;
+                  text-decoration: none;
+                  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                  padding: 14px 28px;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                  transition: transform 0.2s ease;'
+           onmouseover='this.style.transform=\""scale(1.05)\""'
+           onmouseout='this.style.transform=\""scale(1)\""' >
+            Reset Password
+        </a>
+    </div>
+    <p style='font-size: 14px; color: #6b7280; margin-bottom: 8px;'>
+        This link will expire in 24 hours for your security.
+    </p>
+    <p style='font-size: 14px; color: #6b7280;'>
+        — The JobBee Team
+    </p>
+</div>";
 
 			var smtpClient = new SmtpClient(host, port);
 			smtpClient.EnableSsl = true;

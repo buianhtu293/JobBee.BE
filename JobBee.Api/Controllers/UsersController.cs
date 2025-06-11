@@ -1,7 +1,9 @@
 ﻿using JobBee.Application.Contracts.Persistence;
+using JobBee.Application.Features.User.Commands.ForgetPassword;
 using JobBee.Application.Features.User.Commands.Login;
 using JobBee.Application.Features.User.Commands.Register;
 using JobBee.Application.Features.User.Commands.ResendVerifyAccount;
+using JobBee.Application.Features.User.Commands.ResetPassword;
 using JobBee.Application.Features.User.Commands.VerifyAccount;
 using JobBee.Application.Features.User.Queries.GetAllUser;
 using JobBee.Application.Features.User.Queries.GetUserDetail;
@@ -87,6 +89,22 @@ namespace JobBee.Api.Controllers
 		public async Task<ActionResult> ResendVerify([FromBody] ResendVerifyAccountCommand resendVerifyAccountCommand)
 		{
 			var user = await _mediator.Send(resendVerifyAccountCommand);
+			return Ok(user);
+		}
+
+		[HttpPut]
+		[Route(UserRoutes.ACTION.Forget)]
+		public async Task<ActionResult> ForgetPassword([FromBody] ForgetPasswordCommand forgetPasswordCommand)
+		{
+			var user = await _mediator.Send(forgetPasswordCommand);
+			return Ok(user);
+		}
+
+		[HttpPut]
+		[Route(UserRoutes.ACTION.Reset)]
+		public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordCommand resetPasswordCommand)
+		{
+			var user = await _mediator.Send(resetPasswordCommand);
 			return Ok(user);
 		}
 	}
