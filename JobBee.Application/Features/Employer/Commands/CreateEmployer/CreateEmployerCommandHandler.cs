@@ -16,10 +16,11 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 	{
 		public async Task<ApiResponse<bool>> Handle(CreateEmployerCommand request, CancellationToken cancellationToken)
 		{
+			var employerId = Guid.NewGuid();
 			// employer entities
 			var employer = new Domain.Entities.Employer()
 			{
-				Id = Guid.NewGuid(),
+				Id = employerId,
 				UserId = request.UserId,
 				CompanyName = request.CompnanyName,
 				CompanyDescription = request.AboutUs,
