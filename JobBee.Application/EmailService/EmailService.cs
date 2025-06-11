@@ -59,7 +59,7 @@ namespace JobBee.Application.EmailService
                   transition: transform 0.2s ease;'
            onmouseover='this.style.transform=\""scale(1.05)\""'
            onmouseout='this.style.transform=\""scale(1)\""' >
-            Reset Password
+        Reset Password
         </a>
     </div>
     <p style='font-size: 14px; color: #6b7280; margin-bottom: 8px;'>

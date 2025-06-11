@@ -8,6 +8,7 @@ using JobBee.Application.ElasticSearchService;
 using JobBee.Application.EmailService;
 using JobBee.Application.Features.Employer.Commands.CreateEmployer;
 using JobBee.Application.Validators;
+using JobBee.Application.EmailService;
 using JobBee.Domain.Config;
 using JobBee.Shared.Shared;
 using MediatR;
@@ -40,6 +41,7 @@ namespace JobBee.Application
 
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 			services.AddValidatorsFromAssemblyContaining<CreateEmployerCommandValidator>();
+			services.AddScoped<IEmailService, EmailService.EmailService>();
 			return services;
 		}
 	}

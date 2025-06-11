@@ -84,8 +84,6 @@ namespace JobBee.Application.Features.User.Commands.Register
 			var userCreated = _mapper.Map<RegisterUserDto>(userToCreate);
 			var data = new ApiResponse<RegisterUserDto>("Success", 201, userCreated);
 
-			await _unitOfWork.SaveChangesAsync();
-
 			return data;
 
 		}
