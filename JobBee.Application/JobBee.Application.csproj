@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\Candidate\Commands\" />
+    <Folder Include="Features\Candidate\Queries\" />
     <Folder Include="Features\Company\Queries\" />
     <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
   </ItemGroup>
