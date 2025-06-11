@@ -3,8 +3,8 @@ using JobBee.Application.Contracts.Persistence;
 using JobBee.Application.Exceptions;
 using JobBee.Application.Models.Response;
 using JobBee.Domain.Entities;
-using JobBee.Shared.Ultils;
 using MediatR;
+using Newtonsoft.Json;
 
 namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 {
@@ -19,28 +19,41 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 			// employer entities
 			var employer = new Domain.Entities.Employer()
 			{
+				Id = Guid.NewGuid(),
+				UserId = request.UserId,
 				CompanyName = request.CompnanyName,
 				CompanyDescription = request.AboutUs,
 				IndustryId = request.IndustryType,
 				CompanySizeId = request.TeamSize,
 				FoundedYear = request.FoundedYear,
 				WebsiteUrl = request.WebsiteUrl,
+				ContactEmail = request.ContactEmail,
+				ContactPersonName = request.ContactPerson,
+				ContactPhone = request.ContactPhone,
+				HeadquartersCity = request.City,
+				HeadquartersAddress = request.Address,
+				HeadquartersState = request.District,
+				HeadquartersCountry = "Vietnam",
+				IsVerified = false,
+				CreatedAt = DateTime.Now,
+				UpdatedAt= DateTime.Now
 			};
 
-			var listSocailMedia = new List<EmployerSocialMedia>();
+			var socialLinks = JsonConvert.DeserializeObject<List<SocialMedial>>(request.SocialLinkJson);
 
-			var socialMedias = request.SocialLink;
-			foreach (var media in socialMedias)
+			if (socialLinks != null)
 			{
-				listSocailMedia.Add(new EmployerSocialMedia()
+				foreach (var media in socialLinks)
 				{
-					CreatedAt = DateTime.UtcNow,
-					PlatformName = media.Platform,
-					ProfileUrl = media.Link
-				});
+					employer.EmployerSocialMedia.Add(new EmployerSocialMedia()
+					{
+						Id = Guid.NewGuid(),
+						CreatedAt = DateTime.Now,
+						PlatformName = media.Platform,
+						ProfileUrl = media.Link
+					});
+				}
 			}
-
-			employer.EmployerSocialMedia = listSocailMedia;
 
 			// logo
 			var logo = request.Logo;
@@ -48,20 +61,22 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 			var logoUrl = await cloudService.UploadFile(logo.ContentType, JobBee.Shared.Shared.Directory.Images, logoStream);
 			var logoImage = new CompanyPhoto()
 			{
+				Id = Guid.NewGuid(),
 				PhotoUrl = logoUrl,
 				Caption = "Company Logo",
-				CreatedAt = DateTime.UtcNow,
+				CreatedAt = DateTime.Now,
 			};
 
 			// banner
 			var banner = request.Banner;
 			var bannerStream = banner.OpenReadStream();
-			var bannerUrl = await cloudService.UploadFile(logo.ContentType, JobBee.Shared.Shared.Directory.Images, bannerStream);
+			var bannerUrl = await cloudService.UploadFile(banner.ContentType, JobBee.Shared.Shared.Directory.Images, bannerStream);
 			var bannerImage = new CompanyPhoto()
 			{
+				Id = Guid.NewGuid(),
 				PhotoUrl = bannerUrl,
 				Caption = "Company Banner",
-				CreatedAt = DateTime.UtcNow,
+				CreatedAt = DateTime.Now,
 			};
 
 			// save logo and banner image

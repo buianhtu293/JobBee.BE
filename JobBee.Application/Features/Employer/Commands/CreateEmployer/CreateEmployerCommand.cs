@@ -13,6 +13,7 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 
 	public class CreateEmployerCommand : IRequest<ApiResponse<bool>>
 	{
+		public Guid UserId { get; set; }
 		public IFormFile Logo { get; set; } = null!;
 		public IFormFile Banner { get; set; } = null!;
 		public string CompnanyName { get; set; } = null!;
@@ -21,7 +22,7 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 		public Guid TeamSize { get; set; }
 		public int FoundedYear { get; set; }
 		public string WebsiteUrl { get; set; } = null!;
-		public IList<SocialMedial> SocialLink { get; set; } = new List<SocialMedial>();
+		public string SocialLinkJson { get; set; } = null!;
 		public string ContactPerson { get; set; } = null!;
 		public string ContactEmail { get; set; } = null!;
 		public string ContactPhone { get; set; } = null!;
