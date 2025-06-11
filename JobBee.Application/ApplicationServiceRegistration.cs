@@ -2,8 +2,10 @@
 using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
+using FluentValidation;
 using JobBee.Application.CloudService;
 using JobBee.Application.ElasticSearchService;
+using JobBee.Application.Features.Employer.Commands.CreateEmployer;
 using JobBee.Domain.Config;
 using JobBee.Shared.Shared;
 using MediatR;
@@ -32,6 +34,9 @@ namespace JobBee.Application
 			});
 			services.AddSingleton(typeof(IElasticSearchService<>), typeof(ElasticSearchService<>));
 			services.AddScoped<ICloudService, AWSService>();
+
+			services.AddTransient(typeof(IPipelineBehavior<,>));
+			services.AddValidatorsFromAssemblyContaining<CreateEmployerCommandValidator>();
 			return services;
 		}
 	}

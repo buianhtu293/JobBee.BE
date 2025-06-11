@@ -1,4 +1,5 @@
-﻿using JobBee.Shared.APIRoutes;
+﻿using JobBee.Application.Features.Employer.Commands.CreateEmployer;
+using JobBee.Shared.APIRoutes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace JobBee.Api.Controllers
 	public class EmployersController : ControllerBase
 	{
 		//[HttpPost(EmployerRoutes.ACTION.Create)]
-		//public Task<IActionResult> Create([FromForm] )
+		//public Task<IActionResult> Create([FromForm] CreateEmployerCommand command)
 		//{
 
 		//}
