@@ -5,6 +5,7 @@ using JobBee.Domain.Entities;
 using JobBee.Application.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace JobBee.Infrastructure.Authentication
 {
@@ -21,7 +22,8 @@ namespace JobBee.Infrastructure.Authentication
 		{
 			var claims = new Claim[] {
 				new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-				new(JwtRegisteredClaimNames.Email, user.Email.ToString())
+				new(JwtRegisteredClaimNames.Email, user.Email.ToString()),
+				new("role", string.Join(",", user.Roles))
 			};
 
 			var signingCredentials = new SigningCredentials(

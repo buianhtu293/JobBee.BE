@@ -24,6 +24,11 @@ namespace JobBee.Persistence.Repositories
 			.FirstOrDefaultAsync(member => member.Email == email, cancellationToken);
 		}
 
+		public async Task<User> InsertUserAsync(User user)
+		{
+			var entry = await _context.Set<User>().AddAsync(user);
+			return entry.Entity;
+		}
 
 		public async Task<bool> IsEmailUniqueAsync(
 		string email,

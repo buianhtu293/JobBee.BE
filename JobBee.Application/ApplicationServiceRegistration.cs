@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using JobBee.Application.ElasticSearchService;
+using JobBee.Application.EmailService;
 using JobBee.Domain.Config;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,7 @@ namespace JobBee.Application
 			services.AddMediatR(Assembly.GetExecutingAssembly());
 			services.Configure<ElasticSearchSettings>(configuration.GetSection("ElasticSearchSettings"));
 			services.AddSingleton(typeof(IElasticSearchService<>), typeof(ElasticSearchService<>));
+			services.AddScoped<IEmailService, EmailService.EmailService>();
 			return services;
 		}
 	}
