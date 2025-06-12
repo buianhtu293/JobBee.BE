@@ -13,10 +13,10 @@ namespace JobBee.Api.Controllers
 	) : ControllerBase
 	{
 		[HttpPost(EmployerRoutes.ACTION.Create)]
-		public async Task<IActionResult> Create([FromForm] CreateEmployerCommand command)
+		public async Task<IActionResult> Create([FromBody] CreateEmployerCommand command)
 		{
 			var result = await mediator.Send(command);
-			return Created();
+			return Ok(result);
 		}
 	}
 }

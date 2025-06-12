@@ -1,7 +1,5 @@
 ﻿using JobBee.Application.Models.Response;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using System.Numerics;
 
 namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 {
@@ -11,18 +9,16 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 		public string Link { get; set; } = null!;
 	}
 
-	public class CreateEmployerCommand : IRequest<ApiResponse<bool>>
+	public class CreateEmployerCommand : IRequest<ApiResponse<Guid>>
 	{
 		public Guid UserId { get; set; }
-		public IFormFile Logo { get; set; } = null!;
-		public IFormFile Banner { get; set; } = null!;
 		public string CompnanyName { get; set; } = null!;
 		public string AboutUs { get; set; } = null!;
 		public Guid IndustryType { get; set; }
 		public Guid TeamSize { get; set; }
 		public int FoundedYear { get; set; }
 		public string WebsiteUrl { get; set; } = null!;
-		public string SocialLinkJson { get; set; } = null!;
+		public IList<SocialMedial> SocialMedials { get; set; } = new List<SocialMedial>();
 		public string ContactPerson { get; set; } = null!;
 		public string ContactEmail { get; set; } = null!;
 		public string ContactPhone { get; set; } = null!;

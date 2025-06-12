@@ -4,48 +4,35 @@ namespace JobBee.Shared.Ultils;
 
 public static class DateConverter
 {
-	public static BigInteger ConvertToTime(this DateTime dateTime)
+	public static long ConvertToTime(this DateTime dateTime)
 	{
 		DateTime utcDateTime = dateTime.ToUniversalTime();
-
 		DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
 		TimeSpan timeSpan = utcDateTime - unixEpoch;
-		long seconds = (long)timeSpan.TotalSeconds;
-
-		return new BigInteger(seconds);
+		return (long)timeSpan.TotalSeconds;
 	}
 
-	public static BigInteger ConvertToTime(this DateOnly date)
+	public static long ConvertToTime(this DateOnly date)
 	{
-		// Chuyển DateOnly thành DateTime lúc 00:00:00
-		DateTime dateTime = date.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
-
-		// Epoch
+		DateTime dateTime = date.ToDateTime(TimeOnly.MinValue);
 		DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-		// Tính số giây kể từ Epoch
-		TimeSpan timeSpan = dateTime - unixEpoch;
-		long seconds = (long)timeSpan.TotalSeconds;
-
-		return new BigInteger(seconds);
+		TimeSpan timeSpan = dateTime.ToUniversalTime() - unixEpoch;
+		return (long)timeSpan.TotalSeconds;
 	}
 
-	public static DateTime ConvertToDateTime(this BigInteger time)
+	public static DateTime ConvertToDateTime(this long time)
 	{
-		DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-		long seconds = (long)time;
-
-		return unixEpoch.AddSeconds(seconds);
+		DateTime utcDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(time);
+		return DateTime.SpecifyKind(utcDateTime, DateTimeKind.Unspecified);
 	}
 
-	public static DateOnly ConvertToDate(this BigInteger time)
+	public static DateOnly ConvertToDate(this long time)
 	{
 		if (time < 0 || time > long.MaxValue)
 		{
 			return DateOnly.MinValue;
 		}
-		return DateOnly.FromDateTime(DateTime.UnixEpoch.AddSeconds((long)time));
+		DateTime utcDateTime = DateTime.UnixEpoch.AddSeconds(time);
+		return DateOnly.FromDateTime(DateTime.SpecifyKind(utcDateTime, DateTimeKind.Unspecified));
 	}
 }
