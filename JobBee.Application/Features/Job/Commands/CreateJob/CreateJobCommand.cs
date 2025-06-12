@@ -22,7 +22,8 @@ public class CreateJobCommand : IRequest<bool>
 	public string LocationCountry { get; set; } = null!;
 	public bool IsRemote { get; set; }
 	public bool AllowsWorkFromHome { get; set; }
-	public BigInteger ApplicationDeadline { get; set; }
+	public long ApplicationDeadline { get; set; }
 	public bool IsFeatured { get; set; }
 	public bool IsActive { get; set; }
+	public long ExpireAt { get; set; }
 }
