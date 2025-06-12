@@ -8,7 +8,7 @@ using MediatR;
 
 namespace JobBee.Application.Features.EducationLevel.Commands.UpdateEducationLevel
 {
-	public class UpdateEducationLevelCommand : IRequest<ApiResponse<UpdateEducationLevelDto>
+	public class UpdateEducationLevelCommand : IRequest<ApiResponse<UpdateEducationLevelDto>>
 	{
 		public Guid Id { get; set; }
 		public string LevelName { get; set; } = null!;

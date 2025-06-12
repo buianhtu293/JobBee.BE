@@ -51,6 +51,7 @@ namespace JobBee.Api.Controllers
 		[ProducesResponseType(400)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
+		[Route(EducationLevelRoutes.ACTION.UpdateEducationLevel)]
 		public async Task<ActionResult> UpdateEducationLevel([FromBody] UpdateEducationLevelCommand updateEducationLevelCommand)
 		{
 			var response = await _mediator.Send(updateEducationLevelCommand);
