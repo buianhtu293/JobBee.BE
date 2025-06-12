@@ -12,6 +12,7 @@ public class JobProfile : Profile
     {
         CreateMap<Job, JobDto>().ReverseMap();
         CreateMap<CreateJobCommand, Job>().ForMember(des => des.ApplicationDeadline, 
-            opt => opt.MapFrom(src => src.ApplicationDeadline.ConvertToDate()));
+            opt => opt.MapFrom(src => src.ApplicationDeadline.ConvertToDate()))
+            .ForMember(des => des.ExpiresAt, opt => opt.MapFrom(src => src.ExpireAt.ConvertToDateTime()));
     }
 }

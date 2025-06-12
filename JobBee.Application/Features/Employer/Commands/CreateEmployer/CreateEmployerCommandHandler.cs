@@ -4,17 +4,15 @@ using JobBee.Application.Exceptions;
 using JobBee.Application.Models.Response;
 using JobBee.Domain.Entities;
 using MediatR;
-using Newtonsoft.Json;
 
 namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 {
 	public class CreateEmployerCommandHandler(
-			IUnitOfWork<Domain.Entities.Employer, Guid> unitOfWork,
-			ICloudService cloudService
+			IUnitOfWork<Domain.Entities.Employer, Guid> unitOfWork
 		)
-		: IRequestHandler<CreateEmployerCommand, ApiResponse<bool>>
+		: IRequestHandler<CreateEmployerCommand, ApiResponse<Guid>>
 	{
-		public async Task<ApiResponse<bool>> Handle(CreateEmployerCommand request, CancellationToken cancellationToken)
+		public async Task<ApiResponse<Guid>> Handle(CreateEmployerCommand request, CancellationToken cancellationToken)
 		{
 			var employerId = Guid.NewGuid();
 			// employer entities
@@ -40,11 +38,10 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 				UpdatedAt= DateTime.Now
 			};
 
-			var socialLinks = JsonConvert.DeserializeObject<List<SocialMedial>>(request.SocialLinkJson);
 
-			if (socialLinks != null)
+			if (request.SocialMedials != null)
 			{
-				foreach (var media in socialLinks)
+				foreach (var media in request.SocialMedials)
 				{
 					employer.EmployerSocialMedia.Add(new EmployerSocialMedia()
 					{
@@ -56,35 +53,6 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 				}
 			}
 
-			// logo
-			var logo = request.Logo;
-			var logoStream = logo.OpenReadStream();
-			var logoUrl = await cloudService.UploadFile(logo.ContentType, JobBee.Shared.Shared.Directory.Images, logoStream);
-			var logoImage = new CompanyPhoto()
-			{
-				Id = Guid.NewGuid(),
-				PhotoUrl = logoUrl,
-				Caption = "Company Logo",
-				CreatedAt = DateTime.Now,
-			};
-
-			// banner
-			var banner = request.Banner;
-			var bannerStream = banner.OpenReadStream();
-			var bannerUrl = await cloudService.UploadFile(banner.ContentType, JobBee.Shared.Shared.Directory.Images, bannerStream);
-			var bannerImage = new CompanyPhoto()
-			{
-				Id = Guid.NewGuid(),
-				PhotoUrl = bannerUrl,
-				Caption = "Company Banner",
-				CreatedAt = DateTime.Now,
-			};
-
-			// save logo and banner image
-			employer.CompanyLogo = logoUrl;
-			employer.CompanyPhotos.Add(logoImage);
-			employer.CompanyPhotos.Add(bannerImage);
-
 			unitOfWork.GenericRepository.Insert(employer);
 
 			var rowAffectd = await unitOfWork.SaveChangesAsync();
@@ -93,7 +61,7 @@ namespace JobBee.Application.Features.Employer.Commands.CreateEmployer
 				// can pass validator
 				throw new BadRequestException(nameof(Domain.Entities.Employer));
 			}
-			return new ApiResponse<bool>("Success", 201, true);
+			return new ApiResponse<Guid>("Success", 201, employerId);
 		}
 	}
 }

@@ -20,6 +20,9 @@ namespace JobBee.Application.Features.Job.Commands.CreateJob
 		public async Task<bool> Handle(CreateJobCommand request, CancellationToken cancellationToken)
 		{
 			var job = mapper.Map<Domain.Entities.Job>(request);
+			job.UpdatedAt = DateTime.Now;
+			job.PostedAt = DateTime.Now;
+			job.Id = Guid.NewGuid();
 			unitOfWork.GenericRepository.Insert(job);
 			var numberOfRecord = await unitOfWork.SaveChangesAsync();
 			if (numberOfRecord < 0)
