@@ -19,9 +19,9 @@ namespace JobBee.Application.Features.CandidateEducation.Commands.AddCandidateEd
 
 		public string? FieldOfStudy { get; set; }
 
-		public DateOnly? StartDate { get; set; }
+		public long StartDate { get; set; }
 
-		public DateOnly? EndDate { get; set; }
+		public long EndDate { get; set; }
 
 		public bool? IsCurrent { get; set; }
 

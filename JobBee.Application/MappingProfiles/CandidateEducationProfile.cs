@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using JobBee.Application.Features.CandidateEducation.Commands.AddCandidateEducation;
 using JobBee.Application.Features.CandidateEducation.Commands.UpdateCandidateEducation;
 using JobBee.Application.Features.CandidateEducation.Queries.GetAllCandidateEducation;
 using JobBee.Application.Features.CandidateEducation.Queries.GetCandidateEducationByCandidateId;
 using JobBee.Application.Features.CandidateEducation.Queries.GetCandidateEducationById;
 using JobBee.Domain.Entities;
+using JobBee.Shared.Ultils;
 
 namespace JobBee.Application.MappingProfiles
 {
@@ -18,9 +14,12 @@ namespace JobBee.Application.MappingProfiles
         public CandidateEducationProfile()
         {
             CreateMap<CandidateEducation, CreateCandidateEducationDto>().ReverseMap();
-            CreateMap<CandidateEducation, CreateCandidateEducationCommand>().ReverseMap();
+            CreateMap<CreateCandidateEducationCommand, CandidateEducation>().ForMember(des => des.StartDate,
+                otp => otp.MapFrom(src => src.StartDate.ConvertToDate()))
+                .ForMember(des => des.EndDate, otp => otp.MapFrom(src => src.EndDate.ConvertToDate()));
 
-            CreateMap<CandidateEducation, UpdateCandidateEducationDto>().ReverseMap();
+
+			CreateMap<CandidateEducation, UpdateCandidateEducationDto>().ReverseMap();
             CreateMap<CandidateEducation, UpdateCandidateEducationCommand>().ReverseMap();
 
             CreateMap<CandidateEducation, CandidateEducationDetailDto>().ReverseMap();

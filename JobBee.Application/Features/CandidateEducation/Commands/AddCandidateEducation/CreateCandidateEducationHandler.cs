@@ -32,21 +32,10 @@ namespace JobBee.Application.Features.CandidateEducation.Commands.AddCandidateEd
 			}
 
 			var candidateEducationToCreate = _mapper.Map<Domain.Entities.CandidateEducation>(request);
-			//var candidateEducationToCreate = new Domain.Entities.CandidateEducation();
 
 			candidateEducationToCreate.Id = Guid.NewGuid();
-			//candidateEducationToCreate.CandidateId = request.CandidateId;
-			//candidateEducationToCreate.InstitutionName = request.InstitutionName;
-			//candidateEducationToCreate.EducationLevelId = request.EducationLevelId;
-			//candidateEducationToCreate.FieldOfStudy = request.FieldOfStudy;
-			//DateTime dateTime = request.StartDate.Value;
-			//candidateEducationToCreate.StartDate = DateOnly.FromDateTime(dateTime);
-			//dateTime = request.EndDate.Value;
-			//candidateEducationToCreate.EndDate = DateOnly.FromDateTime(dateTime);
-			//candidateEducationToCreate.IsCurrent = request.IsCurrent;
-			//candidateEducationToCreate.Description = request.Description;
-			candidateEducationToCreate.CreatedAt = DateTime.UtcNow;
-			candidateEducationToCreate.UpdatedAt = DateTime.UtcNow;
+			candidateEducationToCreate.CreatedAt = DateTime.Now;
+			candidateEducationToCreate.UpdatedAt = DateTime.Now;
 
 			_candidateEducationRepository.Insert(candidateEducationToCreate);
 

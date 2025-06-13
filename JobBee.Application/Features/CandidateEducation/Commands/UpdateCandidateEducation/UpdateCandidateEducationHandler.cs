@@ -37,7 +37,7 @@ namespace JobBee.Application.Features.CandidateEducation.Commands.UpdateCandidat
 			}
 
 			var candidateEducationToUpdate = _mapper.Map<Domain.Entities.CandidateEducation>(request);
-			candidateEducationToUpdate.UpdatedAt = DateTime.UtcNow;
+			candidateEducationToUpdate.UpdatedAt = DateTime.Now;
 
 			_candidateEducationRepository.Update(candidateEducationToUpdate);
 

@@ -1,20 +1,27 @@
 using System.Numerics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JobBee.Shared.Ultils;
 
 public static class DateConverter
 {
-	public static long ConvertToTime(this DateTime dateTime)
+	public static long? ConvertToTime(this DateTime? dateTime)
 	{
-		DateTime utcDateTime = dateTime.ToUniversalTime();
+		if (dateTime == null)
+			return null;
+
+		DateTime utcDateTime = dateTime.Value.ToUniversalTime();
 		DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 		TimeSpan timeSpan = utcDateTime - unixEpoch;
 		return (long)timeSpan.TotalSeconds;
 	}
 
-	public static long ConvertToTime(this DateOnly date)
+	public static long? ConvertToTime(this DateOnly? date)
 	{
-		DateTime dateTime = date.ToDateTime(TimeOnly.MinValue);
+		if (date == null)
+			return null;
+
+		DateTime dateTime = date.Value.ToDateTime(TimeOnly.MinValue);
 		DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 		TimeSpan timeSpan = dateTime.ToUniversalTime() - unixEpoch;
 		return (long)timeSpan.TotalSeconds;
