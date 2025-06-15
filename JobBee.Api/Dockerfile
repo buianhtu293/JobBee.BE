@@ -44,7 +44,4 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 COPY --from=publish /app/publish .
 COPY --from=build /src /app/src
 
-# 👉 Chạy EF Core migration
-RUN dotnet ef database update --project /app/src/JobBee.Persistence/JobBee.Persistence.csproj --startup-project /app/src/JobBee.Api/JobBee.Api.csproj
-
 ENTRYPOINT ["dotnet", "JobBee.Api.dll"]
