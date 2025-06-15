@@ -1,4 +1,3 @@
-#deploy
 name: Deploy JobBee via Docker Compose to EC2
 
 on:
