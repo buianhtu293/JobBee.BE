@@ -89,7 +89,10 @@ namespace JobBee.Api
 			app.UseAuthorization();
 
 			app.MapControllers();
-
+			builder.WebHost.ConfigureKestrel(options =>
+			{
+				options.ListenAnyIP(5000);
+			});
 			app.Run();
 		}
 	}
