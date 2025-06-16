@@ -43,7 +43,7 @@ namespace JobBee.Application.Features.Skill.Commands.UpdateSkill
 			var skillUpdated = _mapper.Map<UpdateSkillDto>(skillToUpdate);
 			var data = new ApiResponse<UpdateSkillDto>("Success", 200, skillUpdated);
 
-			_unitOfWork.SaveChangesAsync();
+			await _unitOfWork.SaveChangesAsync();
 
 			return data;
 
