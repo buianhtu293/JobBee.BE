@@ -17,6 +17,7 @@ namespace JobBee.Shared.APIRoutes
 			public const string CreateCandidate = "create";
 			public const string UpdateCandidate = "update";
 			public const string DeleteCandidate = "delete/{id}";
+			public const string GetListCandidatePageResult = "pageResult";
 		}
 	}
 }

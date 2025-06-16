@@ -3,6 +3,7 @@ using JobBee.Application.Features.Candidate.Commands.DeleteCandidate;
 using JobBee.Application.Features.Candidate.Commands.UpdateCandidate;
 using JobBee.Application.Features.Candidate.Queries.GetAllCandidate;
 using JobBee.Application.Features.Candidate.Queries.GetCandidateDetail;
+using JobBee.Application.Features.Candidate.Queries.GetCandidatePageResult;
 using JobBee.Shared.APIRoutes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,14 @@ namespace JobBee.Api.Controllers
 		public async Task<ActionResult> GetAllCandidate()
 		{
 			var candidates = await _mediator.Send(new CandidateQuery());
+			return Ok(candidates);
+		}
+
+		[HttpGet]
+		[Route(CandidateRoutes.ACTION.GetListCandidatePageResult)]
+		public async Task<ActionResult> GetCandidatePageResult([FromQuery] CandidatePageResultQuery query)
+		{
+			var candidates = await _mediator.Send(query);
 			return Ok(candidates);
 		}
 
