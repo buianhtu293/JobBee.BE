@@ -24,13 +24,13 @@ services:
       - AWS_ACCESS_KEY_ID=AKIA6JKEYE33IENG7XUP
       - AWS_SECRET_ACCESS_KEY=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
       - AWS_REGION=us-east-1
+      - ASPNETCORE_URLS=http://+:5000
     container_name: jobbee.api
     build:
       context: .
       dockerfile: JobBee.Api/Dockerfile
     ports:
       - "5000:5000"
-      - "5001:5001"
     networks:
       - jobbee
 
