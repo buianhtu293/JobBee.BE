@@ -11,8 +11,8 @@ namespace JobBee.Api.Controllers
     [ApiController]
     public class JobsController(IMediator mediator) : ControllerBase
     {
-        [HttpGet(JobRoutes.ACTION.GetListJobs)]
-        public async Task<IActionResult> GetJobs([FromQuery] GetAllJobsQuery query)
+        [HttpPost(JobRoutes.ACTION.Search)]
+        public async Task<IActionResult> GetJobs([FromBody] GetAllJobsQuery query)
         {
             var result = await mediator.Send(query);
             return Ok(result);
