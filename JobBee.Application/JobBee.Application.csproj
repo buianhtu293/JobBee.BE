@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Company\Queries\" />
+    <Folder Include="Features\JobApplication\" />
     <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
     <Folder Include="Features\Employer\Queries\" />
   </ItemGroup>
