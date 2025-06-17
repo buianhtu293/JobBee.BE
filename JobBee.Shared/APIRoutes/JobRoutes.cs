@@ -6,7 +6,7 @@
 
 		public static class ACTION
 		{
-			public const string GetListJobs = "";
+			public const string Search = "search";
 			public const string GetDetail = "{id}";
 			public const string Create = "";
 			public const string Edit = "";
