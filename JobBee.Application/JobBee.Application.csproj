@@ -35,6 +35,7 @@
     <Folder Include="Features\Role\Commands\" />
     <Folder Include="Features\Role\Queries\" />
     <Folder Include="Features\Employer\Queries\" />
+    <Folder Include="Features\JobApplication\" />
     <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
   </ItemGroup>
 
