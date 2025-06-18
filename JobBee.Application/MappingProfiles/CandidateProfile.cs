@@ -14,13 +14,14 @@ namespace JobBee.Application.MappingProfiles
         {
             CreateMap<CreateCandidateCommand, Candidate>().ForMember(des => des.BirthDate,
                 otp => otp.MapFrom(src => src.BirthDate.ConvertToDate()));
-            CreateMap<Candidate, CreateCandidateDto>();
+            CreateMap<Candidate, CreateCandidateDto>().ReverseMap();
 
             CreateMap<UpdateCandidateCommand, Candidate>().ForMember(des => des.BirthDate,
 				otp => otp.MapFrom(src => src.BirthDate.ConvertToDate()));
             CreateMap<Candidate, UpdateCandidateDto>();
 
-            CreateMap<Candidate, CandidateDto>().ReverseMap();
+            CreateMap<Candidate, CandidateDto>()
+				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
 
             CreateMap<Candidate, CandidateDetailDto>().ReverseMap();
 		}
