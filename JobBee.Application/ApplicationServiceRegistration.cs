@@ -8,7 +8,6 @@ using JobBee.Application.ElasticSearchService;
 using JobBee.Application.EmailService;
 using JobBee.Application.Features.Employer.Commands.CreateEmployer;
 using JobBee.Application.Validators;
-using JobBee.Application.EmailService;
 using JobBee.Domain.Config;
 using JobBee.Shared.Shared;
 using MediatR;
@@ -44,6 +43,7 @@ namespace JobBee.Application
 				var payOSSettings = options.GetRequiredService<IOptions<PayOSSettings>>().Value;
 				return new PayOS(payOSSettings.ClientID, payOSSettings.APIKey, payOSSettings.CheckSumKey);
 			});
+			services.Configure<ReturnSettings>(configuration.GetSection("PayOSUrl"));
 			services.AddSingleton(typeof(IElasticSearchService<>), typeof(ElasticSearchService<>));
 			services.AddScoped<IEmailService, EmailService.EmailService>();
 			services.AddScoped<ICloudService, AWSService>();
