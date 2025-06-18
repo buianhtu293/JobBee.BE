@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobBee.Application.Features.JobApplication.Commands.CreateJobAppliaction
+namespace JobBee.Application.Features.JobApplication.Commands.UpdateJobApplication
 {
-	public class CreateJobApplicationDto
+	public class UpdateJobApplicationDto
 	{
 		public Guid Id { get; set; }
 		public Guid JobId { get; set; }

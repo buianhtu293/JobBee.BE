@@ -8,7 +8,8 @@ using JobBee.Shared.Paginators;
 
 namespace JobBee.Application.Contracts.Persistence
 {
-	public interface IJobApplicationRepository : IGenericRepository<JobApplication, Guid>
+	public interface IJobRepository : IGenericRepository<Job, Guid>
 	{
+		Task<PageResult<Job>> GetJobsAppliedByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken);
 	}
 }

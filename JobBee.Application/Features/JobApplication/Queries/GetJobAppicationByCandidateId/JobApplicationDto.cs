@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using JobBee.Application.Features.Candidate.Queries.GetAllCandidate;
+using JobBee.Application.Features.CandidateResume.Queries.GetAllCandidateResume;
+using JobBee.Application.Features.Job.Queries.GetAllJobs;
 
-namespace JobBee.Application.Features.JobApplication.Commands.CreateJobAppliaction
+namespace JobBee.Application.Features.JobApplication.Queries.GetJobAppicationByCandidateId
 {
-	public class CreateJobApplicationDto
+	public class JobApplicationDto
 	{
 		public Guid Id { get; set; }
 		public Guid JobId { get; set; }

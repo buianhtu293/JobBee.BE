@@ -30,10 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Company\Queries\" />
-    <Folder Include="Features\JobApplication\Commands\DeleteJobApplication\" />
-    <Folder Include="Features\JobApplication\Commands\UpdateJobApplication\" />
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationDetail\" />
-    <Folder Include="Features\JobApplication\Queries\GetJobAppicationByCandidateId\" />
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationByJobId\" />
     <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
     <Folder Include="Features\Role\Commands\" />

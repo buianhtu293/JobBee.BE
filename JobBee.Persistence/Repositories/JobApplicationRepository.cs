@@ -15,19 +15,5 @@ namespace JobBee.Persistence.Repositories
 		public JobApplicationRepository(JobBeeContext context) : base(context)
 		{
 		}
-
-		public async Task<List<JobApplication>> GetJobApplicationByCandidateId(Guid candidateId)
-		{
-			return await _context.job_applications
-				.Where(c => c.CandidateId == candidateId)
-				.ToListAsync();
-		}
-
-		public async Task<List<JobApplication>> GetJobApplicationByJobId(Guid jobId)
-		{
-			return await _context.job_applications
-				.Where(j => j.JobId == jobId)
-				.ToListAsync();
-		}
 	}
 }
