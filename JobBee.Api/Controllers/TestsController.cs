@@ -33,7 +33,7 @@ namespace JobBee.Api.Controllers
 		[HttpPost("{id}/payment")]
 		public async Task<IActionResult> PaymentTest(Guid id)
 		{
-			var payResult = await payOSService.PayTransaction(id);
+			var payResult = await payOSService.CreatePayTransaction(id);
 			return Ok(payResult);
 		}
 	}
