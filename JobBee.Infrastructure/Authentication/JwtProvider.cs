@@ -23,7 +23,7 @@ namespace JobBee.Infrastructure.Authentication
 			var claims = new Claim[] {
 				new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
 				new(JwtRegisteredClaimNames.Email, user.Email.ToString()),
-				new("role", string.Join(",", user.Roles))
+				new("role", string.Join(",", user.Roles.Select(x => x.Name)))
 			};
 
 			var signingCredentials = new SigningCredentials(

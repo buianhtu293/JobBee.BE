@@ -21,6 +21,7 @@ namespace JobBee.Persistence.Repositories
 		{
 			return await _context
 			.Set<User>()
+			.Include(x => x.Roles)
 			.FirstOrDefaultAsync(member => member.Email == email, cancellationToken);
 		}
 
