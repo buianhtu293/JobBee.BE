@@ -1,6 +1,8 @@
 ﻿using JobBee.Application.Contracts.Persistence;
 using JobBee.Application.Exceptions;
+using JobBee.Application.Models.PayOS;
 using JobBee.Domain.Entities;
+using Microsoft.Extensions.Options;
 using Net.payOS;
 using Net.payOS.Types;
 
@@ -8,6 +10,7 @@ namespace JobBee.Application.PayOSService
 {
 	public class PayOSService(
 		IUnitOfWork<SubscriptionPlan, Guid> unitOfWork,
+		IOptions<ReturnSettings> options,
 		PayOS payOS
 	) : IPayOSService
 	{
@@ -21,8 +24,8 @@ namespace JobBee.Application.PayOSService
 			List<ItemData> items = new List<ItemData>();
 			var price = RoundDecimalToInt(subcriptionPlan.Price);
 			items.Add(new ItemData(subcriptionPlan.PlanName, 1, price));
-			string cancelUrl = "";
-			string returnUrl = "";
+			string cancelUrl = options.Value.CancelUrl;
+			string returnUrl = options.Value.ReturnUrl;
 			PaymentData paymentData = new PaymentData(GenerateUniquePayOSOrderId(Guid.NewGuid()), price, subcriptionPlan.PlanName, items, cancelUrl, returnUrl);
 			CreatePaymentResult createPayment = await payOS.createPaymentLink(paymentData);
 			return createPayment;

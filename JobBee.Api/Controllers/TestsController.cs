@@ -36,5 +36,18 @@ namespace JobBee.Api.Controllers
 			var payResult = await payOSService.CreatePayTransaction(id);
 			return Ok(payResult);
 		}
+
+		[HttpGet("payment/return")]
+		public IActionResult PayReturn(string id, string code, string status, string cancel, string orderCode)
+		{
+			var paymentResult = new
+			{
+				Code = code,
+				Status = status,
+				Cancel = cancel,
+				OrderCode = orderCode
+			};
+			return Ok(paymentResult);
+		}
 	}
 }
