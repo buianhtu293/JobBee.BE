@@ -1,12 +1,13 @@
 ﻿using JobBee.Application.CloudService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using JobBee.Application.PayOSService;
 
 namespace JobBee.Api.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class TestsController(ICloudService cloudService) : ControllerBase
+	public class TestsController(ICloudService cloudService, IPayOSService payOSService) : ControllerBase
 	{
 		[HttpPost]
 		[Consumes("multipart/form-data")]
@@ -27,6 +28,13 @@ namespace JobBee.Api.Controllers
 			var response = await cloudService.DeleteFile(fileUrl);
 			var t = response.DeleteMarker;
 			return Ok(t);
+		}
+
+		[HttpPost("{id}/payment")]
+		public async Task<IActionResult> PaymentTest(Guid id)
+		{
+			var payResult = await payOSService.PayTransaction(id);
+			return Ok(payResult);
 		}
 	}
 }

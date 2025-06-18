@@ -15,6 +15,9 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using JobBee.Application.Models.PayOS;
+using JobBee.Application.PayOSService;
+using Net.payOS;
 
 namespace JobBee.Application
 {
@@ -35,9 +38,16 @@ namespace JobBee.Application
 				};
 				return new AmazonS3Client(config);
 			});
+			services.Configure<PayOSSettings>(configuration.GetSection("PayOSSettings"));
+			services.AddScoped<PayOS>(options =>
+			{
+				var payOSSettings = options.GetRequiredService<IOptions<PayOSSettings>>().Value;
+				return new PayOS(payOSSettings.ClientID, payOSSettings.APIKey, payOSSettings.CheckSumKey);
+			});
 			services.AddSingleton(typeof(IElasticSearchService<>), typeof(ElasticSearchService<>));
 			services.AddScoped<IEmailService, EmailService.EmailService>();
 			services.AddScoped<ICloudService, AWSService>();
+			services.AddScoped<IPayOSService, Application.PayOSService.PayOSService>();
 
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 			services.AddValidatorsFromAssemblyContaining<CreateEmployerCommandValidator>();
