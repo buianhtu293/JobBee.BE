@@ -9,5 +9,6 @@ namespace JobBee.Application.Contracts.Persistence
 {
 	public interface IEmployerRepository : IGenericRepository<Employer, Guid>
 	{
+
 	}
 }

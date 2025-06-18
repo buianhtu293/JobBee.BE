@@ -18,6 +18,7 @@ namespace JobBee.Shared.APIRoutes
 			public const string UpdateJobApplication = "update";
 			public const string DeleteJobApplication = "delete/{id}";
 			public const string GetJobApplicationByCandidateId = "by-candidate-id";
+			public const string GetCandidateApplicationByJobId = "by-job-id";
 		}
 	}
 }

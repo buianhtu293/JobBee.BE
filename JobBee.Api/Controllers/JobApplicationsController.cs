@@ -2,6 +2,7 @@
 using JobBee.Application.Features.JobApplication.Commands.DeleteJobApplication;
 using JobBee.Application.Features.JobApplication.Commands.UpdateJobApplication;
 using JobBee.Application.Features.JobApplication.Queries.GetJobAppicationByCandidateId;
+using JobBee.Application.Features.JobApplication.Queries.GetJobApplicationByJobId;
 using JobBee.Shared.APIRoutes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -61,6 +62,14 @@ namespace JobBee.Api.Controllers
 		{
 			var jobApplications = await _mediator.Send(query);
 			return Ok(jobApplications);
+		}
+
+		[HttpGet]
+		[Route(JobApplicationRoutes.ACTION.GetCandidateApplicationByJobId)]
+		public async Task<ActionResult> GetCandidateApplicationByJobId([FromQuery] GetCandidateApplicationByJobQuery query)
+		{
+			var candidateApplications = await _mediator.Send(query);
+			return Ok(candidateApplications);
 		}
 
 	}
