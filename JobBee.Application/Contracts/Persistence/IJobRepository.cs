@@ -11,5 +11,6 @@ namespace JobBee.Application.Contracts.Persistence
 	public interface IJobRepository : IGenericRepository<Job, Guid>
 	{
 		Task<PageResult<Job>> GetJobsAppliedByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken);
+		Task<PageResult<Job>> GetSavedJobByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken);
 	}
 }
