@@ -7,6 +7,6 @@
 		public string JobType { get; set; } = null!;
 		public int DaysRemaing { get; set; }
 		public bool IsActive { get; set; }
-		public int Application { get; set; }
+		public int ApplicationsCount { get; set; }
 	}
 }
