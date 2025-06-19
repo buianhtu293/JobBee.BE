@@ -52,6 +52,7 @@ namespace JobBee.Persistence
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<ISavedJobRepository, SavedJobRepository>();
 			services.AddScoped<IJobAlertRepository, JobAlertRepository>();
+			services.AddScoped<INotificationTypeRepository, NotificationTypeRepository>();
 
 			services.AddSingleton<IPasswordHasher, PasswordHasher>();
 			services.AddScoped<IRoleRepository, RoleRepository>();
