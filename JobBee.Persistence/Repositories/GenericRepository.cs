@@ -223,6 +223,57 @@ namespace JobBee.Persistence.Repositories
 			return pageResult;
 		}
 
+		public async Task<PageResult<TEntity>> GetPaginatedAsyncIncluding(
+												int pageIndex,
+												int pageSize,
+												Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
+												Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+												params Expression<Func<TEntity, object>>[] includes)
+		{
+			var query = _context.Set<TEntity>().AsQueryable();
+
+			// Apply includes
+			if (includes != null && includes.Length > 0)
+			{
+				foreach (var include in includes)
+				{
+					query = query.Include(include);
+				}
+			}
+
+			// Apply filter
+			if (filter != null)
+			{
+				query = filter(query);
+			}
+
+			// Count total items after filtering
+			int totalItems = await query.CountAsync();
+
+			// Apply ordering
+			if (orderBy != null)
+			{
+				query = orderBy(query);
+			}
+			else
+			{
+				// Fallback: order by Id (assumes entity has "Id" property)
+				var param = Expression.Parameter(typeof(TEntity), "e");
+				var idProp = Expression.PropertyOrField(param, "Id");
+				var lambda = Expression.Lambda<Func<TEntity, object>>(
+					Expression.Convert(idProp, typeof(object)), param);
+				query = query.OrderBy(lambda);
+			}
+
+			// Apply pagination
+			var items = await query
+				.Skip((pageIndex - 1) * pageSize)
+				.Take(pageSize)
+				.ToListAsync();
+
+			return new PageResult<TEntity>(items, totalItems, pageIndex, pageSize);
+		}
+
 		public async Task InsertRange(List<TEntity> entities)
 		{
 			await _context.Set<TEntity>().AddRangeAsync(entities);

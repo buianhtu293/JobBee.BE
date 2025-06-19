@@ -1,6 +1,3 @@
-using System.Numerics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace JobBee.Shared.Ultils;
 
 public static class DateConverter
@@ -41,5 +38,11 @@ public static class DateConverter
 		}
 		DateTime utcDateTime = DateTime.UnixEpoch.AddSeconds(time);
 		return DateOnly.FromDateTime(DateTime.SpecifyKind(utcDateTime, DateTimeKind.Unspecified));
+	}
+
+	public static int DifferenceDays(this DateOnly targetDate, DateOnly today)
+	{
+		int daysRemaining = (targetDate.ToDateTime(TimeOnly.MinValue) - today.ToDateTime(TimeOnly.MinValue)).Days;
+		return daysRemaining;
 	}
 }

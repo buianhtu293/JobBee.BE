@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using JobBee.Application.Contracts.Persistence;
 using JobBee.Application.Models.Response;
+using JobBee.Domain.Entities;
 using JobBee.Shared.Paginators;
 using MediatR;
+using System.Linq;
 
 
 namespace JobBee.Application.Features.Job.Queries.GetPostedJobs
@@ -14,36 +16,37 @@ namespace JobBee.Application.Features.Job.Queries.GetPostedJobs
 	{
 		public async Task<ApiResponse<PageResult<PostedJobDto>>> Handle(GetPostedJobQuery request, CancellationToken cancellationToken)
 		{
-			var query = unitOfWork.GenericRepository
-				.GetQueryAble();
-
-			query = query.Where(x => x.EmployerId == request.EmployerId);
-
-			if (!string.IsNullOrWhiteSpace(request.Keyword))
+			Func<IQueryable<Domain.Entities.Job>, IQueryable<Domain.Entities.Job>> filter = query =>
 			{
-				string keyword = request.Keyword.Trim().ToLower();
-				query = query.Where(j =>
-					j.Title.ToLower().Contains(keyword) ||
-					j.Description.ToLower().Contains(keyword));
-			}
+				if (request == null) return query;
 
-			if (request.IsActive.HasValue)
-			{
-				query = query.Where(j => j.IsActive == request.IsActive.Value);
-			}
+				query = query.Where(job => job.EmployerId == request.EmployerId);
 
-			int totalCount = query.Count();
+				if (!string.IsNullOrWhiteSpace(request.Keyword))
+				{
+					string keyword = request.Keyword.Trim().ToLower();
+					query = query.Where(job =>
+						job.Title.ToLower().Contains(keyword) ||
+						job.Description.ToLower().Contains(keyword));
+				}
 
-			var pagedJobs = query
-				.OrderByDescending(j => j.PostedAt)
-				.Skip(request.Page * request.PageSize)
-				.Take(request.PageSize)
-				.ToList();
+				if (request.IsActive.HasValue)
+				{
+					query = query.Where(job => job.IsActive == request.IsActive.Value);
+				}
 
-			var jobDtos = mapper.Map<List<PostedJobDto>>(pagedJobs);
+				return query;
+			};
 
-			var pageResult = new PageResult<PostedJobDto>(jobDtos, totalCount, request.Page, request.PageSize);
-			return new ApiResponse<PageResult<PostedJobDto>>("Success", 200, pageResult);
+			var pageResult = await unitOfWork.GenericRepository.GetPaginatedAsyncIncluding(
+				request.Page,
+				request.PageSize,
+				filter,
+				null,
+				c => c.JobType!
+			);
+
+			return new ApiResponse<PageResult<PostedJobDto>>("Success", 200, mapper.Map<PageResult<PostedJobDto>>(pageResult));
 		}
 	}
 }
