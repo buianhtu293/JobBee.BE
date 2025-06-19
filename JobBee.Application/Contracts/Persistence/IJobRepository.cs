@@ -12,5 +12,6 @@ namespace JobBee.Application.Contracts.Persistence
 	{
 		Task<PageResult<Job>> GetJobsAppliedByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken);
 		Task<PageResult<Job>> GetSavedJobByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken);
+		Task<PageResult<Job>> GetJobAlertByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken);
 	}
 }

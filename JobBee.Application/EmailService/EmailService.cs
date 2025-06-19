@@ -3,6 +3,9 @@ using System.Net;
 using Microsoft.Extensions.Configuration;
 using static System.Net.Mime.MediaTypeNames;
 using System.Security.Principal;
+using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
+using Elastic.Clients.Elasticsearch.Requests;
+using JobBee.Domain.Entities;
 
 namespace JobBee.Application.EmailService
 {
@@ -30,6 +33,78 @@ namespace JobBee.Application.EmailService
 
 			var message = new MailMessage(email!, receptor, subject, body);
 			await smtpClient.SendMailAsync(message);
+		}
+
+		public async Task SendEmailJobAlert(string receptor, string subject, Job jobAlert)
+		{
+			var email = _configuration.GetValue<string>("EMAIL_CONFIGURATION:EMAIL");
+			var password = _configuration.GetValue<string>("EMAIL_CONFIGURATION:PASSWORD");
+			var host = _configuration.GetValue<string>("EMAIL_CONFIGURATION:HOST");
+			var port = _configuration.GetValue<int>("EMAIL_CONFIGURATION:PORT");
+
+			var bodyHtml = $@"<div style='font-family: Segoe UI, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; background-color: #ffffff; color: #333333; border: 1px solid #e5e7eb; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);'>
+    <h2 style='color: #111827; margin-bottom: 16px;'>New <span style='color: #2563eb;'>JobBee</span> Job Alert</h2>
+    <p style='font-size: 16px; line-height: 1.6; margin-bottom: 16px;'>
+        A new job that matches your interests has been posted. Here are the details:
+    </p>
+
+    <table style='width: 100%; font-size: 15px; line-height: 1.6; margin-bottom: 24px;'>
+        <tr><td><strong>🔹 Title:</strong></td><td>{jobAlert.Title}</td></tr>
+        <tr><td><strong>📍 Location:</strong></td><td>{jobAlert.LocationCity}, {jobAlert.LocationState}, {jobAlert.LocationCountry}</td></tr>
+        <tr><td><strong>💰 Salary:</strong></td><td>{(jobAlert.MinSalary.HasValue ? $"${jobAlert.MinSalary.Value:N0}" : "N/A")} - {(jobAlert.MaxSalary.HasValue ? $"${jobAlert.MaxSalary.Value:N0}" : "N/A")} {jobAlert.Currency ?? ""} {(!string.IsNullOrEmpty(jobAlert.SalaryPeriod) ? $"/{jobAlert.SalaryPeriod}" : "")}</td></tr>
+        <tr><td><strong>📅 Deadline:</strong></td><td>{jobAlert.ApplicationDeadline?.ToString("MMMM dd, yyyy") ?? "Open until filled"}</td></tr>
+    </table>
+
+    <p style='margin-bottom: 16px; font-size: 15px;'><strong>📝 Description:</strong><br>{(jobAlert.Description.Length > 300 ? jobAlert.Description.Substring(0, 300) + "..." : jobAlert.Description)}</p>
+
+    <div style='text-align: center; margin: 30px 0;'>
+        <a href='https://jobbee.example.com/job-alerts' target='_blank'
+           style='display: inline-block;
+                  font-size: 16px;
+                  font-weight: 600;
+                  letter-spacing: 0.5px;
+                  color: #ffffff;
+                  text-decoration: none;
+                  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+                  padding: 14px 28px;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                  transition: transform 0.2s ease;'>
+            View Full Job Details
+        </a>
+    </div>
+
+    <p style='font-size: 14px; color: #6b7280; margin-bottom: 8px;'>This is an automated alert based on your preferences.</p>
+    <p style='font-size: 14px; color: #6b7280;'>— The JobBee Team</p>
+</div>";
+
+
+			var smtpClient = new SmtpClient(host, port);
+			smtpClient.EnableSsl = true;
+			smtpClient.UseDefaultCredentials = false;
+			smtpClient.Credentials = new NetworkCredential(email, password);
+
+			var message = new MailMessage
+			{
+				From = new MailAddress(email!),
+				Subject = subject,
+				Body = bodyHtml,
+				IsBodyHtml = true
+			};
+
+			message.To.Add(receptor);
+			message.BodyEncoding = System.Text.Encoding.UTF8;
+			message.SubjectEncoding = System.Text.Encoding.UTF8;
+
+			try
+			{
+				await smtpClient.SendMailAsync(message);
+			}
+			finally
+			{
+				message.Dispose();
+				smtpClient.Dispose();
+			}
 		}
 
 		public async Task SendEmailPassword(string receptor, string subject, string url)

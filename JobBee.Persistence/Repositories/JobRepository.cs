@@ -16,6 +16,29 @@ namespace JobBee.Persistence.Repositories
 		{
 		}
 
+		public async Task<PageResult<Job>> GetJobAlertByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken)
+		{
+			Func<IQueryable<Domain.Entities.Job>, IQueryable<Domain.Entities.Job>>? filter = null;
+			filter = query => query.Where(j => j.JobAlerts.Any(ja => ja.CandidateId == candidateId));
+
+			Func<IQueryable<Domain.Entities.Job>, IOrderedQueryable<Domain.Entities.Job>>? orderBy = null;
+
+			return await GetPaginatedAsyncIncluding(
+				pageIndex,
+				pageSize,
+				filter,
+				orderBy,
+				j => j.JobAlerts,
+				j => j.SavedJobs,
+				j => j.JobApplications,
+				e => e.Employer,
+				c => c.JobCategory,
+				t => t.JobType,
+				e => e.ExperienceLevel,
+				e => e.MinEducation
+				);
+		}
+
 		public async Task<PageResult<Job>> GetJobsAppliedByCandidateAsync(Guid candidateId, int pageIndex, int pageSize, CancellationToken cancellationToken)
 		{
 			Func<IQueryable<Domain.Entities.Job>, IQueryable<Domain.Entities.Job>>? filter = null;
