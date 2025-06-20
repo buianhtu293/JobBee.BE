@@ -11,5 +11,6 @@ namespace JobBee.Application.Features.Skill.Queries.GetAllSkill
 		public Guid Id { get; set; }
 		public string SkillName { get; set; } = null!;
 		public Guid? CategoryId { get; set; }
+		public string CategoryName { get; set; } = null!;
 	}
 }

@@ -32,11 +32,14 @@ namespace JobBee.Application.Features.Employer.Queries.GetAllEmployer
 			//	orderBy = query => query.OrderByDescending(c => c.CreatedAt);
 			//}
 
-			var result = await _employerRepository.GetPaginatedAsync(
+			var result = await _employerRepository.GetPaginatedAsyncIncluding(
 					request.PageIndex,
 					request.PageSize,
 					filter,
-					orderBy
+					orderBy,
+					u => u.User,
+					i => i.Industry,
+					c => c.CompanySize
 				);
 
 			var dtoItems = _mapper.Map<List<EmployerPageResultDto>>(result.Items);

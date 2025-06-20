@@ -24,7 +24,10 @@ namespace JobBee.Application.Features.Skill.Queries.GetSkillById
 		}
 		public async Task<ApiResponse<SkillDetailDto>> Handle(GetSkillDetailQuery request, CancellationToken cancellationToken)
 		{
-			var skill = _skillRepository.GetById(request.id);
+			var skill = _skillRepository.GetByIdIncluding(
+				request.id,
+				c => c.Category
+				);
 
 			if (skill == null)
 			{

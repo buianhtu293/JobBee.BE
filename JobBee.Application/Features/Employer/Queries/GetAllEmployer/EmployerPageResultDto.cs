@@ -11,10 +11,13 @@ namespace JobBee.Application.Features.Employer.Queries.GetAllEmployer
 	{
 		public Guid Id { get; set; }
 		public Guid UserId { get; set; }
+		public string UserName { get; set; }
 		public string CompanyName { get; set; } = null!;
 		public string? CompanyLogo { get; set; }
 		public Guid? IndustryId { get; set; }
+		public string IndustryName { get; set; }
 		public Guid? CompanySizeId { get; set; }
+		public string SizeRange { get; set; }
 		public int? FoundedYear { get; set; }
 		public string? CompanyDescription { get; set; }
 		public string? WebsiteUrl { get; set; }
