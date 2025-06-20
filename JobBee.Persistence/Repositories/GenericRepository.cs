@@ -309,5 +309,20 @@ namespace JobBee.Persistence.Repositories
 		{
 			return GetAll(isAll).Where(predicate);
 		}
+
+		public TEntity? GetByIdIncluding(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors)
+		{
+			IQueryable<TEntity> query = _context.Set<TEntity>();
+
+			if (propertySelectors?.Any() == true)
+			{
+				foreach (var includeProperty in propertySelectors)
+				{
+					query = query.Include(includeProperty);
+				}
+			}
+
+			return query.FirstOrDefault(e => EF.Property<TPrimaryKey>(e, "Id")!.Equals(id));
+		}
 	}
 }

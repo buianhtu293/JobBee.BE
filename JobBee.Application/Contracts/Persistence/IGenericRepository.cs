@@ -94,6 +94,8 @@ namespace JobBee.Application.Contracts.Persistence
 		/// <returns>Entity</returns>
 		TEntity? GetById(TPrimaryKey id);
 
+		TEntity? GetByIdIncluding(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors);
+
 		/// <summary>
 		/// Used to get a IQueryable that is used to retrieve entities from entire table.
 		/// </summary>

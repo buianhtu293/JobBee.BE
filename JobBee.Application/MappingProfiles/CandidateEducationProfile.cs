@@ -22,11 +22,14 @@ namespace JobBee.Application.MappingProfiles
 			CreateMap<CandidateEducation, UpdateCandidateEducationDto>().ReverseMap();
             CreateMap<CandidateEducation, UpdateCandidateEducationCommand>().ReverseMap();
 
-            CreateMap<CandidateEducation, CandidateEducationDetailDto>().ReverseMap();
+            CreateMap<CandidateEducation, CandidateEducationDetailDto>()
+				.ForMember(des => des.EducationLevel, opt => opt.MapFrom(src => src.EducationLevel.LevelName));
 
-            CreateMap<CandidateEducation, CandidateEducationByCandidateIdDto>().ReverseMap();
+			CreateMap<CandidateEducation, CandidateEducationByCandidateIdDto>()
+				.ForMember(des => des.EducationLevel, opt => opt.MapFrom(src => src.EducationLevel.LevelName));
 
-            CreateMap<CandidateEducation, CandidateEducationDto>().ReverseMap();
+			CreateMap<CandidateEducation, CandidateEducationDto>()
+                .ForMember(des => des.EducationLevel, opt => opt.MapFrom(src => src.EducationLevel.LevelName));
         }
     }
 }
