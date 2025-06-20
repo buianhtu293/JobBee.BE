@@ -26,5 +26,21 @@ namespace JobBee.Persistence.Repositories
 				j => j.User
 				);
 		}
+
+		public async Task<PageResult<Candidate>> GetSavedCandiddateByEmployerAsync(Guid employerId, int pageIndex, int pageSize, CancellationToken cancellationToken)
+		{
+			Func<IQueryable<Domain.Entities.Candidate>, IQueryable<Domain.Entities.Candidate>>? filter = null;
+			filter = query => query.Where(j => j.SavedCandidates.Any(ja => ja.EmployerId == employerId));
+
+			Func<IQueryable<Domain.Entities.Candidate>, IOrderedQueryable<Domain.Entities.Candidate>>? orderBy = null;
+
+			return await GetPaginatedAsyncIncluding(
+				pageIndex,
+				pageSize,
+				filter,
+				orderBy,
+				j => j.User
+				);
+		}
 	}
 }
