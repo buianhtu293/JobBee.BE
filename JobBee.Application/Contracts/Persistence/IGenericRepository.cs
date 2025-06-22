@@ -225,30 +225,6 @@ namespace JobBee.Application.Contracts.Persistence
 			Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null);
 
-
-		//Task<PageResult<TEntity>> GetPaginatedAsyncIncluding(
-		//	int pageIndex,
-		//	int pageSize,
-		//	Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
-		//	Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-		//	params Expression<Func<TEntity, object>>[] includes);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="pageIndex"></param>
-		/// <param name="pageSize"></param>
-		/// <param name="filter"></param>
-		/// <param name="orderBy"></param>
-		/// <param name="includes"></param>
-		/// <returns></returns>
-		Task<PageResult<TEntity>> GetPaginatedAsyncIncluding(
-												int pageIndex,
-												int pageSize,
-												Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
-												Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-												params Expression<Func<TEntity, object>>[] includes);
-
 		/// <summary>
 		/// 
 		/// </summary>
