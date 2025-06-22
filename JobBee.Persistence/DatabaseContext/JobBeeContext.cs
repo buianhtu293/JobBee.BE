@@ -431,7 +431,7 @@ public partial class JobBeeContext : DbContext
 			entity.Property(e => e.Id).ValueGeneratedNever();
 			entity.Property(e => e.ApplicationsCount).HasDefaultValue(0);
 			entity.Property(e => e.Currency).HasMaxLength(10);
-			entity.Property(e => e.ExpiresAt).HasColumnType("timestamp without time zone");
+			
 			entity.Property(e => e.LocationCity).HasMaxLength(100);
 			entity.Property(e => e.LocationCountry).HasMaxLength(100);
 			entity.Property(e => e.LocationState).HasMaxLength(100);

@@ -25,5 +25,5 @@ public class CreateJobCommand : IRequest<bool>
 	public long ApplicationDeadline { get; set; }
 	public bool IsFeatured { get; set; }
 	public bool IsActive { get; set; }
-	public long ExpireAt { get; set; }
+	public long ExpiresAt { get; set; }
 }

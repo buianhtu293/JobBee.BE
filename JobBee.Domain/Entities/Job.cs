@@ -66,7 +66,7 @@ public partial class Job
 	public bool? AllowsWorkFromHome { get; set; }
 
 	[Column("application_deadline")]
-	public DateOnly? ApplicationDeadline { get; set; }
+	public long? ApplicationDeadline { get; set; }
 
 	[Column("is_featured")]
 	public bool? IsFeatured { get; set; }
@@ -87,7 +87,7 @@ public partial class Job
 	public DateTime? UpdatedAt { get; set; }
 
 	[Column("expires_at")]
-	public DateTime? ExpiresAt { get; set; }
+	public long? ExpiresAt { get; set; }
 
 	public virtual Employer Employer { get; set; } = null!;
 
