@@ -69,9 +69,9 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 		public DateTime UpdatedAt { get; set; }
 
 		[JsonPropertyName("expires_at")]
-		public object? ExpiresAt { get; set; }
+		public long? ExpiresAt { get; set; }
 
 		[JsonPropertyName("application_deadline")]
-		public DateTime? ApplicationDeadline { get; set; }
+		public long? ApplicationDeadline { get; set; }
 	}
 }
