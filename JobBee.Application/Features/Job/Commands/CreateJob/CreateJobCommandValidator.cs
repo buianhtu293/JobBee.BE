@@ -34,12 +34,12 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
 
 		RuleFor(x => x.SalaryPeriod)
 			.NotEmpty()
-			.Must(x => x == "Monthly" || x == "Yearly" || x == "Hourly")
+			.Must(x => x == "Monthly" || x == "Yearly" || x == "Hourly" || x == "Tháng" || x == "Năm" || x == "Giờ")
 			.WithMessage("SalaryPeriod must be Monthly, Yearly, or Hourly.");
 
 		RuleFor(x => x.Currency)
 			.NotEmpty()
-			.Length(2, 5); // e.g., USD, EUR
+			.Length(2, 5);
 
 		RuleFor(x => x.LocationCity)
 			.NotEmpty();
@@ -51,7 +51,7 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
 			.NotEmpty();
 
 		RuleFor(x => x.ApplicationDeadline)
-			.GreaterThan(0)
-			.WithMessage("ApplicationDeadline must be a valid timestamp.");
+			.GreaterThanOrEqualTo(0)
+			.WithMessage("ApplicationDeadline must be today or a future date.");
 	}
 }
