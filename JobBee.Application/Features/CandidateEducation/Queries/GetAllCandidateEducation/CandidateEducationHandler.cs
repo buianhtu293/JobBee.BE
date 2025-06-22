@@ -26,7 +26,9 @@ namespace JobBee.Application.Features.CandidateEducation.Queries.GetAllCandidate
 		}
 		public async Task<ApiResponse<List<CandidateEducationDto>>> Handle(CandidateEducationQuery request, CancellationToken cancellationToken)
 		{
-			var candidateEducations = await _candidateEducationRepository.GetAllListAsync();
+			var candidateEducations = _candidateEducationRepository.GetAllIncluding(
+					e => e.EducationLevel
+				).ToList();
 
 			var candidateEducationList = _mapper.Map<List<CandidateEducationDto>>(candidateEducations);
 			var data = new ApiResponse<List<CandidateEducationDto>>("Success", 200, candidateEducationList);

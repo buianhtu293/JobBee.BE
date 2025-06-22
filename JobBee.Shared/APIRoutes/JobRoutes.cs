@@ -12,6 +12,7 @@
 			public const string Edit = "";
 			public const string Delete = "{id}";
 			public const string GetPostedJob = "posted-job";
+			public const string GetAllJob = "get-all-job";
 		}
 	}
 }

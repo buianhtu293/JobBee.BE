@@ -25,6 +25,19 @@ namespace JobBee.Persistence.Repositories
 			.FirstOrDefaultAsync(member => member.Email == email, cancellationToken);
 		}
 
+		public async Task<List<User>> GetUserOpenToWork()
+		{
+			var users = await _context.users
+				.Include(u => u.Candidate)
+				.Where(u => u.Candidate != null && u.Candidate.IsAvailableForHire == true)
+				.ToListAsync();
+
+			if (users == null || users.Count == 0)
+				throw new KeyNotFoundException("No users are currently open to work.");
+
+			return users;
+		}
+
 		public async Task<User> InsertUserAsync(User user)
 		{
 			var entry = await _context.Set<User>().AddAsync(user);
@@ -42,14 +55,14 @@ namespace JobBee.Persistence.Repositories
 		{
 			User? user = await GetByEmailAsync(email);
 
-			if(user is null)
+			if (user is null)
 			{
 				throw new Exception("The user was not found");
 			}
 
 			bool verified = _passwordHasher.Verify(password, user.PasswordHash);
 
-			if(!verified)
+			if (!verified)
 			{
 				user = null;
 			}

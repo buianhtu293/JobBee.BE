@@ -23,7 +23,9 @@ namespace JobBee.Application.Features.Skill.Queries.GetAllSkill
 
 		public async Task<ApiResponse<List<SkillDto>>> Handle(GetAllSkillQuery request, CancellationToken cancellationToken)
 		{
-			var skills = await _skillRepository.GetAllListAsync();
+			var skills = _skillRepository.GetAllIncluding(
+				c => c.Category
+				);
 
 			var skillList = _mapper.Map<List<SkillDto>>(skills);
 			var data = new ApiResponse<List<SkillDto>>("Success", 200, skillList);

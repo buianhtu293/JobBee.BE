@@ -11,5 +11,7 @@ namespace JobBee.Application.Contracts.Persistence
 		Task<User> Login(string email, string password);
 
 		Task<User> InsertUserAsync(User user);
+
+		Task<List<User>> GetUserOpenToWork();
 	}
 }

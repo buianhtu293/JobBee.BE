@@ -16,6 +16,8 @@ namespace JobBee.Application.Features.CandidateEducation.Queries.GetAllCandidate
 
 		public Guid? EducationLevelId { get; set; }
 
+		public string EducationLevel { get; set; }
+
 		public string? FieldOfStudy { get; set; }
 
 		public DateOnly? StartDate { get; set; }

@@ -22,9 +22,11 @@ namespace JobBee.Application.MappingProfiles
 			CreateMap<Skill, UpdateSkillDto>().ReverseMap();
 			CreateMap<Skill, UpdateSkillCommand>().ReverseMap();
 
-			CreateMap<Skill, SkillDto>().ReverseMap();
+			CreateMap<Skill, SkillDto>()
+				.ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName));
 
-			CreateMap<Skill, SkillDetailDto>().ReverseMap();
+			CreateMap<Skill, SkillDetailDto>()
+				.ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName));
 		}
 	}
 }

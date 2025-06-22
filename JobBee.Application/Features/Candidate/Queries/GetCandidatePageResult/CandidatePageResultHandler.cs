@@ -36,11 +36,12 @@ namespace JobBee.Application.Features.Candidate.Queries.GetCandidatePageResult
 			}
 
 			// Fetch from repository
-			var result = await _candidateRepository.GetPaginatedAsync(
+			var result = await _candidateRepository.GetPaginatedAsyncIncluding(
 				request.PageIndex,
 				request.PageSize,
 				filter,
-				orderBy
+				orderBy,
+				c => c.User
 			);
 
 			// Map to DTOs

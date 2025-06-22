@@ -20,7 +20,10 @@ namespace JobBee.Application.Features.CandidateEducation.Queries.GetCandidateEdu
 
 		public async Task<ApiResponse<CandidateEducationDetailDto>> Handle(CandidateEducationDetailQuery request, CancellationToken cancellationToken)
 		{
-			var candidateEducation = _candidateEducationRepository.GetById(request.id);
+			var candidateEducation = _candidateEducationRepository.GetByIdIncluding(
+					request.id,
+					e => e.EducationLevel
+				);
 
 			if (candidateEducation == null)
 			{

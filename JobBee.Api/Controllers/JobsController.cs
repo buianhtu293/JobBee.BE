@@ -39,5 +39,12 @@ namespace JobBee.Api.Controllers
             var result = await mediator.Send(query);
             return Ok(result);
 		}
+
+        [HttpGet(JobRoutes.ACTION.GetAllJob)]
+        public async Task<IActionResult> GetAllJob([FromQuery] GetAllJobsQuery query)
+        {
+            var jobs = await mediator.Send(query);
+            return Ok(jobs);
+        }
 	}
 }

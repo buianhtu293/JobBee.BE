@@ -94,6 +94,8 @@ namespace JobBee.Application.Contracts.Persistence
 		/// <returns>Entity</returns>
 		TEntity? GetById(TPrimaryKey id);
 
+		TEntity? GetByIdIncluding(TPrimaryKey id, params Expression<Func<TEntity, object>>[] propertySelectors);
+
 		/// <summary>
 		/// Used to get a IQueryable that is used to retrieve entities from entire table.
 		/// </summary>
@@ -222,6 +224,30 @@ namespace JobBee.Application.Contracts.Persistence
 			int pageSize,
 			Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
 			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null);
+
+
+		Task<PageResult<TEntity>> GetPaginatedAsyncIncluding(
+			int pageIndex,
+			int pageSize,
+			Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
+			Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+			params Expression<Func<TEntity, object>>[] includes);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="pageIndex"></param>
+		/// <param name="pageSize"></param>
+		/// <param name="filter"></param>
+		/// <param name="orderBy"></param>
+		/// <param name="includes"></param>
+		/// <returns></returns>
+		Task<PageResult<TEntity>> GetPaginatedAsyncIncluding(
+												int pageIndex,
+												int pageSize,
+												Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
+												Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+												params Expression<Func<TEntity, object>>[] includes);
 
 		/// <summary>
 		/// 

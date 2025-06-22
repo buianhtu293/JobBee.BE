@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using JobBee.Application.Contracts.Persistence;
@@ -21,6 +22,22 @@ namespace JobBee.Persistence.Repositories
 			return await _context.candidate_educations
 				.Where(ce => ce.CandidateId == CandidateId)
 				.ToListAsync();
+		}
+
+		public async Task<List<CandidateEducation>> GetCandidateEducationByCandidateIdIncluding(Guid candidateId, params Expression<Func<CandidateEducation, object>>[] propertySelectors)
+		{
+			IQueryable<CandidateEducation> query = _context.candidate_educations
+		.Where(ce => ce.CandidateId == candidateId);
+
+			if (propertySelectors?.Any() == true)
+			{
+				foreach (var includeProperty in propertySelectors)
+				{
+					query = query.Include(includeProperty);
+				}
+			}
+
+			return await query.ToListAsync();
 		}
 	}
 }
