@@ -16,6 +16,16 @@ namespace JobBee.Api
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("AllowLocalhost", policy =>
+				{
+					policy.WithOrigins("http://localhost:4200") // Allow your frontend origin
+						  .AllowAnyHeader()                    // Allow any headers
+						  .AllowAnyMethod();                   // Allow any HTTP methods (GET, POST, etc.)
+				});
+			});
+
 			// Add services to the container.
 
 			builder.Services.AddApplicationServices(builder.Configuration);
@@ -72,6 +82,7 @@ namespace JobBee.Api
 
 			var app = builder.Build();
 
+			app.UseCors("AllowLocalhost");
 
 			using (var scope = app.Services.CreateScope())
 			{
