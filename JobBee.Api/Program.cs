@@ -22,7 +22,8 @@ namespace JobBee.Api
 				{
 					policy.WithOrigins("http://localhost:4200", "https://jobbeefe.vercel.app/") 
 						  .AllowAnyHeader()                    
-						  .AllowAnyMethod();
+						  .AllowAnyMethod()
+						  .AllowCredentials();
 				});
 			});
 
@@ -81,7 +82,7 @@ namespace JobBee.Api
 
 				options.ListenAnyIP(5001, listenOptions =>
 				{
-					listenOptions.UseHttps();
+					listenOptions.UseHttps("/home/ubuntu/cert.pfx", "Callmebean03@");
 				});
 			});
 
