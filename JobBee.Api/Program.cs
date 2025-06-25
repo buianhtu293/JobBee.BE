@@ -18,14 +18,10 @@ namespace JobBee.Api
 
 			builder.Services.AddCors(options =>
 			{
-				options.AddPolicy("AllowLocalhost", policy =>
+				options.AddPolicy("AllowFrontend", policy =>
 				{
-					policy.WithOrigins("http://localhost:4200") 
+					policy.WithOrigins("http://localhost:4200", "https://jobbeefe.vercel.app/") 
 						  .AllowAnyHeader()                    
-						  .AllowAnyMethod();
-
-					policy.WithOrigins("https://jobbeefe.vercel.app/")
-						  .AllowAnyHeader()
 						  .AllowAnyMethod();
 				});
 			});
@@ -86,7 +82,7 @@ namespace JobBee.Api
 
 			var app = builder.Build();
 
-			app.UseCors("AllowLocalhost");
+			app.UseCors("AllowFrontend");
 
 			using (var scope = app.Services.CreateScope())
 			{
