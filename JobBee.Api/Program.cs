@@ -20,9 +20,13 @@ namespace JobBee.Api
 			{
 				options.AddPolicy("AllowLocalhost", policy =>
 				{
-					policy.WithOrigins("http://localhost:4200") // Allow your frontend origin
-						  .AllowAnyHeader()                    // Allow any headers
-						  .AllowAnyMethod();                   // Allow any HTTP methods (GET, POST, etc.)
+					policy.WithOrigins("http://localhost:4200") 
+						  .AllowAnyHeader()                    
+						  .AllowAnyMethod();
+
+					policy.WithOrigins("https://jobbeefe.vercel.app/")
+						  .AllowAnyHeader()
+						  .AllowAnyMethod();
 				});
 			});
 
