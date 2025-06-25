@@ -72,6 +72,15 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 					if (!string.IsNullOrWhiteSpace(request.Level))
 						mustClauses.Add(new MatchQuery { Field = "experience_level", Query = request.Level });
 
+					if (request.IsFeatured.HasValue)
+					{
+						mustClauses.Add(new TermQuery
+						{
+							Field = "is_featured",
+							Value = request.IsFeatured.Value
+						});
+					}
+
 					if (mustClauses.Any())
 					{
 						q.Bool(b => b.Must(mustClauses.ToArray()));
