@@ -20,7 +20,7 @@ namespace JobBee.Api
 			{
 				options.AddPolicy("AllowFrontend", policy =>
 				{
-					policy.WithOrigins("http://localhost:4200", "https://jobbeefe.vercel.app/") 
+					policy.WithOrigins("http://localhost:4200", "https://jobbeefe.vercel.app") 
 						  .AllowAnyHeader()                    
 						  .AllowAnyMethod()
 						  .AllowCredentials();
@@ -34,13 +34,6 @@ namespace JobBee.Api
 			builder.Services.AddPersistenceServices(builder.Configuration);
 
 			builder.Services.AddControllers();
-
-			builder.Services.AddCors(options =>
-			{
-				options.AddPolicy("all", builder => builder.AllowAnyOrigin()
-				.AllowAnyHeader()
-				.AllowAnyMethod());
-			});
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
