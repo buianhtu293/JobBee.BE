@@ -78,6 +78,11 @@ namespace JobBee.Api
 			builder.WebHost.ConfigureKestrel(options =>
 			{
 				options.ListenAnyIP(5000);
+
+				options.ListenAnyIP(5001, listenOptions =>
+				{
+					listenOptions.UseHttps();
+				});
 			});
 
 			var app = builder.Build();
