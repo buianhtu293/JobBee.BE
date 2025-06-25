@@ -15,6 +15,7 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 		public IList<String>? JobTypes { get; set; } = new List<String>();
 		public List<String>? EducationLevels { get; set; } = new List<String>();
 		public String? Level { get; set; }
+		public bool? IsFeatured { get; set; }
 		public int Page { get; set; } = 0;
 		public int PageSize { get; set; } = 20;
 	}
