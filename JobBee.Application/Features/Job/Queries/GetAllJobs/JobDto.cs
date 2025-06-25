@@ -14,6 +14,9 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 		[JsonPropertyName("employer_name")]
 		public string EmployerName { get; set; }
 
+		[JsonPropertyName("company_logo")]
+		public string CompanyLogo { get; set; }
+
 		[JsonPropertyName("job_category")]
 		public string JobCategory { get; set; }
 
