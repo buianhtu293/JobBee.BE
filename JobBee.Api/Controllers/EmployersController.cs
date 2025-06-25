@@ -1,4 +1,5 @@
-﻿using JobBee.Application.Features.Employer.Commands.CreateEmployer;
+﻿using JobBee.Application.Features.Company.Queries.GetTopCompany;
+using JobBee.Application.Features.Employer.Commands.CreateEmployer;
 using JobBee.Application.Features.Employer.Queries.GetAllEmployer;
 using JobBee.Shared.APIRoutes;
 using MediatR;
@@ -28,5 +29,11 @@ namespace JobBee.Api.Controllers
 			return Ok(employers);
 		}
 
+		[HttpGet(EmployerRoutes.ACTION.GetTopEmployer)]
+		public async Task<IActionResult> GetTopEmployer([FromQuery] TopCompanyQuery query)
+		{
+			var result = await mediator.Send(query);
+			return Ok(result);
+		}
 	}
 }

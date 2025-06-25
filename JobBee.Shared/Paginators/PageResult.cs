@@ -53,7 +53,7 @@
 		{
 			Items = items ?? new List<TModel>();
 			TotalItems = totalItems;
-			PageIndex = pageIndex;
+			PageIndex = pageIndex > 0 ? pageIndex : 1;
 			PageSize = pageSize > 0 ? Math.Min(pageSize, 20) : 20;
 		}
 	}

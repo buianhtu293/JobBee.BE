@@ -1,5 +1,6 @@
 using AutoMapper;
 using JobBee.Application.Features.Job.Commands.CreateJob;
+using JobBee.Application.Features.Job.Queries.CommonJobs;
 using JobBee.Application.Features.Job.Queries.GetAllJobs;
 using JobBee.Application.Features.Job.Queries.GetPostedJobs;
 using JobBee.Domain.Entities;
@@ -15,5 +16,7 @@ public class JobProfile : Profile
         CreateMap<Job, JobDto>().ReverseMap();
         CreateMap<CreateJobCommand, Job>();
         CreateMap<PageResult<Job>, PageResult<PostedJobDto>>();
+		CreateMap<PageResult<Job>, PageResult<CommonJob>>();
+		CreateMap<Job, CommonJob>();
     }
 }

@@ -17,6 +17,7 @@ namespace JobBee.Shared.APIRoutes
 			public const string CreateJobCategory = "create";
 			public const string UpdateJobCategory = "update";
 			public const string DeleteJobCategory = "delete/{id}";
+			public const string GetPopularCategory = "popular";
 		}
 	}
 }

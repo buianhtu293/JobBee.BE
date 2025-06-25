@@ -224,8 +224,8 @@ namespace JobBee.Persistence.Repositories
 		}
 
 		public async Task<PageResult<TEntity>> GetPaginatedAsyncIncluding(
-												int pageIndex,
-												int pageSize,
+												int pageIndex = 1,
+												int pageSize = 20,
 												Func<IQueryable<TEntity>, IQueryable<TEntity>>? filter = null,
 												Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
 												params Expression<Func<TEntity, object>>[] includes)

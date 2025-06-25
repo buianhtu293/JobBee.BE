@@ -8,14 +8,16 @@ using JobBee.Application.Features.JobCategory.Commands.CreateJobCategory;
 using JobBee.Application.Features.JobCategory.Commands.UpdateJobCategory;
 using JobBee.Application.Features.JobCategory.Queries.GetAllJobCategory;
 using JobBee.Application.Features.JobCategory.Queries.GetJobCategoryDetail;
+using JobBee.Application.Features.JobCategory.Queries.GetPopularCategory;
 using JobBee.Domain.Entities;
+using JobBee.Shared.Paginators;
 
 namespace JobBee.Application.MappingProfiles
 {
 	public class JobCategoryProfile : Profile
 	{
-		public JobCategoryProfile() 
-		{ 
+		public JobCategoryProfile()
+		{
 			CreateMap<JobCategory, CreateJobCategoryCommand>().ReverseMap();
 			CreateMap<JobCategory, CreateJobCategoryDto>().ReverseMap();
 
@@ -25,6 +27,9 @@ namespace JobBee.Application.MappingProfiles
 			CreateMap<JobCategory, JobCategoryDto>().ReverseMap();
 
 			CreateMap<JobCategory, JobCategoryDetailDto>().ReverseMap();
+
+			CreateMap<JobCategory, CategoryPopularDto>().ForMember(dest => dest.OpenPosition, opt => opt.MapFrom(src => src.Jobs.Count));
+			CreateMap<PageResult<JobCategory>, PageResult<CategoryPopularDto>>();
 		}
 	}
 }
