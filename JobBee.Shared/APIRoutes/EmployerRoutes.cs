@@ -12,6 +12,7 @@
 			public const string Update = "{id}";
 			public const string Delete = "{id}";
 			public const string GetListPageResult = "page-result";
+			public const string GetTopEmployer = "top";
 		}
 	}
 }

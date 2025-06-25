@@ -1,3 +1,4 @@
+using JobBee.Application.Features.Job.Queries.CommonJobs;
 using JobBee.Application.Features.Job.Queries.GetAllJobs;
 using JobBee.Application.Features.Job.Queries.GetDetail;
 using JobBee.Application.Features.Job.Queries.GetPostedJobs;
@@ -40,11 +41,11 @@ namespace JobBee.Api.Controllers
             return Ok(result);
 		}
 
-        [HttpGet(JobRoutes.ACTION.GetAllJob)]
-        public async Task<IActionResult> GetAllJob([FromQuery] GetAllJobsQuery query)
+        [HttpGet(JobRoutes.ACTION.GetCommonJob)]
+        public async Task<IActionResult> GetCommonJobs([FromQuery] CommonJobQuery query)
         {
-            var jobs = await mediator.Send(query);
-            return Ok(jobs);
+            var result = await mediator.Send(query);
+            return Ok(result);
         }
 	}
 }

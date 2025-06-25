@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Company\Queries\" />
     <Folder Include="Features\JobApplication\Commands\DeleteJobApplication\" />
     <Folder Include="Features\JobApplication\Commands\UpdateJobApplication\" />
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationDetail\" />

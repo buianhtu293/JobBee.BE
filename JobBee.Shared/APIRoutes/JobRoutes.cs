@@ -11,8 +11,8 @@
 			public const string Create = "";
 			public const string Edit = "";
 			public const string Delete = "{id}";
-			public const string GetPostedJob = "posted-job";
-			public const string GetAllJob = "get-all-job";
+			public const string GetPostedJob = "posted-jobs";
+			public const string GetCommonJob = "common-jobs";
 		}
 	}
 }

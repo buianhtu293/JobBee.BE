@@ -3,6 +3,7 @@ using JobBee.Application.Features.JobCategory.Commands.DeleteJobCategory;
 using JobBee.Application.Features.JobCategory.Commands.UpdateJobCategory;
 using JobBee.Application.Features.JobCategory.Queries.GetAllJobCategory;
 using JobBee.Application.Features.JobCategory.Queries.GetJobCategoryDetail;
+using JobBee.Application.Features.JobCategory.Queries.GetPopularCategory;
 using JobBee.Shared.APIRoutes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -72,5 +73,11 @@ namespace JobBee.Api.Controllers
 			return NoContent();
 		}
 
+		[HttpGet(JobCategoryRoutes.ACTION.GetPopularCategory)]
+		public async Task<IActionResult> GetPopularJobCategory([FromQuery] PopularCategoryQuery query)
+		{
+			var result = await _mediator.Send(query);
+			return Ok(result);
+		}
 	}
 }
