@@ -1,4 +1,5 @@
 ﻿using JobBee.Application.Contracts.Persistence;
+using JobBee.Application.Features.User.Commands.ChangePassword;
 using JobBee.Application.Features.User.Commands.ForgetPassword;
 using JobBee.Application.Features.User.Commands.Login;
 using JobBee.Application.Features.User.Commands.Register;
@@ -105,6 +106,14 @@ namespace JobBee.Api.Controllers
 		public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordCommand resetPasswordCommand)
 		{
 			var user = await _mediator.Send(resetPasswordCommand);
+			return Ok(user);
+		}
+
+		[HttpPut]
+		[Route(UserRoutes.ACTION.ChangePassword)]
+		public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordCommand changePasswordCommand)
+		{
+			var user = await _mediator.Send(changePasswordCommand);
 			return Ok(user);
 		}
 	}

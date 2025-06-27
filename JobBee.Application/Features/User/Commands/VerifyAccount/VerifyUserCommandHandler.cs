@@ -45,7 +45,7 @@ namespace JobBee.Application.Features.User.Commands.VerifyAccount
 			}
 
 			user.EmailConfirmed = true;
-			_userRepository.Update(user);
+			_userRepository.UpdateEmailConfirmed(user);
 			await _unitOfWork.SaveChangesAsync();
 			var verifyUserDto = _mapper.Map<VerifyUserDto>(user);
 			var data = new ApiResponse<VerifyUserDto>("Success", 201, verifyUserDto);

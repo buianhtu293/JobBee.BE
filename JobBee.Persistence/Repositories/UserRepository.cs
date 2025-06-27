@@ -69,5 +69,23 @@ namespace JobBee.Persistence.Repositories
 
 			return user;
 		}
+
+		public void UpdateEmailConfirmed(User user)
+		{
+			_context.Attach(user);
+			_context.Entry(user).Property(x => x.EmailConfirmed).IsModified = true;
+		}
+
+		public void UpdatePassword(User user)
+		{
+			_context.Attach(user);
+			_context.Entry(user).Property(x => x.PasswordHash).IsModified = true;
+		}
+
+		public void UpdateSecurityStamp(User user)
+		{
+			_context.Attach(user);
+			_context.Entry(user).Property(x => x.SecurityStamp).IsModified = true;
+		}
 	}
 }

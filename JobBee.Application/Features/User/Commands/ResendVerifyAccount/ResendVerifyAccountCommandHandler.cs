@@ -50,7 +50,7 @@ namespace JobBee.Application.Features.User.Commands.ResendVerifyAccount
 
 			await _emailService.SendEmailVerification(request.Email, "Verification Account", callbackUrl);
 
-			_userRepository.Update(user);
+			_userRepository.UpdateSecurityStamp(user);
 			await _unitOfWork.SaveChangesAsync();
 
 			var resendVerifyAccount = _mapper.Map<ResendVerifyAccountDto>(user);

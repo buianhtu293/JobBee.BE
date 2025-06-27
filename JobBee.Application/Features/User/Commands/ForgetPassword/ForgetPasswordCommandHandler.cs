@@ -51,7 +51,7 @@ namespace JobBee.Application.Features.User.Commands.ForgetPassword
 
 			await _emailService.SendEmailPassword(request.Email, "Reset Password", callbackUrl);
 
-			_userRepository.Update(user);
+			_userRepository.UpdateSecurityStamp(user);
 			await _unitOfWork.SaveChangesAsync();
 
 			var ForgetPasswordAccount = _mapper.Map<ForgetPasswordDto>(user);
