@@ -1,4 +1,5 @@
 ﻿using JobBee.Application.Features.Candidate.Commands.CreateCandidate;
+using JobBee.Application.Features.Candidate.Commands.CreateCandidatePhoto;
 using JobBee.Application.Features.Candidate.Commands.DeleteCandidate;
 using JobBee.Application.Features.Candidate.Commands.UpdateCandidate;
 using JobBee.Application.Features.Candidate.Queries.GetAllCandidate;
@@ -87,5 +88,14 @@ namespace JobBee.Api.Controllers
 			await _mediator.Send(command);
 			return NoContent();
 		}
+
+		[HttpPut]
+		[Route(CandidateRoutes.ACTION.UpdateProfilePicture)]
+		public async Task<ActionResult> UpdateProfilePicture([FromForm] CreateCandidatePhotoCommand createCandidatePhotoCommand)
+		{
+			var response = await _mediator.Send(createCandidatePhotoCommand);
+			return Ok(response);
+		}
+
 	}
 }
