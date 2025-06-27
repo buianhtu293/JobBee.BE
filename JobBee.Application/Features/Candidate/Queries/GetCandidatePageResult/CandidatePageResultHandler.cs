@@ -22,18 +22,67 @@ namespace JobBee.Application.Features.Candidate.Queries.GetCandidatePageResult
 		public async Task<ApiResponse<PageResult<CandidateDto>>> Handle(CandidatePageResultQuery request, CancellationToken cancellationToken)
 		{
 			// Build filter
-			Func<IQueryable<Domain.Entities.Candidate>, IQueryable<Domain.Entities.Candidate>>? filter = null;
-			if (!string.IsNullOrWhiteSpace(request.SearchName))
+			Func<IQueryable<Domain.Entities.Candidate>, IQueryable<Domain.Entities.Candidate>>? filter = query =>
 			{
-				filter = query => query.Where(c => c.City == request.SearchName);
-			}
+				if (!string.IsNullOrWhiteSpace(request.SearchName))
+				{
+					query = query.Where(c =>
+						(c.FirstName + " " + c.LastName).Contains(request.SearchName) ||
+						c.FirstName.Contains(request.SearchName) ||
+						c.LastName.Contains(request.SearchName));
+				}
+
+				if (!string.IsNullOrWhiteSpace(request.Gender))
+				{
+					query = query.Where(c => c.Gender == request.Gender);
+				}
+
+				if (!string.IsNullOrWhiteSpace(request.City))
+				{
+					query = query.Where(c => c.City == request.City);
+				}
+
+				if (!string.IsNullOrWhiteSpace(request.State))
+				{
+					query = query.Where(c => c.State == request.State);
+				}
+
+				if (!string.IsNullOrWhiteSpace(request.Country))
+				{
+					query = query.Where(c => c.Country == request.Country);
+				}
+
+				if (request.SalaryExpectation.HasValue)
+				{
+					query = query.Where(c => c.SalaryExpectation >= request.SalaryExpectation.Value);
+				}
+
+				if (request.ExperienceYears.HasValue)
+				{
+					query = query.Where(c => c.ExperienceYears >= request.ExperienceYears.Value);
+				}
+
+				if (request.IsAvailableForHire.HasValue)
+				{
+					query = query.Where(c => c.IsAvailableForHire == request.IsAvailableForHire.Value);
+				}
+
+				return query;
+			};
+
 
 			// Build sort
 			Func<IQueryable<Domain.Entities.Candidate>, IOrderedQueryable<Domain.Entities.Candidate>>? orderBy = null;
+
 			if (request.IsAscCreateAt)
+			{
+				orderBy = query => query.OrderBy(c => c.CreatedAt);
+			}
+			else
 			{
 				orderBy = query => query.OrderByDescending(c => c.CreatedAt);
 			}
+
 
 			// Fetch from repository
 			var result = await _candidateRepository.GetPaginatedAsyncIncluding(
