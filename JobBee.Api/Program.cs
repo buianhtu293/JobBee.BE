@@ -96,13 +96,10 @@ namespace JobBee.Api
 			{
 				options.ListenAnyIP(5000);
 
-				if(builder.Environment.IsProduction())
+				options.ListenAnyIP(5001, listenOptions =>
 				{
-					options.ListenAnyIP(5001, listenOptions =>
-					{
-						listenOptions.UseHttps();
-					});
-				}
+					listenOptions.UseHttps();
+				});
 			});
 
 			var app = builder.Build();
