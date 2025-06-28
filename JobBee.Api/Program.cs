@@ -1,12 +1,17 @@
+using Amazon.Extensions.NETCore.Setup;
 using JobBee.Api.Middleware;
 using JobBee.Api.OptionsSetup;
 using JobBee.Application;
 using JobBee.Infrastructure;
+using JobBee.Infrastructure.Authentication;
 using JobBee.Persistence;
 using JobBee.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace JobBee.Api
 {
@@ -63,20 +68,41 @@ namespace JobBee.Api
 			});
 
 			//Jwt
-			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddJwtBearer();
-
 			builder.Services.ConfigureOptions<JwtOptionsSetup>();
 			builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+			var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!);
+			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddJwtBearer(options =>
+					{
+						options.TokenValidationParameters = new TokenValidationParameters
+						{
+							ValidateIssuer = true,
+							ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+							ValidateAudience = true,
+							ValidAudience = builder.Configuration["Jwt:Audience"],
+
+							ValidateLifetime = true,
+							ClockSkew = TimeSpan.Zero,
+
+							ValidateIssuerSigningKey = true,
+							IssuerSigningKey = new SymmetricSecurityKey(key),
+
+							NameClaimType = "sub"
+						};
+					});
 
 			builder.WebHost.ConfigureKestrel(options =>
 			{
 				options.ListenAnyIP(5000);
 
-				options.ListenAnyIP(5001, listenOptions =>
+				if(builder.Environment.IsProduction())
 				{
-					listenOptions.UseHttps();
-				});
+					options.ListenAnyIP(5001, listenOptions =>
+					{
+						listenOptions.UseHttps();
+					});
+				}
 			});
 
 			var app = builder.Build();
@@ -101,7 +127,7 @@ namespace JobBee.Api
 			app.UseHttpsRedirection();
 
 			app.UseAuthentication();
-			//app.UseAuthorization();
+			app.UseAuthorization();
 
 			app.MapControllers();
 			app.Run();
