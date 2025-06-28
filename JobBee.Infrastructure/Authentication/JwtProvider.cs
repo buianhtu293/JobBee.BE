@@ -37,7 +37,7 @@ namespace JobBee.Infrastructure.Authentication
 				claims,
 				null,
 				DateTime.UtcNow.AddHours(1),
-				null);
+				signingCredentials);
 
 			string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 

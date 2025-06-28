@@ -35,6 +35,7 @@
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationDetail\" />
     <Folder Include="Features\JobApplication\Queries\GetJobAppicationByCandidateId\" />
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationByJobId\" />
+    <Folder Include="Features\NewFolder\" />
     <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
     <Folder Include="Features\Role\Commands\" />
     <Folder Include="Features\Role\Queries\" />
