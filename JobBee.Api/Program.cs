@@ -98,7 +98,7 @@ namespace JobBee.Api
 
 				options.ListenAnyIP(5001, listenOptions =>
 				{
-					listenOptions.UseHttps("/app/cert.pfx", "Callmebean03@");
+					listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
 				});
 			});
 
