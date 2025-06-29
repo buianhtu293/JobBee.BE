@@ -18,7 +18,7 @@ namespace JobBee.Api.Controllers
 	[ApiController]
 	public class PaymentsController(
 		IMediator mediator,
-		ILogger logger
+		ILogger<PaymentsController> logger
 	)
 		: ControllerBase
 	{
