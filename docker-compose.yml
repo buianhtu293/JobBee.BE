@@ -25,19 +25,18 @@ services:
       - AWS_SECRET_ACCESS_KEY=aaKHNXE7/aqLILcN98mT+ol96iL1A/ovq5XJHCPv
       - AWS_REGION=us-east-1
       - ASPNETCORE_URLS=http://+:5000
-      # - ASPNETCORE_URLS=https://+:5001
-      # - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/cert.pfx
-      # - ASPNETCORE_Kestrel__Certificates__Default__Password=Callmebean03@    
+      - ASPNETCORE_URLS=https://+:5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Callmebean03@    
     container_name: jobbee.api
     build:
       context: .
       dockerfile: JobBee.Api/Dockerfile
     ports:
       - "5000:5000"
-      # - "5001:5001"
+      - "5001:5001"
     volumes:
-      - /home/ubuntu/fullchain.cer:/https/fullchain.cer:ro
-      - /home/ubuntu/jobbee.work.gd.key:/https/jobbee.work.gd.key:ro
+      - /home/ubuntu/cert.pfx:/https/cert.pfx:ro
     networks:
       - jobbee
 
