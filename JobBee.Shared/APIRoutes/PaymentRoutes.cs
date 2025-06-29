@@ -7,6 +7,7 @@
 		public static class ACTION
 		{
 			public const string CreatePayment = "";
+			public const string HandleWebhook = "hook";
 		}
 	}
 }

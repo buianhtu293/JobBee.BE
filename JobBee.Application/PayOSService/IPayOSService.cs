@@ -5,5 +5,6 @@ namespace JobBee.Application.PayOSService
 	public interface IPayOSService
 	{
 		Task<CreatePaymentResult> CreatePayTransaction(Guid subcriptionId);
+		WebhookData VerifyWebhookSignature(WebhookType webhookBody);
 	}
 }

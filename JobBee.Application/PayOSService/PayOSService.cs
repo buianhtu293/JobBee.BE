@@ -31,6 +31,12 @@ namespace JobBee.Application.PayOSService
 			return createPayment;
 		}
 
+		public WebhookData VerifyWebhookSignature(WebhookType webhookBody)
+		{
+			WebhookData webhookData = payOS.verifyPaymentWebhookData(webhookBody);
+			return webhookData;
+		}
+
 		private int RoundDecimalToInt(decimal value)
 		{
 			return (int)Math.Round(value, MidpointRounding.AwayFromZero);

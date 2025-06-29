@@ -38,12 +38,15 @@ namespace JobBee.Application
 				return new AmazonS3Client(config);
 			});
 			services.Configure<PayOSSettings>(configuration.GetSection("PayOSSettings"));
+			services.Configure<ReturnSettings>(configuration.GetSection("PayOSUrl"));
 			services.AddScoped<PayOS>(options =>
 			{
 				var payOSSettings = options.GetRequiredService<IOptions<PayOSSettings>>().Value;
+				var returnSettings = options.GetRequiredService<IOptions<ReturnSettings>>().Value;
 				return new PayOS(payOSSettings.ClientID, payOSSettings.APIKey, payOSSettings.CheckSumKey);
 			});
-			services.Configure<ReturnSettings>(configuration.GetSection("PayOSUrl"));
+			services.AddScoped<WebhookInitializer>();
+
 			services.AddSingleton(typeof(IElasticSearchService<>), typeof(ElasticSearchService<>));
 			services.AddScoped<IEmailService, EmailService.EmailService>();
 			services.AddScoped<ICloudService, AWSService>();
