@@ -1,4 +1,5 @@
 ﻿using JobBee.Application.Features.Payment.Command.CreatePayment;
+using JobBee.Application.Features.Payment.Command.HandlePayment;
 using JobBee.Application.Models.PayOS;
 using JobBee.Shared.APIRoutes;
 using MediatR;
@@ -16,7 +17,8 @@ namespace JobBee.Api.Controllers
 	[Route(PaymentRoutes.Index)]
 	[ApiController]
 	public class PaymentsController(
-		IMediator mediator
+		IMediator mediator,
+		ILogger logger
 	)
 		: ControllerBase
 	{
@@ -41,13 +43,16 @@ namespace JobBee.Api.Controllers
 			{
 				requestBody = await reader.ReadToEndAsync();
 			}
-
+			logger.Log(LogLevel.Debug, "WEBHOOK-------------------------");
 			// Verify webhook signature
 			var signature = Request.Headers["X-Webhook-Signature"].FirstOrDefault();
 
 			// request body
 			// signature
-			
+			await mediator.Send(new HandlePaymentHook
+			{
+				webhookBody = webhookBody,
+			});
 
 			return Ok(new { status = "success" });
 		}
