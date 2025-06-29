@@ -4,5 +4,6 @@
 	{
 		public string CancelUrl { get; set; } = null!;
 		public string ReturnUrl { get; set; } = null!;
+		public string WebhookUrl { get; set; } = null!;
 	}
 }
