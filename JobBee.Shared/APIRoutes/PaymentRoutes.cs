@@ -2,7 +2,7 @@
 {
 	public class PaymentRoutes
 	{
-		public const string Index = "payments";
+		public const string Index = $"{CommonRoutes.API}/payments";
 
 		public static class ACTION
 		{
