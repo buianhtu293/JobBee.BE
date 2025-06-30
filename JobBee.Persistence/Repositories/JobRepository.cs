@@ -74,6 +74,7 @@ namespace JobBee.Persistence.Repositories
 				Experience = job.ExperienceLevel!.LevelName,
 				Employer = new Application.Features.Employer.Queries.GetEmployerDetail.EmployerDetailDTO()
 				{
+					EmployerId = job.Employer.Id,
 					CompanyLogo = job.Employer.CompanyLogo!,
 					CompanyName = job.Employer.CompanyName,
 					CompanySize = job.Employer.CompanySize!.SizeRange,

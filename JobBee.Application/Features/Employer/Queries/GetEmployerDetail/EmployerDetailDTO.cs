@@ -4,6 +4,7 @@ namespace JobBee.Application.Features.Employer.Queries.GetEmployerDetail
 {
 	public class EmployerDetailDTO
 	{
+		public Guid EmployerId { get; set; }
 		public string CompanyLogo { get; set; } = null!;
 		public string CompanyName { get; set; } = null!;
 		public string Industry { get; set; } = null!;
