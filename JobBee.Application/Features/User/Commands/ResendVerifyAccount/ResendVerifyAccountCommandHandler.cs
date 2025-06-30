@@ -46,7 +46,7 @@ namespace JobBee.Application.Features.User.Commands.ResendVerifyAccount
 			byte[] tokenBytes = RandomNumberGenerator.GetBytes(64);
 			string token = Convert.ToBase64String(tokenBytes);
 			user.SecurityStamp = _passwordHasher.Hash(token);
-			var callbackUrl = $"http://localhost:4200/verification?token={token}&email={request.Email}";
+			var callbackUrl = $"https://jobbeefe.vercel.app/verification?token={token}&email={request.Email}";
 
 			await _emailService.SendEmailVerification(request.Email, "Verification Account", callbackUrl);
 

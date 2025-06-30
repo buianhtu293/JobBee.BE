@@ -40,6 +40,11 @@ namespace JobBee.Application.Features.User.Commands.ChangePassword
 				throw new NotFoundException(nameof(user), request.Email);
 			}
 
+			if(!_passwordHasher.Verify(request.OldPassword, user.PasswordHash))
+			{
+				throw new BadRequestException("Invalid Old Password", validatorResult);
+			}
+
 			user.PasswordHash = _passwordHasher.Hash(request.Password);
 			_userRepository.UpdatePassword(user);
 			await _unitOfWork.SaveChangesAsync();

@@ -11,6 +11,7 @@ namespace JobBee.Application.Features.User.Commands.ChangePassword
 	public class ChangePasswordCommand : IRequest<ApiResponse<ChangePasswordDto>>
 	{
 		public string Email { get; set; } = string.Empty;
+		public string OldPassword { get; set; } = string.Empty;
 		public string Password { get; set; } = string.Empty;
 		public string ConfirmPassword { get; set; } = string.Empty;
 	}
