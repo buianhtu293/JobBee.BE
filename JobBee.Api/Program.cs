@@ -112,6 +112,11 @@ namespace JobBee.Api
 				dbContext.Database.Migrate(); // Applies any pending EF Core migrations
 			}
 
+			app.UseCors(x => x
+			.AllowAnyOrigin()
+			.AllowAnyMethod()
+			.AllowAnyHeader());
+
 			app.UseMiddleware<ExceptionMiddleware>();
 
 			// Configure the HTTP request pipeline.

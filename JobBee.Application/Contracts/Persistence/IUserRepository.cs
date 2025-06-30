@@ -13,5 +13,11 @@ namespace JobBee.Application.Contracts.Persistence
 		Task<User> InsertUserAsync(User user);
 
 		Task<List<User>> GetUserOpenToWork();
+
+		void UpdatePassword(User user);
+
+		void UpdateSecurityStamp(User user);
+
+		void UpdateEmailConfirmed(User user);
 	}
 }

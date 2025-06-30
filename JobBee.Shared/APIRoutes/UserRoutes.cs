@@ -21,6 +21,7 @@ namespace JobBee.Shared.APIRoutes
 			public const string Resend = "resend";
 			public const string Forget = "forget";
 			public const string Reset = "reset";
+			public const string ChangePassword = "change-password";
 		}
 	}
 }
