@@ -2,6 +2,7 @@
 using JobBee.Domain.Entities;
 using JobBee.Persistence.DatabaseContext;
 using JobBee.Shared.Paginators;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobBee.Persistence.Repositories
 {
@@ -25,6 +26,13 @@ namespace JobBee.Persistence.Repositories
 				orderBy,
 				j => j.User
 				);
+		}
+
+		public async Task<Candidate?> GetCandidateByUserIdAsync(Guid userId)
+		{
+			return await _context.candidates
+				.Include(c => c.User) 
+				.FirstOrDefaultAsync(c => c.UserId == userId);
 		}
 
 		public async Task<PageResult<Candidate>> GetSavedCandiddateByEmployerAsync(Guid employerId, int pageIndex, int pageSize, CancellationToken cancellationToken)

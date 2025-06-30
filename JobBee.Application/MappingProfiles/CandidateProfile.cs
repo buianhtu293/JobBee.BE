@@ -2,6 +2,7 @@
 using JobBee.Application.Features.Candidate.Commands.CreateCandidate;
 using JobBee.Application.Features.Candidate.Commands.UpdateCandidate;
 using JobBee.Application.Features.Candidate.Queries.GetAllCandidate;
+using JobBee.Application.Features.Candidate.Queries.GetCandidateByUserId;
 using JobBee.Application.Features.Candidate.Queries.GetCandidateDetail;
 using JobBee.Domain.Entities;
 using JobBee.Shared.Ultils;
@@ -24,6 +25,8 @@ namespace JobBee.Application.MappingProfiles
 				.ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
 
             CreateMap<Candidate, CandidateDetailDto>().ReverseMap();
+
+            CreateMap<Candidate, GetCandidateByUserDto>().ReverseMap();
 		}
     }
 }

@@ -3,6 +3,7 @@ using JobBee.Application.Features.Candidate.Commands.CreateCandidatePhoto;
 using JobBee.Application.Features.Candidate.Commands.DeleteCandidate;
 using JobBee.Application.Features.Candidate.Commands.UpdateCandidate;
 using JobBee.Application.Features.Candidate.Queries.GetAllCandidate;
+using JobBee.Application.Features.Candidate.Queries.GetCandidateByUserId;
 using JobBee.Application.Features.Candidate.Queries.GetCandidateDetail;
 using JobBee.Application.Features.Candidate.Queries.GetCandidatePageResult;
 using JobBee.Shared.APIRoutes;
@@ -51,7 +52,15 @@ namespace JobBee.Api.Controllers
 			return Ok(candidateDetails);
 		}
 
-		
+		[HttpGet]
+		[Route(CandidateRoutes.ACTION.GetCandidateByUser)]
+		public async Task<ActionResult> GetCandidateByUser([FromRoute] Guid id)
+		{
+			var candidateDetails = await _mediator.Send(new GetCandidateByUserQuery(id));
+			return Ok(candidateDetails);
+		}
+
+
 		[HttpPost]
 		[ProducesResponseType(201)]
 		[ProducesResponseType(400)]
