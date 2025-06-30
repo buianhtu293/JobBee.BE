@@ -2,7 +2,7 @@
 {
 	public class JobRoutes
 	{
-		public const string Index = "jobs";
+		public const string Index = $"{CommonRoutes.API}/jobs";
 
 		public static class ACTION
 		{
