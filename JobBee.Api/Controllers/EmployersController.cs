@@ -1,6 +1,7 @@
 ﻿using JobBee.Application.Features.Company.Queries.GetTopCompany;
 using JobBee.Application.Features.Employer.Commands.CreateEmployer;
 using JobBee.Application.Features.Employer.Queries.GetAllEmployer;
+using JobBee.Application.Features.Employer.Queries.GetEmployerByUserId;
 using JobBee.Shared.APIRoutes;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,13 @@ namespace JobBee.Api.Controllers
 		public async Task<IActionResult> GetTopEmployer([FromQuery] TopCompanyQuery query)
 		{
 			var result = await mediator.Send(query);
+			return Ok(result);
+		}
+
+		[HttpGet(EmployerRoutes.ACTION.GetEmployerByUserId)]
+		public async Task<IActionResult> GetEmployerByUserId([FromRoute] Guid id)
+		{
+			var result = await mediator.Send(new GetEmployerByUserIdQuery { Id = id});
 			return Ok(result);
 		}
 	}

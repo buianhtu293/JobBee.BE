@@ -13,6 +13,7 @@
 			public const string Delete = "{id}";
 			public const string GetListPageResult = "page-result";
 			public const string GetTopEmployer = "top";
+			public const string GetEmployerByUserId = "employer-by-userId/{id}";
 		}
 	}
 }
