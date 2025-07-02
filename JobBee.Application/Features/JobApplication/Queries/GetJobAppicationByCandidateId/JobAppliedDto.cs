@@ -12,6 +12,7 @@ namespace JobBee.Application.Features.JobApplication.Queries.GetJobAppicationByC
 		public Guid Id { get; set; }
 		public Guid EmployerId { get; set; }
 		public string? CompanyName { get; set; }
+		public string? CompanyLogo { get; set; }
 		public string Title { get; set; } = null!;
 		public Guid? JobCategoryId { get; set; }
 		public string? CategoryName { get; set; }
