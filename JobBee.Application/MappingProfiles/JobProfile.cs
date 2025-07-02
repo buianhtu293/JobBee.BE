@@ -15,7 +15,19 @@ public class JobProfile : Profile
     {
         CreateMap<Job, JobDto>().ReverseMap();
         CreateMap<CreateJobCommand, Job>();
-        CreateMap<PageResult<Job>, PageResult<PostedJobDto>>();
+		CreateMap<Job, PostedJobDto>()
+				.ForMember(dest => dest.JobType, opt =>
+					opt.MapFrom(src => src.JobType != null ? src.JobType.TypeName : string.Empty))
+				.ForMember(dest => dest.DaysRemaing, opt =>
+					opt.MapFrom(src =>
+						src.ApplicationDeadline.HasValue
+						? (int)(DateTimeOffset.FromUnixTimeSeconds(src.ApplicationDeadline.Value).Date - DateTime.UtcNow.Date).TotalDays
+						: 0))
+				.ForMember(dest => dest.IsActive, opt =>
+					opt.MapFrom(src => src.IsActive ?? false))
+				.ForMember(dest => dest.ApplicationsCount, opt =>
+					opt.MapFrom(src => src.ApplicationsCount ?? 0));
+		CreateMap<PageResult<Job>, PageResult<PostedJobDto>>();
 		CreateMap<PageResult<Job>, PageResult<CommonJob>>();
 		CreateMap<Job, CommonJob>();
     }

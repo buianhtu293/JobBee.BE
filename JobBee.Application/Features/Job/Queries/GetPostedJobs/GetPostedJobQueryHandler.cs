@@ -46,7 +46,9 @@ namespace JobBee.Application.Features.Job.Queries.GetPostedJobs
 				c => c.JobType!
 			);
 
-			return new ApiResponse<PageResult<PostedJobDto>>("Success", 200, mapper.Map<PageResult<PostedJobDto>>(pageResult));
+			var result = new PageResult<PostedJobDto> { };
+
+			return new ApiResponse<PageResult<PostedJobDto>>("Success", 200, );
 		}
 	}
 }
