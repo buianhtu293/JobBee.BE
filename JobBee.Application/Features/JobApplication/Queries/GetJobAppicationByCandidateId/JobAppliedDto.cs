@@ -34,13 +34,13 @@ namespace JobBee.Application.Features.JobApplication.Queries.GetJobAppicationByC
 		public string? LocationCountry { get; set; }
 		public bool? IsRemote { get; set; }
 		public bool? AllowsWorkFromHome { get; set; }
-		public DateOnly? ApplicationDeadline { get; set; }
+		public long? ApplicationDeadline { get; set; }
 		public bool? IsFeatured { get; set; }
 		public bool? IsActive { get; set; }
 		public int? ViewsCount { get; set; }
 		public int? ApplicationsCount { get; set; }
 		public DateTime? PostedAt { get; set; }
 		public DateTime? UpdatedAt { get; set; }
-		public DateTime? ExpiresAt { get; set; }
+		public long? ExpiresAt { get; set; }
 	}
 }
