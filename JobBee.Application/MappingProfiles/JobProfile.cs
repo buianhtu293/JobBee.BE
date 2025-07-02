@@ -27,7 +27,17 @@ public class JobProfile : Profile
 					opt.MapFrom(src => src.IsActive ?? false))
 				.ForMember(dest => dest.ApplicationsCount, opt =>
 					opt.MapFrom(src => src.ApplicationsCount ?? 0));
-		CreateMap<PageResult<Job>, PageResult<PostedJobDto>>();
+		CreateMap<PageResult<Job>, PageResult<PostedJobDto>>()
+		.ConvertUsing((src, _, context) =>
+		{
+			var mappedItems = context.Mapper.Map<List<PostedJobDto>>(src.Items);
+			return new PageResult<PostedJobDto>(
+				mappedItems,
+				src.TotalItems,
+				src.PageIndex,
+				src.PageSize
+			);
+		});
 		CreateMap<PageResult<Job>, PageResult<CommonJob>>();
 		CreateMap<Job, CommonJob>();
     }
