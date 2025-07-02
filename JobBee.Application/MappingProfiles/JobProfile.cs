@@ -27,7 +27,7 @@ public class JobProfile : Profile
 					opt.MapFrom(src => src.IsActive ?? false))
 				.ForMember(dest => dest.ApplicationsCount, opt =>
 					opt.MapFrom(src => src.ApplicationsCount ?? 0));
-		CreateMap<List<Job>, List<PostedJobDto>>();
+		//CreateMap<List<Job>, List<PostedJobDto>>();
 		CreateMap<PageResult<Job>, PageResult<PostedJobDto>>();
 		CreateMap<PageResult<Job>, PageResult<CommonJob>>();
 		CreateMap<Job, CommonJob>();
