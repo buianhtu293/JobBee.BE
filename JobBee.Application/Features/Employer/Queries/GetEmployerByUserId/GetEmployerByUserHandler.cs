@@ -1,7 +1,5 @@
-﻿using AutoMapper.Execution;
-using JobBee.Application.Contracts.Persistence;
+﻿using JobBee.Application.Contracts.Persistence;
 using JobBee.Application.Exceptions;
-using JobBee.Application.Features.Employer.Queries.GetEmployerDetail;
 using JobBee.Application.Models.Response;
 using MediatR;
 
