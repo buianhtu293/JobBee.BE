@@ -46,7 +46,26 @@ namespace JobBee.Application.Features.Job.Queries.GetPostedJobs
 				c => c.JobType!
 			);
 
-			return new ApiResponse<PageResult<PostedJobDto>>("Success", 200, mapper.Map<PageResult<PostedJobDto>>(pageResult));
+			var dtoList = pageResult.Items!.Select(job => new PostedJobDto
+			{
+				Id = job.Id,
+				Title = job.Title,
+				JobType = job.JobType?.TypeName ?? string.Empty,
+				DaysRemaing = job.ApplicationDeadline.HasValue
+					? (int)(DateTimeOffset.FromUnixTimeSeconds(job.ApplicationDeadline.Value).Date - DateTime.UtcNow.Date).TotalDays
+					: 0,
+				IsActive = job.IsActive ?? false,
+				ApplicationsCount = job.ApplicationsCount ?? 0
+			}).ToList();
+
+			var result = new PageResult<PostedJobDto>(
+				dtoList,
+				pageResult.TotalItems,
+				pageResult.PageIndex,
+				pageResult.PageSize
+			);
+
+			return new ApiResponse<PageResult<PostedJobDto>>("Success", 200, result);
 		}
 	}
 }
