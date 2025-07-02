@@ -52,8 +52,8 @@ namespace JobBee.Application.Features.Job.Queries.GetPostedJobs
 				Title = job.Title,
 				JobType = job.JobType?.TypeName ?? string.Empty,
 				DaysRemaing = job.ApplicationDeadline.HasValue
-					? (int)(DateTimeOffset.FromUnixTimeSeconds(job.ApplicationDeadline.Value).Date - DateTime.UtcNow.Date).TotalDays
-					: 0,
+				? (int)(DateTimeOffset.FromUnixTimeMilliseconds(job.ApplicationDeadline.Value).Date - DateTime.UtcNow.Date).TotalDays
+				: 0,
 				IsActive = job.IsActive ?? false,
 				ApplicationsCount = job.ApplicationsCount ?? 0
 			}).ToList();
