@@ -22,6 +22,8 @@ RUN dotnet restore "./JobBee.Api/JobBee.Api.csproj"
 
 COPY . .
 
+RUN find . -name "launchSettings.json" -type f -delete
+
 WORKDIR "/src/JobBee.Api"
 RUN dotnet build "./JobBee.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

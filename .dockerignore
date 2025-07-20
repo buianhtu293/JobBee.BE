@@ -1,0 +1,16 @@
+# Ignore launchSettings to prevent Development override
+**/Properties/launchSettings.json
+Properties/launchSettings.json
+JobBee.Api/Properties/launchSettings.json
+
+# Other common ignores
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/node_modules/
+**/.git/
+Dockerfile*
+docker-compose*
+.dockerignore
+README.md

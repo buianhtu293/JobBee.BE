@@ -6,12 +6,12 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID=AKIA6JKEYE33IENG7XUP
       - AWS_SECRET_ACCESS_KEY=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
-      - AWS_REGION=us-east-1
-      - ASPNETCORE_ENVIRONMENT=Production 
+      - AWS_REGION=us-east-1 
       - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_URLS=https://+:5001
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/cert.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=Callmebean03@    
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=Callmebean03@  
+      - ASPNETCORE_ENVIRONMENT=Production 
     container_name: jobbee.api
     build:
       context: .
