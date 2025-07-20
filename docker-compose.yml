@@ -15,6 +15,8 @@ services:
     build:
       context: .
       dockerfile: JobBee.Api/Dockerfile
+      args:
+        ASPNETCORE_ENVIRONMENT: Production
     ports:
       - "5000:5000"
       - "5001:5001"

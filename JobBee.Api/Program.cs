@@ -98,21 +98,11 @@ namespace JobBee.Api
 
 			builder.WebHost.ConfigureKestrel(options =>
 			{
-				var env = builder.Environment.EnvironmentName;
-				Console.WriteLine("ENV: " + env);
-
-				if (env == "Production")
+				options.ListenAnyIP(5000);
+				options.ListenAnyIP(5001, listenOptions =>
 				{
-					options.ListenAnyIP(5000);
-					options.ListenAnyIP(5001, listenOptions =>
-					{
-						listenOptions.UseHttps("https/cert.pfx", "Callmebean03@");
-					});
-				}
-				else
-				{
-					options.ListenAnyIP(5000);
-				}
+					listenOptions.UseHttps("https/cert.pfx", "Callmebean03@");
+				});
 			});
 
 			var app = builder.Build();
