@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 
 namespace JobBee.Api
 {
@@ -96,14 +97,14 @@ namespace JobBee.Api
 						};
 					});
 
-			builder.WebHost.ConfigureKestrel(options =>
-			{
-				options.ListenAnyIP(5000);
-				options.ListenAnyIP(5001, listenOptions =>
-				{
-					listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
-				});
-			});
+			//builder.WebHost.ConfigureKestrel(options =>
+			//{
+			//	options.ListenAnyIP(5000);
+			//	options.ListenAnyIP(5001, listenOptions =>
+			//	{
+			//		listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
+			//	});
+			//});
 
 			var app = builder.Build();
 
