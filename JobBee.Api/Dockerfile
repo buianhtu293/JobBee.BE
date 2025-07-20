@@ -44,4 +44,6 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 COPY --from=publish /app/publish .
 COPY --from=build /src /app/src
 
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 ENTRYPOINT ["dotnet", "JobBee.Api.dll"]

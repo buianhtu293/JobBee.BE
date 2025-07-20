@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using static System.Net.Mime.MediaTypeNames;
 using System.Security.Principal;
 using Amazon.Runtime.Internal.Endpoints.StandardLibrary;
-using Elastic.Clients.Elasticsearch.Requests;
 using JobBee.Domain.Entities;
 
 namespace JobBee.Application.EmailService

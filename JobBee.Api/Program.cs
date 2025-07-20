@@ -7,10 +7,14 @@ using JobBee.Infrastructure.Authentication;
 using JobBee.Persistence;
 using JobBee.Persistence.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace JobBee.Api
@@ -92,15 +96,26 @@ namespace JobBee.Api
 						};
 					});
 
-			builder.WebHost.ConfigureKestrel(options =>
+			var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+			if (env == "Development")
 			{
-				options.ListenAnyIP(5000);
-
-				options.ListenAnyIP(5001, listenOptions =>
+				builder.WebHost.ConfigureKestrel(options =>
 				{
-					listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
+					options.ListenAnyIP(5000);
 				});
-			});
+			}
+			else
+			{
+				builder.WebHost.ConfigureKestrel(options =>
+				{
+					options.ListenAnyIP(5000);
+
+					options.ListenAnyIP(5001, listenOptions =>
+					{
+						listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
+					});
+				});
+			}
 
 			var app = builder.Build();
 

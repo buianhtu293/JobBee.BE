@@ -1,5 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.QueryDsl;
+﻿using OpenSearch.Client;
 using JobBee.Application.ElasticSearchService;
 using JobBee.Application.Models.Response;
 using JobBee.Shared.Paginators;
@@ -18,59 +17,93 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 
 		public async Task<ApiResponse<PageResult<JobDto>>> Handle(GetAllJobsQuery request, CancellationToken cancellationToken)
 		{
-			Func<SearchRequestDescriptor<JobDto>, SearchRequestDescriptor<JobDto>> searchConfig = s => s
+			Func<SearchDescriptor<JobDto>, ISearchRequest> searchConfig = s => s
 				.Size(request.PageSize)
 				.From(request.Page * request.PageSize)
 				.Query(q =>
 				{
-					var mustClauses = new List<Query>();
+					var mustClauses = new List<QueryContainer>();
 
 					if (!string.IsNullOrWhiteSpace(request.Keyword))
-						mustClauses.Add(new MatchQuery { Field = "title", Query = request.Keyword });
+					{
+						mustClauses.Add(new MatchQuery
+						{
+							Field = "title",
+							Query = request.Keyword
+						});
+					}
 
 					if (!string.IsNullOrWhiteSpace(request.Location))
-						mustClauses.Add(new MatchQuery { Field = "location_city", Query = request.Location });
+					{
+						mustClauses.Add(new MatchQuery
+						{
+							Field = "location_city",
+							Query = request.Location
+						});
+					}
 
 					if (request.Categories?.Any() == true)
+					{
 						mustClauses.Add(new TermsQuery
 						{
 							Field = "job_category.keyword",
-							Terms = new TermsQueryField(request.Categories.Select(FieldValue.String).ToList())
+							Terms = request.Categories.Cast<object>().ToList()
 						});
+					}
 
 					if (request.MinSalary.HasValue)
-						mustClauses.Add(new NumberRangeQuery
+					{
+						mustClauses.Add(new NumericRangeQuery
 						{
 							Field = "min_salary",
-							Gte = (Number?)request.MinSalary.Value
+							GreaterThanOrEqualTo = (double)request.MinSalary.Value
 						});
+					}
 
 					if (request.MaxSalary.HasValue)
-						mustClauses.Add(new NumberRangeQuery
+					{
+						mustClauses.Add(new NumericRangeQuery
 						{
 							Field = "max_salary",
-							Lte = (Number?)request.MaxSalary.Value
+							LessThanOrEqualTo = (double)request.MaxSalary.Value
 						});
+					}
 
 					if (request.JobTypes?.Any() == true)
+					{
 						mustClauses.Add(new TermsQuery
 						{
 							Field = "job_type.keyword",
-							Terms = new TermsQueryField(request.JobTypes.Select(FieldValue.String).ToList())
+							Terms = request.JobTypes.Cast<object>().ToList()
 						});
+					}
 
 					if (request.EducationLevels?.Any() == true)
+					{
 						mustClauses.Add(new TermsQuery
 						{
 							Field = "min_education_level.keyword",
-							Terms = new TermsQueryField(request.EducationLevels.Select(FieldValue.String).ToList())
+							Terms = request.EducationLevels.Cast<object>().ToList()
 						});
+					}
 
 					if (!string.IsNullOrWhiteSpace(request.Experience))
-						mustClauses.Add(new MatchQuery { Field = "experience_level", Query = request.Experience });
+					{
+						mustClauses.Add(new MatchQuery
+						{
+							Field = "experience_level",
+							Query = request.Experience
+						});
+					}
 
 					if (!string.IsNullOrWhiteSpace(request.Level))
-						mustClauses.Add(new MatchQuery { Field = "experience_level", Query = request.Level });
+					{
+						mustClauses.Add(new MatchQuery
+						{
+							Field = "experience_level",
+							Query = request.Level
+						});
+					}
 
 					if (request.IsFeatured.HasValue)
 					{
@@ -83,17 +116,16 @@ namespace JobBee.Application.Features.Job.Queries.GetAllJobs
 
 					if (mustClauses.Any())
 					{
-						q.Bool(b => b.Must(mustClauses.ToArray()));
+						return q.Bool(b => b.Must(mustClauses.ToArray()));
 					}
 					else
 					{
-						q.MatchAll();
+						return q.MatchAll();
 					}
 				});
 
 			var list = await _elasticSearchService.GetList<string>(searchConfig, null, true, request.Page, request.PageSize);
-			var apiResponse = new ApiResponse<PageResult<JobDto>>("Success", 200, list);
-			return apiResponse;
+			return new ApiResponse<PageResult<JobDto>>("Success", 200, list);
 		}
 	}
 }

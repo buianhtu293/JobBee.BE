@@ -1,24 +1,7 @@
 version: '3.4'
 
 services:
-  jobbee.database:
-    hostname: jobbee.database
-    image: postgres:17.5-alpine3.21
-    container_name: jobbee.database
-    environment:
-      - POSTGRES_DB=JobBee
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123
-    volumes:
-      - jobbee_pgdata:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
-    networks:
-      - jobbee
-  
   jobbee.api:
-    depends_on:
-      - jobbee.database
     image: ${DOCKER_REGISTRY-}jobbeeapi
     environment:
       - AWS_ACCESS_KEY_ID=AKIA6JKEYE33IENG7XUP
@@ -40,63 +23,25 @@ services:
     networks:
       - jobbee
 
-  elasticsearch:
-    container_name: els
-    image: elasticsearch:9.0.1
-    ports:
-      - "9200:9200"
-    volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=true
-      - xpack.security.http.ssl.enabled=false
-      - xpack.security.transport.ssl.enabled=false
-      - ELASTIC_PASSWORD=l3lack0ver9669
-    networks:
-      - jobbee
-
-  kibana:
-    container_name: kibana
-    image: kibana:9.0.1
-    ports:
-      - "5601:5601"
-    depends_on:
-      - elasticsearch
-    environment:
-      - ELASTICSEARCH_HOSTS=http://els:9200
-      - xpack.security.enabled=true
-      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbjp5VjVzNk4tUVI4LW01Rmg4cVZxOHZB
-      - xpack.encryptedSavedObjects.encryptionKey=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
-    networks:
-      - jobbee
-
   logstash:
     container_name: logstash
     build:
       context: ./logstash
       dockerfile: Dockerfile
-    depends_on:
-      - jobbee.database
-      - elasticsearch
     ports:
       - "2003:2003"
     environment:
       - CONFIG_SUPPORT_ESCAPE=true
-      - ELASTICSEARCH_HOSTS=http://els:9200
-      - ELASTICSEARCH_SERVICEACCOUNTTOKEN=AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbjpwZ2Jsc3JYNVNPLWFJZW9ELXh1SlNn
-      - xpack.encryptedSavedObjects.encryptionKey=a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
     volumes:
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       - ./logstash/postgresql-42.7.4.jar:/usr/share/logstash/postgresql-42.7.4.jar
     networks:
       - jobbee
 
+
 networks:
   jobbee:
     driver: bridge
     
 volumes:
-  jobbee_pgdata:
-  elasticsearch-data:
   logstash_data:  

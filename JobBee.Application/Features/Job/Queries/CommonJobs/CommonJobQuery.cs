@@ -1,5 +1,4 @@
-﻿using Elastic.Clients.Elasticsearch.MachineLearning;
-using JobBee.Application.Models.Response;
+﻿using JobBee.Application.Models.Response;
 using JobBee.Shared.Paginators;
 using MediatR;
 

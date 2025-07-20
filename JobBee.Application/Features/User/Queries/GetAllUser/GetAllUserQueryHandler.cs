@@ -1,54 +1,70 @@
-﻿using AutoMapper;
-using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.QueryDsl;
-using JobBee.Application.Contracts.Persistence;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using JobBee.Application.ElasticSearchService;
+using JobBee.Application.Features.User.Queries.GetAllUser;
 using JobBee.Application.Models.Response;
+using JobBee.Domain.Entities;
 using JobBee.Shared.Paginators;
 using MediatR;
+using OpenSearch.Client;
 
-namespace JobBee.Application.Features.User.Queries.GetAllUser
+public class GetAllUserQueryHandler : IRequestHandler<GetAllUserQuery, ApiResponse<PageResult<UserDto>>>
 {
-	public class GetAllUserQueryHandler : IRequestHandler<GetAllUserQuery, ApiResponse<PageResult<UserDto>>>
+	private readonly IElasticSearchService<UserDto> _elasticSearchService;
+
+	public GetAllUserQueryHandler(IElasticSearchService<UserDto> elasticSearchService)
 	{
-		private readonly IElasticSearchService<UserDto> _elasticSearchService;
+		_elasticSearchService = elasticSearchService;
+	}
 
-		public GetAllUserQueryHandler(IElasticSearchService<UserDto> elasticSearchService)
-		{
-			_elasticSearchService = elasticSearchService;
-		}
+	public async Task<ApiResponse<PageResult<UserDto>>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
+	{
+		Func<SearchDescriptor<UserDto>, ISearchRequest> searchConfig = s => s
+			.Query(q => q.Bool(b =>
+			{
+				var mustQueries = new List<Func<QueryContainerDescriptor<UserDto>, QueryContainer>>();
 
-		public async Task<ApiResponse<PageResult<UserDto>>> Handle(GetAllUserQuery request, CancellationToken cancellationToken)
-		{
-			Func<SearchRequestDescriptor<UserDto>, SearchRequestDescriptor<UserDto>> searchConfig = s => s
-				.Size(request.PageSize)
-				.From(request.Page * request.PageSize)
-				.Query(q =>
+				if (!string.IsNullOrWhiteSpace(request.UserName))
 				{
-					var mustClauses = new List<Query>();
+					mustQueries.Add(m => m.Match(ma => ma
+						.Field(f => f.UserName)
+						.Query(request.UserName)
+					));
+				}
 
-					if (!string.IsNullOrWhiteSpace(request.UserName))
-						mustClauses.Add(new MatchQuery { Field = "user_name", Query = request.UserName });
+				if (!string.IsNullOrWhiteSpace(request.Email))
+				{
+					mustQueries.Add(m => m.Match(ma => ma
+						.Field(f => f.Email)
+						.Query(request.Email)
+					));
+				}
 
-					if (!string.IsNullOrWhiteSpace(request.Email))
-						mustClauses.Add(new MatchQuery { Field = "email", Query = request.Email });
+				if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+				{
+					mustQueries.Add(m => m.Match(ma => ma
+						.Field(f => f.PhoneNumber)
+						.Query(request.PhoneNumber)
+					));
+				}
 
-					if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
-						mustClauses.Add(new MatchQuery { Field = "phone_number", Query = request.PhoneNumber });
+				if (mustQueries.Count > 0)
+				{
+					b.Must(mustQueries.ToArray());
+				}
+				else
+				{
+					b.Must(m => m.MatchAll());
+				}
 
-					if (mustClauses.Any())
-					{
-						q.Bool(b => b.Must(mustClauses.ToArray()));
-					}
-					else
-					{
-						q.MatchAll();
-					}
-				});
+				return b;
+			}));
 
-			var list = await _elasticSearchService.GetList<string>(searchConfig, null, true, request.Page, request.PageSize);
-			var apiResponse = new ApiResponse<PageResult<UserDto>>("Success", 200, list);
-			return apiResponse;
-		}
+		var list = await _elasticSearchService.GetList<string>(searchConfig, null, true, request.Page, request.PageSize);
+
+		return new ApiResponse<PageResult<UserDto>>("Success", 200, list);
 	}
 }

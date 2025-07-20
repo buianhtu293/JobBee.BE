@@ -1,136 +1,114 @@
-﻿using Elastic.Clients.Elasticsearch;
-using Elastic.Clients.Elasticsearch.Nodes;
-using Elastic.Clients.Elasticsearch.QueryDsl;
-using Elastic.Transport;
+﻿using OpenSearch.Client;
+using Microsoft.Extensions.Options;
 using JobBee.Domain.Config;
 using JobBee.Shared.Paginators;
-using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
-using SearchRequest = Elastic.Clients.Elasticsearch.SearchRequest;
 
 namespace JobBee.Application.ElasticSearchService
 {
 	public class ElasticSearchService<TModel> : IElasticSearchService<TModel> where TModel : class
 	{
+		private readonly IOpenSearchClient _client;
+		private readonly ElasticSearchSettings _settings;
 
-		private readonly ElasticsearchClient _elasticsearchClient;
-		private readonly ElasticSearchSettings _elasticsearchSettings;
-
-		public ElasticSearchService(IOptions<ElasticSearchSettings> optionsMonitor)
+		public ElasticSearchService(IOptions<ElasticSearchSettings> options)
 		{
-			_elasticsearchSettings = optionsMonitor.Value;
+			_settings = options.Value;
 
-			var settings = new ElasticsearchClientSettings(new Uri(_elasticsearchSettings.Url))
-				.Authentication(new BasicAuthentication(_elasticsearchSettings.Username, _elasticsearchSettings.Password))
-				.DefaultIndex(_elasticsearchSettings.DefaultIndex);
+			var connectionSettings = new ConnectionSettings(new Uri(_settings.Url))
+				.BasicAuthentication(_settings.Username, _settings.Password)
+				.DefaultIndex(_settings.DefaultIndex);
 
-			_elasticsearchClient = new ElasticsearchClient(settings);
+			_client = new OpenSearchClient(connectionSettings);
 		}
 
 		public async Task<bool> AddOrUpdate(TModel model)
 		{
-			var response = await _elasticsearchClient.IndexAsync(model, idx => idx.Index(_elasticsearchSettings.DefaultIndex).OpType(OpType.Index)
-			);
-
-			return response.IsValidResponse;
+			var response = await _client.IndexDocumentAsync(model);
+			return response.IsValid;
 		}
 
 		public async Task<bool> AddOrUpdateBulk(IEnumerable<TModel> models, string indexName)
 		{
-			var response = await _elasticsearchClient.BulkAsync(
-				b => b.Index(_elasticsearchSettings.DefaultIndex)
-					.UpdateMany(models, (ud, u) => ud.Doc(u).DocAsUpsert(true))
+			var response = await _client.BulkAsync(b => b
+				.Index(indexName)
+				.IndexMany(models)
 			);
-			return response.IsValidResponse;
+			return response.IsValid;
 		}
 
 		public async Task CreateIndexIfNotExistesAsync(string indexName)
 		{
-			// check index has been existed
-			if (!_elasticsearchClient.Indices.Exists(indexName).Exists)
+			var exists = await _client.Indices.ExistsAsync(indexName);
+			if (!exists.Exists)
 			{
-				await _elasticsearchClient.CreateAsync(indexName);
+				await _client.Indices.CreateAsync(indexName);
 			}
 		}
 
 		public async Task<TModel?> Get(string key, string? index = null)
 		{
-			var response = await _elasticsearchClient.GetAsync<TModel>(key, g => g.Index(index ?? _elasticsearchSettings.DefaultIndex));
-
-			return response.Source;
+			var response = await _client.GetAsync<TModel>(key, g => g.Index(index ?? _settings.DefaultIndex));
+			return response.Found ? response.Source : null;
 		}
 
 		public async Task<PageResult<TModel>> GetList<TProperty>(
-			Func<SearchRequestDescriptor<TModel>, SearchRequestDescriptor<TModel>>? searchConfig = null,
+			Func<SearchDescriptor<TModel>, ISearchRequest>? searchConfig = null,
 			Expression<Func<TModel, TProperty>>? orderBy = null,
 			bool? ascending = true,
 			int? page = 0,
 			int? pageSize = 20,
 			string? index = null)
 		{
-			var searchResponse = await _elasticsearchClient.SearchAsync<TModel>(s =>
+			var searchDescriptor = new SearchDescriptor<TModel>()
+				.Index(index ?? _settings.DefaultIndex)
+				.From((page ?? 0) * (pageSize ?? 20))
+				.Size(pageSize ?? 20);
+
+			// Apply search config
+			if (searchConfig != null)
 			{
-				s.Indices(index ?? _elasticsearchSettings.DefaultIndex);
-
-				// Apply custom search configuration
-				if (searchConfig != null)
-				{
-					s = searchConfig(s);
-				}
-
-				// Apply sorting
-				if (orderBy != null)
-				{
-					s.Sort(sort =>
-					{
-						if (orderBy != null)
-						{
-							var fieldName = GetPropertyName<TProperty>(orderBy);
-							sort.Field(fieldName, descriptor => descriptor
-								.Order(ascending!.Value ? SortOrder.Asc : SortOrder.Desc)
-							);
-						}
-					});
-				}
-
-				// Apply pagination
-				if (page.HasValue && pageSize.HasValue)
-				{
-					int from = page.Value;
-					s.From(from).Size(pageSize.Value);
-				}
-			});
-
-			if (!searchResponse.IsValidResponse)
-			{
-				throw new Exception("Invalid");
+				searchDescriptor = (SearchDescriptor<TModel>)searchConfig(searchDescriptor);
 			}
 
-			return new PageResult<TModel>(searchResponse.Documents.ToList(), searchResponse.Total, page!.Value, pageSize!.Value);
+			// Apply sorting
+			if (orderBy != null)
+			{
+				var sortField = GetPropertyName(orderBy);
+				searchDescriptor = searchDescriptor.Sort(s => ascending == true
+					? s.Ascending(sortField)
+					: s.Descending(sortField));
+			}
+
+			var response = await _client.SearchAsync<TModel>(searchDescriptor);
+
+			if (!response.IsValid)
+				throw new Exception("OpenSearch query failed: " + response.DebugInformation);
+
+			return new PageResult<TModel>(response.Documents.ToList(), (int)response.Total, page!.Value, pageSize!.Value);
 		}
 
 		private string GetPropertyName<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
-			if (expression.Body is MemberExpression memberExpression)
-			{
-				return memberExpression.Member.Name.ToLowerInvariant();
-			}
+			if (expression.Body is MemberExpression member)
+				return member.Member.Name;
 			throw new ArgumentException("Expression must be a member expression");
 		}
 
 		public async Task<bool> Remove(string key, string? index = null)
 		{
-			var response = await _elasticsearchClient.DeleteAsync<TModel>(key,
-				d => d.Index(index ?? _elasticsearchSettings.DefaultIndex));
-
-			return response.IsValidResponse;
+			var response = await _client.DeleteAsync<TModel>(key, d => d.Index(index ?? _settings.DefaultIndex));
+			return response.IsValid;
 		}
 
 		public async Task<long?> RemoveAll(string? index = null)
 		{
-			var response = await _elasticsearchClient.DeleteByQueryAsync<TModel>(d => d.Indices(index ??_elasticsearchSettings.DefaultIndex));
+			var response = await _client.DeleteByQueryAsync<TModel>(q => q
+				.Index(index ?? _settings.DefaultIndex)
+				.Query(rq => rq.MatchAll())
+			);
 
-			return response.IsValidResponse ? response.Deleted : default;
+			return response.IsValid ? response.Deleted : default;
 		}
 	}
 }

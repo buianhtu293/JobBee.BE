@@ -1,16 +1,16 @@
-﻿using Elastic.Clients.Elasticsearch;
-using JobBee.Shared.Paginators;
-using Nest;
+﻿using JobBee.Shared.Paginators;
+using OpenSearch.Client;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace JobBee.Application.ElasticSearchService
 {
 	public interface IElasticSearchService<TModel> where TModel : class
 	{
 		/// <summary>
-		/// Create a index in elastic search if not existed
+		/// Create a index in OpenSearch if not existed
 		/// </summary>
-		/// <param name="indexName">name of index</param>
+		/// <param name="indexName">Name of index</param>
 		/// <returns></returns>
 		Task CreateIndexIfNotExistesAsync(string indexName);
 
@@ -18,35 +18,24 @@ namespace JobBee.Application.ElasticSearchService
 		/// Add or update a model
 		/// </summary>
 		/// <param name="model">Pass a model</param>
-		/// <returns>true if create successfully</returns>
+		/// <returns>true if created/updated successfully</returns>
 		Task<bool> AddOrUpdate(TModel model);
 
 		/// <summary>
-		/// 
+		/// Bulk add or update models
 		/// </summary>
-		/// <param name="indexName"></param>
-		/// <returns>true if create successfully</returns>
 		Task<bool> AddOrUpdateBulk(IEnumerable<TModel> models, string indexName);
 
 		/// <summary>
-		/// Get specific model with a key 
+		/// Get specific model by key
 		/// </summary>
-		/// <param name="key">key of model</param>
-		/// <returns>model</returns>
 		Task<TModel?> Get(string key, string? index = null);
 
 		/// <summary>
-		/// 
+		/// Get a list of models with pagination and sorting
 		/// </summary>
-		/// <typeparam name="TProperty"></typeparam>
-		/// <param name="searchConfig"></param>
-		/// <param name="orderBy"></param>
-		/// <param name="ascending"></param>
-		/// <param name="page"></param>
-		/// <param name="pageSize"></param>
-		/// <returns></returns>
 		Task<PageResult<TModel>> GetList<TProperty>(
-			Func<SearchRequestDescriptor<TModel>, SearchRequestDescriptor<TModel>>? searchConfig = null,
+			Func<SearchDescriptor<TModel>, ISearchRequest>? searchConfig = null,
 			Expression<Func<TModel, TProperty>>? orderBy = null,
 			bool? ascending = true,
 			int? page = 0,
@@ -54,16 +43,13 @@ namespace JobBee.Application.ElasticSearchService
 			string? index = null);
 
 		/// <summary>
-		/// Remove a model with a specific key 
+		/// Remove a model by key
 		/// </summary>
-		/// <param name="key">Key of model</param>
-		/// <returns>true if remove successfully</returns>
 		Task<bool> Remove(string key, string? index = null);
 
 		/// <summary>
-		/// Remove all model
+		/// Remove all models in index
 		/// </summary>
-		/// <returns>Number of records which were removed</returns>
 		Task<long?> RemoveAll(string? index = null);
 	}
 }
