@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
 EXPOSE 5000
 EXPOSE 5001
@@ -25,15 +26,17 @@ WORKDIR "/src/JobBee.Api"
 RUN dotnet build "./JobBee.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./JobBee.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
-
-# RUN dotnet tool install --global dotnet-ef
-# ENV PATH="$PATH:/root/.dotnet/tools"
-
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final
 WORKDIR /app
+
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
 COPY --from=publish /app/publish .
+COPY --from=build /src /app/src
 
 ENV ASPNETCORE_ENVIRONMENT=Production
 
