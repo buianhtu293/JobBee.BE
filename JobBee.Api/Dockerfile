@@ -17,7 +17,6 @@ COPY ["JobBee.Domain/JobBee.Domain.csproj", "JobBee.Domain/"]
 COPY ["JobBee.Shared/JobBee.Shared.csproj", "JobBee.Shared/"]
 COPY ["JobBee.Infrastructure/JobBee.Infrastructure.csproj", "JobBee.Infrastructure/"]
 COPY ["JobBee.Persistence/JobBee.Persistence.csproj", "JobBee.Persistence/"]
-COPY ./cert.pfx /app/https/cert.pfx
 
 RUN dotnet restore "./JobBee.Api/JobBee.Api.csproj"
 
