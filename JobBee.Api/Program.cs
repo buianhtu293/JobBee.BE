@@ -96,27 +96,23 @@ namespace JobBee.Api
 						};
 					});
 
-			var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-			if (env == "Development")
+			builder.WebHost.ConfigureKestrel(options =>
 			{
-				builder.WebHost.ConfigureKestrel(options =>
-				{
-					options.ListenAnyIP(5000);
-				});
-			}
-			else
-			{
-				
-				builder.WebHost.ConfigureKestrel(options =>
-				{
-					options.ListenAnyIP(5000);
+				var env = builder.Environment.EnvironmentName;
 
+				if (env == "Production")
+				{
+					options.ListenAnyIP(5000);
 					options.ListenAnyIP(5001, listenOptions =>
 					{
-						listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
+						listenOptions.UseHttps("https/cert.pfx", "Callmebean03@");
 					});
-				});
-			}
+				}
+				else
+				{
+					options.ListenAnyIP(5000);
+				}
+			});
 
 			var app = builder.Build();
 
