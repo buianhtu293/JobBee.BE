@@ -99,6 +99,7 @@ namespace JobBee.Api
 			builder.WebHost.ConfigureKestrel(options =>
 			{
 				var env = builder.Environment.EnvironmentName;
+				Console.WriteLine("ENV: " + env);
 
 				if (env == "Production")
 				{
