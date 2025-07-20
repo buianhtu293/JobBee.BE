@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 
 namespace JobBee.Api
 {
