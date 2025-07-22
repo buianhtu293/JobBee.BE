@@ -4,11 +4,6 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
 {
 	public CreateJobCommandValidator()
 	{
-		RuleFor(x => x.EmployerId).NotEmpty();
-		RuleFor(x => x.Title)
-			.NotEmpty()
-			.MaximumLength(100);
-
 		RuleFor(x => x.JobCategoryId).NotEmpty();
 		RuleFor(x => x.JobTypeId).NotEmpty();
 		RuleFor(x => x.ExperienceLevelId).NotEmpty();
@@ -16,15 +11,21 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
 
 		RuleFor(x => x.Description)
 			.NotEmpty()
+			.Must(x => !string.IsNullOrWhiteSpace(x))
+			.WithMessage("Description cannot be empty or contain only spaces")
 			.MinimumLength(30);
 
 		RuleFor(x => x.Responsibilities)
 			.NotEmpty()
-			.MinimumLength(10);
+			.Must(x => !string.IsNullOrWhiteSpace(x))
+			.WithMessage("Responsibilities cannot be empty or contain only spaces")
+			.MinimumLength(30);
 
 		RuleFor(x => x.Requirements)
 			.NotEmpty()
-			.MinimumLength(10);
+			.Must(x => !string.IsNullOrWhiteSpace(x))
+			.WithMessage("Requirements cannot be empty or contain only spaces")
+			.MinimumLength(30);
 
 		RuleFor(x => x.MinSalary)
 			.GreaterThanOrEqualTo(0);
@@ -41,17 +42,20 @@ public class CreateJobCommandValidator : AbstractValidator<CreateJobCommand>
 			.NotEmpty()
 			.Length(2, 5);
 
-		RuleFor(x => x.LocationCity)
-			.NotEmpty();
+		RuleFor(x => x.LocationCity.Trim())
+			.NotEmpty()
+			.Must(x => !string.IsNullOrWhiteSpace(x));
 
-		RuleFor(x => x.LocationState)
-			.NotEmpty();
+		RuleFor(x => x.LocationState.Trim())
+			.NotEmpty()
+			.Must(x => !string.IsNullOrWhiteSpace(x));
 
-		RuleFor(x => x.LocationCountry)
-			.NotEmpty();
+		RuleFor(x => x.LocationCountry.Trim())
+			.NotEmpty()
+			.Must(x => !string.IsNullOrWhiteSpace(x));
 
 		RuleFor(x => x.ApplicationDeadline)
-			.GreaterThanOrEqualTo(0)
-			.WithMessage("ApplicationDeadline must be today or a future date.");
+			.GreaterThanOrEqualTo(DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+			.WithMessage("Application deadline must be now or in the future.");
 	}
 }

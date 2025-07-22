@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using System.Numerics;
+using System.Text.Json.Serialization;
 
 public class CreateJobCommand : IRequest<bool>
 {
-	public Guid EmployerId { get; set; }
+	[JsonIgnore]
+	public Guid UserId { get; set; }
 	public string Title { get; set; } = null!;
 	public Guid JobCategoryId { get; set; }
 	public Guid JobTypeId { get; set; }
