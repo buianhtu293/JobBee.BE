@@ -36,5 +36,5 @@ jobs:
             unzip -o jobbee-deploy.zip -d jobbee-deploy
             cd jobbee-deploy
             docker-compose down || true
-            docker system prune -a -f
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
+            docker system prune -a -f
