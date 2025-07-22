@@ -9,9 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clean up Docker (remove unused containers, images, networks)
-        run: docker system prune -a -f
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -39,4 +36,5 @@ jobs:
             unzip -o jobbee-deploy.zip -d jobbee-deploy
             cd jobbee-deploy
             docker-compose down || true
+            docker system prune -a -f
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
