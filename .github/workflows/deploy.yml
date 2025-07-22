@@ -14,7 +14,7 @@ jobs:
 
       - name: Zip project files
         run: |
-          zip -r jobbee-deploy.zip . -x ".git/*" "*/bin/*" "*/obj/*"
+          zip -r jobbee-deploy.zip . -x ".git/*" "*/bin/*" "*/obj/*" "jobbee-deploy.zip"
 
       - name: Upload project to EC2
         uses: appleboy/scp-action@v0.1.4
