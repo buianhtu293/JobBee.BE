@@ -98,11 +98,22 @@ namespace JobBee.Api
 
 			builder.WebHost.ConfigureKestrel(options =>
 			{
-				options.ListenAnyIP(5000);
-				options.ListenAnyIP(5001, listenOptions =>
+
+				var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+				if (env == Environments.Development)
 				{
-					listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
-				});
+					options.ListenAnyIP(5000);
+					options.ListenAnyIP(5001);
+				}
+				else if (env == Environments.Production)
+				{
+					options.ListenAnyIP(5000);
+					options.ListenAnyIP(5001, listenOptions =>
+					{
+						listenOptions.UseHttps("/https/cert.pfx", "Callmebean03@");
+					});
+				}
 			});
 
 			var app = builder.Build();
