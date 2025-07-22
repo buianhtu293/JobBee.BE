@@ -9,31 +9,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Clean up Docker (remove unused containers, images, networks)
+        run: docker system prune -a -f
 
-    - name: Zip project files
-      run: |
-        zip -r jobbee-deploy.zip . -x ".git/*" "*/bin/*" "*/obj/*"
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Upload project to EC2
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        source: "jobbee-deploy.zip"
-        target: "/home/ubuntu"
+      - name: Zip project files
+        run: |
+          zip -r jobbee-deploy.zip . -x ".git/*" "*/bin/*" "*/obj/*"
 
-    - name: Deploy on EC2
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          sudo apt update && sudo apt install -y unzip docker.io docker-compose
-          unzip -o jobbee-deploy.zip -d jobbee-deploy
-          cd jobbee-deploy
-          docker-compose down || true
-          docker-compose up -d --build
+      - name: Upload project to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "jobbee-deploy.zip"
+          target: "/home/ubuntu"
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo apt update && sudo apt install -y unzip docker.io docker-compose
+            unzip -o jobbee-deploy.zip -d jobbee-deploy
+            cd jobbee-deploy
+            docker-compose down || true
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
