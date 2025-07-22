@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\NewFolder\**" />
+    <Compile Remove="Features\UserRole\**" />
+    <EmbeddedResource Remove="Features\NewFolder\**" />
+    <EmbeddedResource Remove="Features\UserRole\**" />
+    <None Remove="Features\NewFolder\**" />
+    <None Remove="Features\UserRole\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.1" />
@@ -36,11 +45,8 @@
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationDetail\" />
     <Folder Include="Features\JobApplication\Queries\GetJobAppicationByCandidateId\" />
     <Folder Include="Features\JobApplication\Queries\GetJobApplicationByJobId\" />
-    <Folder Include="Features\NewFolder\" />
-    <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
     <Folder Include="Features\Role\Commands\" />
     <Folder Include="Features\Role\Queries\" />
-    <Folder Include="Features\UserRole\Queries\GetUserByRole\" />
   </ItemGroup>
 
 </Project>

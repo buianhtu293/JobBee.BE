@@ -6,6 +6,7 @@ using JobBee.Application.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace JobBee.Infrastructure.Authentication
 {
@@ -32,12 +33,12 @@ namespace JobBee.Infrastructure.Authentication
 				SecurityAlgorithms.HmacSha256);
 
 			var token = new JwtSecurityToken(
-				_jwtOptions.Issuer,
-				_jwtOptions.Audience,
-				claims,
+				issuer: _jwtOptions.Issuer,
+				audience: _jwtOptions.Audience,
+				claims: claims,
 				null,
-				DateTime.UtcNow.AddHours(1),
-				signingCredentials);
+				expires: DateTime.UtcNow.AddHours(1),
+				signingCredentials: signingCredentials);
 
 			string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
