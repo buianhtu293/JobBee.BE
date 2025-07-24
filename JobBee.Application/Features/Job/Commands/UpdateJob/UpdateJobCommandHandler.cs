@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using JobBee.Application.Contracts.Persistence;
+using JobBee.Application.ElasticSearchService;
 using JobBee.Application.Exceptions;
+using JobBee.Application.Features.Job.Queries.GetAllJobs;
 using JobBee.Application.Models.Response;
 using JobBee.Domain.Entities;
 using MediatR;
@@ -10,7 +12,9 @@ namespace JobBee.Application.Features.Job.Commands.UpdateJob
 	public class UpdateJobCommandHandler(
 			IUnitOfWork<Domain.Entities.Job, Guid> unitOfWork,
 			IUnitOfWork<Domain.Entities.Employer, Guid> employerRepository,
-			IUnitOfWork<Domain.Entities.Subscription, Guid> subcriptionRepository
+			IUnitOfWork<Domain.Entities.Subscription, Guid> subcriptionRepository,
+			IElasticSearchService<JobDto> elasticSearchService,
+			IMapper mapper
 		)
 		: IRequestHandler<UpdateJobCommand, ApiResponse<bool>>
 	{
@@ -78,7 +82,29 @@ namespace JobBee.Application.Features.Job.Commands.UpdateJob
 			jobDomain.UpdatedAt = DateTime.Now;
 
 			unitOfWork.GenericRepository.Update(jobDomain);
-			await unitOfWork.SaveChangesAsync();
+			var affectedRows = await unitOfWork.SaveChangesAsync();
+
+			if (affectedRows <= 0)
+			{
+				throw new Exception("Error occur when update in database");
+			}
+
+			var updatedJob = unitOfWork.GenericRepository.GetByIdIncluding(jobDomain.Id,
+				j => j.Employer,
+				j => j.JobCategory!,
+				j => j.JobType!,
+				j => j.ExperienceLevel!,
+			j => j.MinEducation!
+			);
+
+			var updatedJobDto = mapper.Map<JobDto>(updatedJob);
+
+			var isSuccessResponse = await elasticSearchService.AddOrUpdate(updatedJobDto);
+
+			if (!isSuccessResponse)
+			{
+				throw new Exception("Error occur when update in els");
+			}
 
 			return new ApiResponse<bool>("Success", 200, true);
 		}
