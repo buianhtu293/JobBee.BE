@@ -14,6 +14,7 @@ namespace JobBee.Application.Features.Job.Commands.CreateJob
 		IMapper mapper,
 		IUnitOfWork<Domain.Entities.Job, Guid> unitOfWork,
 		IEmployerRepository employerRepository,
+		IUnitOfWork<Domain.Entities.Subscription, Guid> subcriptionRepository,
 		IElasticSearchService<JobDto> elasticSearchService,
 		IAppLogger<CreateJobCommandHandler> logger)
 		: IRequestHandler<CreateJobCommand, bool>
@@ -27,6 +28,32 @@ namespace JobBee.Application.Features.Job.Commands.CreateJob
 			{
 				opt.Items["EmployerId"] = employer!.Id;
 			});
+
+			var subscriptionQuery = subcriptionRepository
+				.GenericRepository
+				.GetQueryAble();
+
+			var subcriptions = subcriptionRepository.GenericRepository
+				.GetAllIncluding(x => x.Plan)
+				.Where(x => x.UserId == request.UserId && x.Status == "active")
+				.ToList();
+
+			if (subcriptions.Count <= 0)
+			{
+				throw new BadRequestException("Active subscription not found for this user.");
+			}
+
+			// miss case check number of post job in db
+			//var numberOfPostJob = subcriptions.Sum(x => x.Plan.)
+
+			var maxEndDate = subcriptions.Max(x => x.EndDate);
+
+			var isExceedingEndDate = DateTimeOffset.FromUnixTimeSeconds(request.ApplicationDeadline).UtcDateTime > maxEndDate;
+
+			if (isExceedingEndDate)
+			{
+				throw new BadRequestException("The application deadline exceeds the allowed subscription end date.");
+			}
 
 			job.UpdatedAt = DateTime.Now;
 			job.PostedAt = DateTime.Now;
