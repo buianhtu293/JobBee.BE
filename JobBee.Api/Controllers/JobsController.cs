@@ -1,3 +1,4 @@
+using JobBee.Application.Features.Job.Commands.UpdateJob;
 using JobBee.Application.Features.Job.Queries.CommonJobs;
 using JobBee.Application.Features.Job.Queries.GetAllJobs;
 using JobBee.Application.Features.Job.Queries.GetDetail;
@@ -37,6 +38,17 @@ namespace JobBee.Api.Controllers
 			command.UserId = Guid.Parse(userId!);
 			var result = await mediator.Send(command);
 			return Ok(result);
+		}
+
+		[Authorize(Roles = "employer")]
+		[HttpPut(JobRoutes.ACTION.Edit)]
+		public async Task<IActionResult> UpdateJob([FromRoute] Guid id, [FromBody] UpdateJobCommand command)
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			command.UserId = Guid.Parse(userId!);
+			command.JobId = id;
+			var res = await mediator.Send(command);
+			return Ok(res);
 		}
 
 		[HttpPost(JobRoutes.ACTION.GetPostedJob)]
